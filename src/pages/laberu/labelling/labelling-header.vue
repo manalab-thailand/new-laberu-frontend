@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-col items-center q-pa-md">
+  <div class="flex-col items-center q-px-md">
     <div class="flex-container">
-      <div class="row q-my-md text-center items-center gg">
+      <div class="row q-my-md text-center items-center unbreak">
         <div class="circle"></div>
         <div class="q-mx-md pages-header">
             Object Labelling</div>
@@ -15,10 +15,7 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.unbreak{
-    white-space: nowrap;
-    flex-wrap: nowrap;
-}
+
 
 .circle {
   width: 10px;

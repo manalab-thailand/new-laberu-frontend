@@ -75,7 +75,6 @@ export default {
       type: Object,
     },
   },
-  setup() {},
 };
 </script>
 

@@ -3,41 +3,59 @@
 html,
 body {
   font-family: "Roboto", sans-serif;
-  background: #393A3F;
+  background: #393a3f;
 }
 
-.flex-col{
-    flex-direction: column;
-    display: flex;
+.flex-col {
+  flex-direction: column;
+  display: flex;
 }
-.flex-row{
-    flex-direction: row;
-    display: flex;
-}
-
-.pages-header{
-    font-size: 30px;
-    font-weight: bold;
-    color: #fff;
+.flex-row {
+  flex-direction: row;
+  display: flex;
 }
 
-.history-sidebar{
-    background: #fff;
-    max-width: 300px;
-    width: 300px;
-    height: 100vh;
+.pages-header {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fff;
 }
 
-@media only screen and(max-width:1000px){
-    .flex-container{
-        width: 100%;
-        padding: 0 12px;
-    }
+.history-sidebar {
+  background: #fff;
+  max-width: 300px;
+  width: 280px;
+  height: 100vh;
 }
-@media only screen and(min-width:1000px){
-    .flex-container{
-        max-width: 1000px;
-        width: 100%;
-        padding: 0 12px;
-    }
+
+.labeltools {
+  background: #fff;
+  max-width: 300px;
+  width: 280px;
+  height: 100vh;
+}
+
+.unbreak{
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
+@media only screen and(max-width:1000px) {
+  .flex-container {
+    width: 100%;
+    padding: 0 12px;
+  }
+}
+
+@media only screen and(max-width:1000px) {
+  .history-sidebar{
+    display: none;
+  }
+}
+@media only screen and(min-width:1000px) {
+  .flex-container {
+    max-width: 1000px;
+    width: 100%;
+    padding: 0 12px;
+  }
 }

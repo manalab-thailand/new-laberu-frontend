@@ -1,17 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-btn
-          flat
-          dense
-          round
-          color="primary"
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
         <q-toolbar-title class="text-bold row" style="flex-wrap: nowrap">
           <q-avatar size="28px">
             <img src="../images/bg-icon.png" />
@@ -27,21 +17,16 @@
             ABERU.TECH
           </div>
         </q-toolbar-title>
-         <q-btn color="black" flat @click="drawer = !drawer" round dense icon="account_circle" />
+        <q-btn
+          color="black"
+          flat
+          @click="drawer = !drawer"
+          round
+          dense
+          icon="account_circle"
+        />
       </q-toolbar>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
