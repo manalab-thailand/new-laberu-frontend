@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute-center">sssssss</div>
+  <div class="absolute-center">ssssssssssssssssssssssssss</div>
 </template>
 
 <script>

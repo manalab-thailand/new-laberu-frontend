@@ -1,5 +1,16 @@
 const routes = [
   {
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    children: [
+      { path: '', name: "index", component: () => import('pages/admin/admin-index.vue') },
+      { path: 'create-project', name: "create-project", component: () => import('pages/admin/create-project/create-project.vue') },
+      { path: 'payment', name: "payment", component: () => import('pages/admin/payment/payment.vue') },
+      { path: 'view-project', name: "view-project", component: () => import('pages/admin/view-project/view-project.vue') },
+      { path: 'view-user', name: "view-user", component: () => import('pages/admin/view-user/view-user.vue') },
+    ],
+  },
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [

@@ -1,14 +1,10 @@
 <template>
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="link"
+    :to="{ path: link }"
+    active-class="q-item-no-link-highlighting"
   >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
+    <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
 
@@ -29,23 +25,23 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
 
     caption: {
       type: String,
-      default: ''
+      default: '',
     },
 
     link: {
       type: String,
-      default: '#'
+      default: '#',
     },
 
     icon: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
