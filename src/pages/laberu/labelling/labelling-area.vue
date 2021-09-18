@@ -1,5 +1,5 @@
 <template>
-  
+  <div class="labeltools fixed-right"></div>
 </template>
 
 <script>
