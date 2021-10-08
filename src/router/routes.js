@@ -5,16 +5,17 @@ const routes = [
     children: [
       { path: "", component: () => import("pages/laberu/home/home.vue") },
       {
-        path: "labelling",
-        component: () => import("pages/laberu/labelling/labelling.vue"),
-      },
-      {
         path: "annotation",
         component: () => import("pages/laberu/annotation/annotation.vue"),
       },
       {
+        path: "objectlabel",
+        component: () => import("src/pages/laberu/objectlabel/ObjectLabel.vue"),
+      },
+      {
         path: "classification",
-        component: () => import("pages/laberu/classification/classification.vue"),
+        component: () =>
+          import("pages/laberu/classification/classification.vue"),
       },
     ],
   },

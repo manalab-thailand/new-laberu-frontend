@@ -1,7 +1,7 @@
 <template>
   <div class="flex-col items-center q-px-md">
     <div class="flex-container">
-      <div class="row q-my-md text-center items-center unbreak">
+      <div class="row q-my-md text-center items-center">
         <div class="circle"></div>
         <div class="q-mx-md pages-header">
             Object Labelling</div>

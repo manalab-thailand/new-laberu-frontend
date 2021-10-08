@@ -2,7 +2,7 @@
   <div v-if="item">
     <q-item clickable v-ripple>
       <q-item-section
-        ><div class="row items-center unbreak">
+        ><div class="row items-center">
           <div class="circle q-mr-xs" :style="style"></div>
           <div style="font-size: 16px">{{ item.short_code }}</div>
         </div>

@@ -16,6 +16,15 @@
           >
             ABERU.TECH
           </div>
+          <q-space />
+          <q-btn
+            color="black"
+            flat
+            @click="leftDrawerOpen = !leftDrawerOpen"
+            round
+            dense
+            icon="menu"
+          />
         </q-toolbar-title>
         <q-btn
           color="black"
@@ -28,6 +37,33 @@
       </q-toolbar>
     </q-header>
 
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      :width="250"
+      :breakpoint="700"
+      elevated
+    >
+      <q-scroll-area class="fit">
+        <div class="q-pa-sm">
+          <div class="flex-col">
+            <div>Menu</div>
+            <q-item clickable v-ripple style="align-items: center">
+              <q-item-list> Home </q-item-list>
+            </q-item>
+            <q-expansion-item label="Project">
+              <q-item clickable v-ripple class="switch-project-btn">
+                <q-item-label style="align-items:center"> classification1 </q-item-label>
+              </q-item>
+            </q-expansion-item>
+            <q-item clickable v-ripple style="align-items: center">
+              <q-item-list> Profile </q-item-list>
+            </q-item>
+          </div>
+        </div>
+      </q-scroll-area>
+    </q-drawer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -39,28 +75,27 @@ import EssentialLink from "components/EssentialLink.vue";
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
-    link: "https://quasar.dev",
+    title: "Home",
+    icon: "home",
+    path: "/home",
   },
   {
-    title: "Github",
+    title: "Project",
     caption: "github.com/quasarframework",
     icon: "code",
-    link: "https://github.com/quasarframework",
+    path: "https://github.com/quasarframework",
   },
   {
     title: "Discord Chat Channel",
     caption: "chat.quasar.dev",
     icon: "chat",
-    link: "https://chat.quasar.dev",
+    path: "https://chat.quasar.dev",
   },
   {
     title: "Forum",
     caption: "forum.quasar.dev",
     icon: "record_voice_over",
-    link: "https://forum.quasar.dev",
+    path: "https://forum.quasar.dev",
   },
   {
     title: "Twitter",
@@ -104,4 +139,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.switch-project-btn {
+  padding-left: 2em;
+  color: #767272;
+}
+.switch-project-btn:focus{
+  background: #000;
+}
+</style>
