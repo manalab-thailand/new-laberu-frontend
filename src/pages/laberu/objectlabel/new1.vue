@@ -1,0 +1,208 @@
+<template>
+  <div class="content-sidebar">
+    <div class="col">
+      <ObjectLabelHeader />
+      <div class="row justify-center">
+        <div id="app">
+          <div id="label-bar">
+            <h4>Your boxes</h4>
+            <ul>
+              <li
+                v-for="(box, i) in boxes"
+                :key="i"
+                v-bind:class="{ active: i === activeBoxIndex }"
+              >
+                <input v-model="box.label" v-on:click="makeBoxActive(i)" />
+                <a @click="removeBox(i)">x</a>
+              </li>
+            </ul>
+          </div>
+          <div
+            id="image-wrapper"
+            :style="{ backgroundImage: `url(images/gridbox.png)` }"
+            @mousedown="startDrawingBox"
+            @mousemove="changeBox"
+            @mouseup="stopDrawingBox"
+          >
+            <Box
+              v-if="drawingBox.active"
+              :b-width="drawingBox.width"
+              :b-height="drawingBox.height"
+              :b-top="drawingBox.top"
+              :b-left="drawingBox.left"
+            />
+            <Box
+              v-for="(box, i) in boxes"
+              :key="i"
+              :bTop="box.top"
+              :bLeft="box.left"
+              :bLabel="box.label"
+              :bWidth="box.width"
+              :bHeight="box.height"
+              :bActive="i === activeBoxIndex"
+              :on-select="makeBoxActive"
+              :bIndex="i"
+              :on-delete="removeBox"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <ObjectLabelSidebar />
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
+import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
+import Box from "components/Box.vue";
+import { pick } from "lodash";
+function useClickCount() {
+  function startDrawingBox(e) {
+    this.drawingBox = {
+      width: 0,
+      height: 0,
+      top: getCoursorTop(e),
+      left: getCoursorLeft(e),
+      active: true,
+    };
+  }
+  function changeBox(e) {
+    if (this.drawingBox.active) {
+      this.drawingBox = {
+        ...this.drawingBox,
+        width: getCoursorLeft(e) - this.drawingBox.left,
+        height: getCoursorTop(e) - this.drawingBox.top,
+      };
+    }
+  }
+  function stopDrawingBox() {
+    if (this.drawingBox.active) {
+      if (this.drawingBox.width > 5) {
+        this.boxes.push({
+          ...pick(this.drawingBox, ["width", "height", "top", "left"]),
+        });
+      }
+      this.drawingBox = {
+        active: false,
+        top: 0,
+        left: 0,
+        height: 0,
+        width: 0,
+      };
+    }
+  }
+  function makeBoxActive(i) {
+    this.activeBoxIndex = i;
+  }
+  function removeBox(i) {
+    this.boxes = this.boxes.filter((elem, index) => {
+      return index !== i;
+    });
+    this.activeBoxIndex = null;
+  }
+  return {
+    makeBoxActive,
+    removeBox,
+    stopDrawingBox,
+    changeBox,
+    startDrawingBox,
+  };
+}
+const getCoursorLeft = (e) => {
+  return e.pageX - 360;
+};
+
+const getCoursorTop = (e) => {
+  return e.pageY - 125;
+};
+
+export default defineComponent({
+  name: "app",
+  components: { Box, ObjectLabelSidebar, ObjectLabelHeader },
+  setup() {
+    return {
+      drawingBox: {
+        active: false,
+        top: 0,
+        left: 0,
+        height: 0,
+        width: 0,
+      },
+      boxes: [],
+      activeBoxIndex: null,
+      ...useClickCount(),
+    };
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+
+  #image-wrapper {
+    height: 640px;
+    width: 640px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+  }
+
+  #label-bar {
+    float: right;
+    margin-right: 50px;
+    width: 220px;
+
+    ul {
+      padding: 0;
+
+      li {
+        list-style-type: none;
+        padding: 8px 16px;
+
+        &.active {
+          background-color: lightblue;
+        }
+
+        a {
+          cursor: pointer;
+          display: inline-block;
+          margin-left: 4px;
+          font-weight: bold;
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(min-width:768px) {
+  .image-wrapper {
+    width: 320px;
+    height: 175px;
+    position: relative;
+  }
+}
+@media only screen and(min-width:1024px) {
+  .image-wrapper {
+    width: 640px;
+    height: 427.5px;
+    position: relative;
+  }
+}
+@media only screen and(min-width:1440px) {
+  .image-wrapper {
+    width: 880px;
+    height: 517.5px;
+    position: relative;
+  }
+}
+</style>

@@ -2,11 +2,21 @@
   <div class="content-sidebar">
     <div class="col">
       <ObjectLabelHeader />
-      <div class="text-white row justify-center">
-        {{ windowSize }}
-      </div>
       <div class="row justify-center">
         <div id="app">
+          <div id="label-bar">
+            <h4>Your boxes</h4>
+            <ul>
+              <li
+                v-for="(box, i) in boxes"
+                :key="i"
+                v-bind:class="{ active: i === activeBoxIndex }"
+              >
+                <input v-model="box.label" v-on:click="makeBoxActive(i)" />
+                <a @click="removeBox(i)">x</a>
+              </li>
+            </ul>
+          </div>
           <div
             id="image-wrapper"
             :style="{ backgroundImage: `url(images/gridbox.png)` }"
@@ -37,16 +47,9 @@
           </div>
         </div>
       </div>
-      <div
-        class="text-white flex-col"
-        v-for="(no, index) in boxes"
-        :key="index"
-      >
-        {{ boxes }}
-      </div>
     </div>
     <div class="col">
-      <ObjectLabelSidebar :boxes="boxes" />
+      <ObjectLabelSidebar />
     </div>
   </div>
 </template>
@@ -57,23 +60,20 @@ import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
 import { pick } from "lodash";
-let X = 0;
+
 const getCoursorLeft = (e) => {
-  if (window.innerWidth < 1600 && window.innerWidth > 1360) this.x = 283;
-  else if (window.innerWidth < 1360 && window.innerWidth > 1024) this.x = 286;
-  else this.x = 250;
-  return e.pageX - this.x;
+  return e.pageX - 360;
 };
 
 const getCoursorTop = (e) => {
-  return e.pageY - 149;
+  return e.pageY - 125;
 };
 
-export default defineComponent({
+export default {
+  name: "app",
   components: { Box, ObjectLabelSidebar, ObjectLabelHeader },
   data: function () {
     return {
-      windowSize: window.innerHeight + "+" + window.innerWidth,
       drawingBox: {
         active: false,
         top: 0,
@@ -130,29 +130,72 @@ export default defineComponent({
       this.activeBoxIndex = null;
     },
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>
-// @media only screen and(min-width:768px) {
-//   #image-wrapper {
-//     width: 320px;
-//     height: 175px;
-//     position: relative;
-//   }
-// }
-// @media only screen and(min-width:1024px) {
-//   #image-wrapper {
-//     width: 640px;
-//     height: 427.5px;
-//     position: relative;
-//   }
-// }
-// @media only screen and(min-width:1440px) {
-//   #image-wrapper {
-//     width: 880px;
-//     height: 517.5px;
-//     position: relative;
-//   }
-// }
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+
+  #image-wrapper {
+    height: 640px;
+    width: 640px;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+  }
+
+  #label-bar {
+    float: right;
+    margin-right: 50px;
+    width: 220px;
+
+    ul {
+      padding: 0;
+
+      li {
+        list-style-type: none;
+        padding: 8px 16px;
+
+        &.active {
+          background-color: lightblue;
+        }
+
+        a {
+          cursor: pointer;
+          display: inline-block;
+          margin-left: 4px;
+          font-weight: bold;
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and(min-width:768px) {
+  .image-wrapper {
+    width: 320px;
+    height: 175px;
+    position: relative;
+  }
+}
+@media only screen and(min-width:1024px) {
+  .image-wrapper {
+    width: 640px;
+    height: 427.5px;
+    position: relative;
+  }
+}
+@media only screen and(min-width:1440px) {
+  .image-wrapper {
+    width: 880px;
+    height: 517.5px;
+    position: relative;
+  }
+}
 </style>

@@ -11,7 +11,39 @@
           </div>
         </q-item-label>
         <q-item-label class="sub-header-crop"> Quick Guidelines </q-item-label>
-        <ObjectLabelTool />
+        <q-item-label class="description-crop">action</q-item-label>
+        <q-scroll-area style="height: 30vh">
+          {{ item }}
+          <q-form>
+            <div class="q-pa-md row justify-center q-gutter-y-md">
+              <div id="app">
+                <div id="label-bar">
+                  <ul>
+                    <li
+                      v-for="(box, i) in boxes"
+                      :key="i"
+                      :class="{ active: i === activeBoxIndex }"
+                    >
+                      <input
+                        v-model="box.label"
+                        v-on:click="makeBoxActive(i)"
+                      />
+                      <a @click="removeBox(i)">x</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </q-form>
+        </q-scroll-area>
+        <div class="row justify-end q-gutter-x-md q-pa-md">
+          <q-btn dense label="Skip" style="background: white; width: 75px" />
+          <q-btn
+            dense
+            label="Submit"
+            style="background: #98da56; width: 75px"
+          />
+        </div>
         <q-item-label class="document-crop row justify-between items-center"
           ><div>document</div>
           <div>
@@ -29,10 +61,84 @@ export default defineComponent({
   components: {
     ObjectLabelTool,
   },
+  props: {
+    items: { type: Array || Object },
+    boxes: { type: Array || Object },
+  },
   setup() {
+    const options = [
+      {
+        label: "snake",
+        value: "reptiles",
+      },
+      {
+        label: "tree",
+        value: "plant",
+      },
+      {
+        label: "sphynx",
+        value: "statue",
+      },
+    ];
+
+    function exp() {
+      function startDrawingBox(e) {
+        this.drawingBox = {
+          width: 0,
+          height: 0,
+          top: getCoursorTop(e),
+          left: getCoursorLeft(e),
+          active: true,
+        };
+      }
+      function changeBox(e) {
+        if (this.drawingBox.active) {
+          this.drawingBox = {
+            ...this.drawingBox,
+            width: getCoursorLeft(e) - this.drawingBox.left,
+            height: getCoursorTop(e) - this.drawingBox.top,
+          };
+        }
+      }
+      function stopDrawingBox() {
+        if (this.drawingBox.active) {
+          if (this.drawingBox.width > 5) {
+            this.boxes.push({
+              ...pick(this.drawingBox, ["width", "height", "top", "left"]),
+            });
+          }
+          this.drawingBox = {
+            active: false,
+            top: 0,
+            left: 0,
+            height: 0,
+            width: 0,
+          };
+        }
+      }
+      function makeBoxActive(i) {
+        this.activeBoxIndex = i;
+      }
+      function removeBox(i) {
+        this.boxes = this.boxes.filter((elem, index) => {
+          return index !== i;
+        });
+        this.activeBoxIndex = null;
+      }
+      return {
+        startDrawingBox,
+        changeBox,
+        makeBoxActive,
+        removeBox,
+        stopDrawingBox,
+      };
+    }
+
     return {
       text: ref(""),
       model: ref(null),
+      options,
+      ...exp,
     };
   },
 });

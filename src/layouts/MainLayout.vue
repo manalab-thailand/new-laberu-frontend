@@ -17,14 +17,14 @@
             ABERU.TECH
           </div>
           <q-space />
-          <q-btn
+          <!-- <q-btn
             color="black"
             flat
             @click="leftDrawerOpen = !leftDrawerOpen"
             round
             dense
             icon="menu"
-          />
+          /> -->
         </q-toolbar-title>
         <q-btn
           color="black"
@@ -40,7 +40,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="250"
+      :width="200"
       :breakpoint="700"
       elevated
     >
@@ -53,7 +53,9 @@
             </q-item>
             <q-expansion-item label="Project">
               <q-item clickable v-ripple class="switch-project-btn">
-                <q-item-label style="align-items:center"> classification1 </q-item-label>
+                <q-item-label style="align-items: center">
+                  classification1
+                </q-item-label>
               </q-item>
             </q-expansion-item>
             <q-item clickable v-ripple style="align-items: center">
@@ -144,7 +146,7 @@ export default defineComponent({
   padding-left: 2em;
   color: #767272;
 }
-.switch-project-btn:focus{
+.switch-project-btn:focus {
   background: #000;
 }
 </style>
