@@ -56,11 +56,9 @@
 
 <script>
 import { defineComponent, ref } from "vue";
-import ObjectLabelTool from "pages/laberu/objectlabel/ObjectLabelTool.vue";
+
 export default defineComponent({
-  components: {
-    ObjectLabelTool,
-  },
+  components: {},
   props: {
     items: { type: Array || Object },
     boxes: { type: Array || Object },

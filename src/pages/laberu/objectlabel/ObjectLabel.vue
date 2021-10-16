@@ -5,7 +5,7 @@
       <div class="text-white row justify-center">
         {{ windowSize }}
       </div>
-      <div class="row justify-center">
+      <div class="row">
         <div id="app">
           <div
             id="image-wrapper"
@@ -42,7 +42,26 @@
         v-for="(no, index) in boxes"
         :key="index"
       >
-        {{ boxes }}
+        <div v-if="windowWide > 1600">
+          top:{{ (no.top * 5) / 3 }},left:{{ (no.left * 5) / 3 }},width:{{
+            (no.width * 5) / 3
+          }},height:{{ (no.height * 5) / 3 }}
+        </div>
+        <div v-if="windowWide > 1366 && windowWide <= 1600">
+          top:{{ no.top * 2 }},left:{{ no.left * 2 }},width:{{
+            no.width * 2
+          }},height:{{ no.height * 2 }}
+        </div>
+        <div v-if="windowWide > 1024 && windowWide <= 1366">
+          top:{{ (no.top * 40) / 17 }},left:{{ (no.left * 40) / 17 }},width:{{
+            (no.width * 40) / 17
+          }},height:{{ (no.height * 40) / 17 }}
+        </div>
+        <div v-if="windowWide > 800 && windowWide <= 1024">
+          top:{{ (no.top * 25) / 8 }},left:{{ (no.left * 25) / 8 }},width:{{
+            (no.width * 25) / 8
+          }},height:{{ (no.height * 25) / 8 }}
+        </div>
       </div>
     </div>
     <div class="col">
@@ -57,16 +76,23 @@ import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
 import { pick } from "lodash";
-let X = 0;
+
 const getCoursorLeft = (e) => {
-  if (window.innerWidth < 1600 && window.innerWidth > 1360) this.x = 283;
-  else if (window.innerWidth < 1360 && window.innerWidth > 1024) this.x = 286;
-  else this.x = 250;
-  return e.pageX - this.x;
+  let vertical = 0;
+  // if (window.innerWidth <= 1920 && window.innerWidth > 1600) vertical = 202;
+  // else if (window.innerWidth <= 1600 && window.innerWidth > 1360)
+  //   vertical = 218;
+  // else if (window.innerWidth <= 1360 && window.innerWidth > 1250)
+  //   vertical = 250 + (1360 - window.innerWidth) / 2;
+  // else if (window.innerWidth <= 1250 && window.innerWidth > 1024)
+  //   vertical = 200;
+  // else if (window.innerWidth <= 1024 && window.innerWidth > 800) vertical = 320;
+
+  return e.pageX - 255;
 };
 
 const getCoursorTop = (e) => {
-  return e.pageY - 149;
+  return e.pageY - 147;
 };
 
 export default defineComponent({
@@ -74,6 +100,7 @@ export default defineComponent({
   data: function () {
     return {
       windowSize: window.innerHeight + "+" + window.innerWidth,
+      windowWide: window.innerWidth,
       drawingBox: {
         active: false,
         top: 0,
