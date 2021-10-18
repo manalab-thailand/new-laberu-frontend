@@ -1,13 +1,30 @@
 <template>
-  <q-item class="flex-col" style="padding: 0">
-    <q-item-label class="description-crop">action</q-item-label>
-  </q-item>
+  <div class="content-sidebar">
+    <div class="col">
+      <ClassificationHeader />
+      <div class="row">
+        <div id="app">
+          <div
+            id="image-wrapper"
+            :style="{ backgroundImage: `url(images/gridbox.png)` }"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="col"><ClassificationSidebar /></div>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-
-export default defineComponent({});
+import ClassificationSidebar from "src/pages/laberu/classification/ClassificationSidebar.vue";
+import ClassificationHeader from "pages/laberu/classification/ClassificationHeader.vue";
+export default defineComponent({
+  components: {
+    ClassificationSidebar,
+    ClassificationHeader,
+  },
+});
 </script>
 
 <style lang="scss" scoped></style>
