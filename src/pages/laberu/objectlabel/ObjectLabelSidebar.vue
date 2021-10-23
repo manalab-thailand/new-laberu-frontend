@@ -13,7 +13,6 @@
         <q-item-label class="sub-header-crop"> Quick Guidelines </q-item-label>
         <q-item-label class="description-crop">action</q-item-label>
         <q-scroll-area style="height: 30vh">
-          {{ item }}
           <q-form>
             <div class="q-pa-md row justify-center q-gutter-y-md">
               <div id="app">
@@ -24,8 +23,11 @@
                       :key="i"
                       :class="{ active: i === activeBoxIndex }"
                     >
-                      <input
-                        v-model="box.label"
+                      <q-select
+                        bg-color="white"
+                        outlined
+                        v-model="model"
+                        :options="options"
                         v-on:click="makeBoxActive(i)"
                       />
                       <a @click="removeBox(i)">x</a>
@@ -58,9 +60,7 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  components: {},
   props: {
-    items: { type: Array || Object },
     boxes: { type: Array || Object },
   },
   setup() {
@@ -137,6 +137,8 @@ export default defineComponent({
       model: ref(null),
       options,
       ...exp,
+      model: ref(null),
+      options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
     };
   },
 });

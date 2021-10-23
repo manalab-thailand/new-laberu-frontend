@@ -17,23 +17,16 @@
             ABERU.TECH
           </div>
           <q-space />
-          <!-- <q-btn
+          <q-btn
             color="black"
             flat
             @click="leftDrawerOpen = !leftDrawerOpen"
             round
             dense
             icon="menu"
-          /> -->
+          />
         </q-toolbar-title>
-        <q-btn
-          color="black"
-          flat
-          @click="drawer = !drawer"
-          round
-          dense
-          icon="account_circle"
-        />
+        <q-btn color="black" flat round dense icon="account_circle" />
       </q-toolbar>
     </q-header>
 

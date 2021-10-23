@@ -1,5 +1,5 @@
 <template>
-  <div class="content-sidebar">
+  <div class="content-sidebar" style="flex-wrap: nowrap">
     <div class="col">
       <ObjectLabelHeader />
       <div class="text-white row justify-center">
@@ -42,25 +42,26 @@
         v-for="(no, index) in boxes"
         :key="index"
       >
+        {{ no }}
         <div v-if="windowWide > 1600">
-          top:{{ (no.top * 5) / 3 }},left:{{ (no.left * 5) / 3 }},width:{{
-            (no.width * 5) / 3
-          }},height:{{ (no.height * 5) / 3 }}
-        </div>
-        <div v-if="windowWide > 1366 && windowWide <= 1600">
           top:{{ no.top * 2 }},left:{{ no.left * 2 }},width:{{
             no.width * 2
           }},height:{{ no.height * 2 }}
         </div>
+        <div v-if="windowWide > 1366 && windowWide <= 1600">
+          top:{{ no.top * 2.4 }},left:{{ no.left * 2.4 }},width:{{
+            no.width * 2.4
+          }},height:{{ no.height * 2.4 }}
+        </div>
         <div v-if="windowWide > 1024 && windowWide <= 1366">
-          top:{{ (no.top * 40) / 17 }},left:{{ (no.left * 40) / 17 }},width:{{
-            (no.width * 40) / 17
-          }},height:{{ (no.height * 40) / 17 }}
+          top:{{ (no.top * 48) / 17 }},left:{{ (no.left * 48) / 17 }},width:{{
+            (no.width * 48) / 17
+          }},height:{{ (no.height * 48) / 17 }}
         </div>
         <div v-if="windowWide > 800 && windowWide <= 1024">
-          top:{{ (no.top * 25) / 8 }},left:{{ (no.left * 25) / 8 }},width:{{
-            (no.width * 25) / 8
-          }},height:{{ (no.height * 25) / 8 }}
+          top:{{ no.top * 3.75 }},left:{{ no.left * 3.75 }},width:{{
+            no.width * 3.75
+          }},height:{{ no.height * 3.75 }}
         </div>
       </div>
     </div>
@@ -160,26 +161,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-// @media only screen and(min-width:768px) {
-//   #image-wrapper {
-//     width: 320px;
-//     height: 175px;
-//     position: relative;
-//   }
-// }
-// @media only screen and(min-width:1024px) {
-//   #image-wrapper {
-//     width: 640px;
-//     height: 427.5px;
-//     position: relative;
-//   }
-// }
-// @media only screen and(min-width:1440px) {
-//   #image-wrapper {
-//     width: 880px;
-//     height: 517.5px;
-//     position: relative;
-//   }
-// }
-</style>
+<style lang="scss" scoped></style>
