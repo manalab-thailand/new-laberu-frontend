@@ -1,8 +1,8 @@
 {
-  "name": "laberu_frontend",
+  "name": "new-laberu-frontend",
   "version": "0.0.1",
-  "description": "New Laberu Frontend",
-  "productName": "Laberu Web App",
+  "description": "A Quasar Framework app",
+  "productName": "new-laberu",
   "author": "Doublepor <doublepor.pp@gmail.com>",
   "private": true,
   "scripts": {
@@ -12,10 +12,12 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "quasar": "^2.0.0"
+    "quasar": "^2.0.0",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
-    "@quasar/app": "^3.0.0"
+    "@quasar/app": "^3.0.0",
+    "@types/node": "^12.20.21"
   },
   "browserslist": [
     "last 10 Chrome versions",
