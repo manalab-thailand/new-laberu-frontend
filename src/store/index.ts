@@ -1,10 +1,22 @@
-import { store } from 'quasar/wrappers'
-import { InjectionKey } from 'vue'
+import { store } from "quasar/wrappers";
+import { InjectionKey } from "vue";
 import {
   createStore,
   Store as VuexStore,
   useStore as vuexUseStore,
-} from 'vuex'
+} from "vuex";
+
+import moduleAuth from "./module-auth";
+import moduleUsers from "./module-users";
+import moduleProjects from "./module-project";
+import moduleTaskSuccess from "./module-task-success";
+import moduleTaskImage from "./module-task-image";
+
+import { IAuthState } from "./module-auth/state";
+import { IProjectState } from "./module-project/state";
+import { ITaskSuccessState } from "./module-task-success/state";
+import { IUserState } from "./module-users/state";
+import { ITaskImageState } from "./module-task-image/state";
 
 // import example from './module-example'
 // import { ExampleStateInterface } from './module-example/state';
@@ -22,33 +34,41 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown
+  moduleUsers: IUserState;
+  moduleAuth: IAuthState;
+  moduleProjects: IProjectState;
+  moduleTaskSuccess: ITaskSuccessState;
+  moduleTaskImage: ITaskImageState;
 }
 
 // provide typings for `this.$store`
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $store: VuexStore<StateInterface>
+    $store: VuexStore<StateInterface>;
   }
 }
 
 // provide typings for `useStore` helper
-export const storeKey: InjectionKey<VuexStore<StateInterface>> = Symbol('vuex-key')
+export const storeKey: InjectionKey<VuexStore<StateInterface>> =
+  Symbol("vuex-key");
 
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      // example
+      moduleAuth,
+      moduleUsers,
+      moduleProjects,
+      moduleTaskSuccess,
+      moduleTaskImage,
     },
-
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: !!process.env.DEBUGGING
-  })
+    strict: !!process.env.DEBUGGING,
+  });
 
   return Store;
-})
+});
 
 export function useStore() {
-  return vuexUseStore(storeKey)
+  return vuexUseStore(storeKey);
 }
