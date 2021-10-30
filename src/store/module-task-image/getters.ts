@@ -1,8 +1,9 @@
 import { GetterTree } from "vuex";
 import { StateInterface } from "../index";
-import { ITaskSuccessState } from "./state";
+import { ITaskImageState } from "./state";
 
-const getters: GetterTree<ITaskSuccessState, StateInterface> = {
+
+const getters: GetterTree<ITaskImageState, StateInterface> = {
   someAction(/* context */) {
     // your code
   },

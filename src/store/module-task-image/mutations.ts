@@ -1,6 +1,6 @@
 import { MutationTree } from "vuex";
-import { ITaskSuccess, ITaskSuccessState, PaymentStatus } from "./state";
+import { ITaskImageState } from "./state";
 
-const mutation: MutationTree<ITaskSuccessState> = {};
+const mutation: MutationTree<ITaskImageState> = {};
 
 export default mutation;

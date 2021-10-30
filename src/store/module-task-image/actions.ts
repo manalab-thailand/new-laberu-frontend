@@ -1,8 +1,8 @@
 import { ActionTree } from "vuex";
 import { api } from "../../boot/axios";
 import { StateInterface } from "../index";
-import { ITaskSuccessState } from "./state";
+import { ITaskImageState } from "./state";
 
-const actions: ActionTree<ITaskSuccessState, StateInterface> = {};
+const actions: ActionTree<ITaskImageState, StateInterface> = {};
 
 export default actions;
