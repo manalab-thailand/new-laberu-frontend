@@ -1,7 +1,7 @@
 <template>
   <div v-if="item">
     <div class="project-card content-between">
-      <div v-if="item.labelType == 'labelling'">
+      <div v-if="item.label_type == 'labelling'">
         <div class="row items-center q-pa-md">
           <div><q-icon name="image_search" size="30px" /></div>
           <div class="text-bold q-mx-sm text-wrapper">
@@ -17,12 +17,19 @@
             flat
             no-caps
             class="text-white col"
-            @click="$router.push({ path: 'labelling' })"
+            @click="
+              $router.push({
+                path: 'labelling',
+                query: {
+                  project_id: item?._id,
+                },
+              })
+            "
             >Get Start!<q-icon name="arrow_right_alt"
           /></q-btn>
         </div>
       </div>
-      <div v-else-if="item.labelType == 'annotation'">
+      <div v-else-if="item.label_type == 'annotation'">
         <div class="row items-center q-pa-md">
           <div><q-icon name="image_search" size="30px" /></div>
           <div class="text-bold q-mx-sm text-wrapper">
@@ -38,7 +45,14 @@
             flat
             no-caps
             class="text-white col"
-            @click="$router.push({ path: 'annotation' })"
+            @click="
+              $router.push({
+                path: 'annotation',
+                query: {
+                  project_id: item?._id,
+                },
+              })
+            "
             >Get Start!<q-icon name="arrow_right_alt"
           /></q-btn>
         </div>
@@ -59,7 +73,14 @@
             flat
             no-caps
             class="text-white col"
-            @click="$router.push({ path: 'classification' })"
+            @click="
+              $router.push({
+                path: 'classification',
+                query: {
+                  project_id: item?._id,
+                },
+              })
+            "
             >Get Start!<q-icon name="arrow_right_alt"
           /></q-btn>
         </div>
@@ -68,12 +89,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { IProject } from "src/store/module-project/state";
 export default {
   props: {
-    item: {
-      type: Object,
-    },
+    item: Object as () => IProject | undefined,
   },
 };
 </script>

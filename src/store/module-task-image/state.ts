@@ -1,3 +1,25 @@
+export interface IImageData {
+  shortcode: string;
+  annotation: IAnnotation;
+  labelling: ILabelling;
+  classification: IClassification;
+  project_id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  update_by: string | null;
+}
+
+export interface IAnnotation {
+  description: string;
+}
+
+export interface IClassification {}
+
+export interface ILabelling {
+  width: string;
+  height: string;
+}
+
 export interface ITaskImage {
   shortcode: string;
   status: TaskImageStatus;
@@ -21,10 +43,12 @@ export enum TaskImageStatus {
 
 export interface ITaskImageState {
   task_image: ITaskImage;
+  image_data: IImageData;
 }
 
 const taskImageState = (): ITaskImageState => ({
   task_image: {} as ITaskImage,
+  image_data: {} as IImageData,
 });
 
 export default taskImageState;

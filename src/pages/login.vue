@@ -1,7 +1,7 @@
 <template>
-  <q-page
+  <div
     class="row justify-center items-center"
-    style="background: linear-gradient(#8274c5, #5a4a9f)"
+    style="background: linear-gradient(#8274c5, #5a4a9f); height: 100%"
   >
     <div class="column q-pa-lg">
       <div class="row">
@@ -70,7 +70,7 @@
         </q-card>
       </div>
     </div>
-  </q-page>
+  </div>
 </template>
 
 <script lang="ts">
@@ -100,11 +100,13 @@ const authentication = (
   const onLoginWithFirebase = async () => {
     try {
       q.loading.show();
-      const user = await loginWithFirebase(email.value, password.value);
-      if (user) {
-        uid.value = user?.uid;
-        setAuhentication();
-      }
+      // const user = await loginWithFirebase(email.value, password.value);
+      // if (user) {
+      //   uid.value = user?.uid;
+
+      // }
+      uid.value = "6130613022";
+      setAuhentication();
     } catch (error) {
       q.notify({
         message: `${error}`,
@@ -139,9 +141,9 @@ const authentication = (
     await store.dispatch("moduleAuth/onLogin", { uid: uid.value });
     const user = store.state.moduleAuth.user;
     const { role } = user;
-    if (role == "admin") {
+    if (role == "user") {
       currentUser.value = store.state.moduleAuth;
-      router.push({ name: "index" });
+      router.push({ name: "home" });
     } else {
       q.dialog({
         title: "Unauthorized access",
@@ -174,5 +176,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-</style>
+<style></style>

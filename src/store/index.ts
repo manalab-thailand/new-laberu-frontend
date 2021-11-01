@@ -6,6 +6,8 @@ import {
   useStore as vuexUseStore,
 } from "vuex";
 
+import createPersistedState from "vuex-persistedstate";
+
 import moduleAuth from "./module-auth";
 import moduleUsers from "./module-users";
 import moduleProjects from "./module-project";
@@ -64,6 +66,7 @@ export default store(function (/* { ssrContext } */) {
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
     strict: !!process.env.DEBUGGING,
+    plugins: [createPersistedState()],
   });
 
   return Store;

@@ -14,47 +14,24 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import homeHeader from "src/pages/laberu/home/home-header.vue";
 import ProjectList from "src/pages/laberu/home/project-list.vue";
+import { useStore } from "src/store";
 export default defineComponent({
   components: {
     ProjectList,
     homeHeader,
   },
   setup() {
-    const projects = [
-      {
-        id: 0,
-        labelType: "labelling",
-        project_name: "steve johnson industry",
-        ppi: 3,
-      },
-      {
-        id: 1,
-        labelType: "classification",
-        project_name: "alan donois mcconnahay",
-        ppi: 2,
-      },
-      {
-        id: 2,
-        labelType: "annotation",
-        project_name: "phillip ian jozenkovsky",
-        ppi: 1,
-      },
-      {
-        id: 0,
-        labelType: "labelling",
-        project_name: "pattrick meet smboerboel",
-        ppi: 3,
-      },
-      {
-        id: 1,
-        labelType: "classification",
-        project_name: "james luis slovakia",
-        ppi: 2,
-      },
-    ];
+    const store = useStore();
+
+    onMounted(async () => {
+      try {
+        store.dispatch("moduleProjects/getProjects");
+      } catch (error) {}
+    });
+    const projects = computed(() => store.state.moduleProjects.projects);
     return {
       projects,
     };

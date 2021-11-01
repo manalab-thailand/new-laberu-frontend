@@ -5,7 +5,7 @@
       <div class="row justify-center q-mb-lg">
         <div
           class="sub-image-wrapper"
-          :style="{ backgroundImage: `url(images/gridbox.png)` }"
+          :style="{ backgroundImage: `url(${image_url})` }"
         ></div>
       </div>
       <q-card
@@ -31,33 +31,78 @@
               text-center text-no-wrap
             "
           >
-            {{ item.label }} = {{ item.value }}
+            {{ item }}
+            <!-- {{ item.label }} = {{ item.value }} -->
           </div>
         </q-card-section>
       </q-card>
     </div>
-    <div class="col"><annotationSidebar @onSubmit="onSubmit" /></div>
+    <div class="col">
+      <annotationSidebar
+        :project="project"
+        :imageData="imageData"
+        @onSave="onSave($event)"
+      />
+    </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted } from "vue";
 import annotationSidebar from "src/pages/laberu/annotation/annotationSidebar.vue";
 import annotationHeader from "pages/laberu/annotation/annotationHeader.vue";
+import { useRoute } from "vue-router";
+import { useStore } from "src/store";
 export default defineComponent({
   components: {
     annotationSidebar,
     annotationHeader,
   },
   setup() {
+    const route = useRoute();
+    const store = useStore();
+
+    const project = computed(() =>
+      store.state.moduleProjects.projects.find(
+        (project) => project._id == route.query.project_id
+      )
+    );
+
+    const user = computed(() => store.state.moduleAuth.user);
+
     const submitResult = ref([]);
-    const onSubmit = (data) => {
-      submitResult.value = data;
-      console.log(data);
+    // const onSubmit = (data:any) => {
+    //   submitResult.value = data;
+    //   console.log(data);
+    // };
+
+    onMounted(async () => {
+      try {
+        store.dispatch("moduleTaskImage/getTaskImage", {
+          user_id: user.value._id,
+          project_id: project.value?._id,
+        });
+      } catch (error) {}
+    });
+    const taskImage = computed(() => store.state.moduleTaskImage.task_image);
+    const imageData = computed(() => store.state.moduleTaskImage.image_data);
+
+    const image_url = `${project.value?.base_image_url}/${taskImage.value.shortcode}.${project.value?.image_type}`;
+    console.log(image_url);
+
+    const onSave = (data: any) => {
+      const result = data.join(" ");
+      console.log(result);
     };
+
     return {
       submitResult,
-      onSubmit,
+      taskImage,
+      imageData,
+      project,
+      onSave,
+      image_url,
+      // onSubmit,
     };
   },
 });
