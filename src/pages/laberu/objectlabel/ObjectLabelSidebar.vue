@@ -12,36 +12,29 @@
         </q-item-label>
         <q-item-label class="sub-header-crop"> Quick Guidelines </q-item-label>
         <q-item-label class="description-crop">action</q-item-label>
-        <q-scroll-area style="height: 30vh">
-          <q-form>
-            <div class="q-pa-md row justify-center q-gutter-y-md">
-              <div id="app">
-                <div id="label-bar">
-                  <ul>
-                    <li
-                      v-for="(box, i) in boxes"
-                      :key="i"
-                      :class="{ active: i === activeBoxIndex }"
-                    >
-                      <q-select
-                        bg-color="white"
-                        outlined
-                        v-model="model"
-                        :options="options"
-                        v-on:click="makeBoxActive(i)"
-                      />
-                      <a @click="removeBox(i)">x</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </q-form>
-        </q-scroll-area>
+        <div class="row justify-center col-12 q-mt-sm" v-if="boxes">
+          <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
+            <q-select
+              style="width: 300px"
+              bg-color="white"
+              outlined
+              emit-value
+              map-options
+              v-model="box.label"
+              :options="options"
+            />
+          </div>
+        </div>
         <div class="row justify-end q-gutter-x-md q-pa-md">
-          <q-btn dense label="Skip" style="background: white; width: 75px" />
           <q-btn
             dense
+            label="Skip"
+            @click="onSkip()"
+            style="background: white; width: 75px"
+          />
+          <q-btn
+            dense
+            @click="onSave()"
             label="Submit"
             style="background: #98da56; width: 75px"
           />
@@ -56,89 +49,79 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
+<script lang='ts'>
+import { IProject } from "src/store/module-project/state";
+import { defineComponent, ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "src/store";
+import { useQuasar } from "quasar";
+
+interface Boxes {
+  top: number;
+  left: number;
+  label: string;
+  width: number;
+  height: number;
+}
 
 export default defineComponent({
   props: {
-    boxes: { type: Array || Object },
+    boxes: Object as () => Boxes[],
+    project: Object as () => IProject,
   },
-  setup() {
-    const options = [
-      {
-        label: "snake",
-        value: "reptiles",
-      },
-      {
-        label: "tree",
-        value: "plant",
-      },
-      {
-        label: "sphynx",
-        value: "statue",
-      },
-    ];
+  setup(props, { emit }) {
+    const route = useRoute();
+    const store = useStore();
+    const q = useQuasar();
 
-    function exp() {
-      function startDrawingBox(e) {
-        this.drawingBox = {
-          width: 0,
-          height: 0,
-          top: getCoursorTop(e),
-          left: getCoursorLeft(e),
-          active: true,
-        };
-      }
-      function changeBox(e) {
-        if (this.drawingBox.active) {
-          this.drawingBox = {
-            ...this.drawingBox,
-            width: getCoursorLeft(e) - this.drawingBox.left,
-            height: getCoursorTop(e) - this.drawingBox.top,
-          };
-        }
-      }
-      function stopDrawingBox() {
-        if (this.drawingBox.active) {
-          if (this.drawingBox.width > 5) {
-            this.boxes.push({
-              ...pick(this.drawingBox, ["width", "height", "top", "left"]),
-            });
-          }
-          this.drawingBox = {
-            active: false,
-            top: 0,
-            left: 0,
-            height: 0,
-            width: 0,
-          };
-        }
-      }
-      function makeBoxActive(i) {
-        this.activeBoxIndex = i;
-      }
-      function removeBox(i) {
-        this.boxes = this.boxes.filter((elem, index) => {
-          return index !== i;
+    const project = computed(() =>
+      store.state.moduleProjects.projects.find(
+        (project) => project._id == route.query.project_id
+      )
+    );
+
+    const options = project.value?.config_input.labelling?.map((config) => ({
+      label: config.display_name,
+      value: config.value,
+    }));
+
+    const onSave = () => {
+      if ((props.boxes?.length as number) < 1) {
+        q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "กรุณาตีกรอบอย่างน้อย 1 จุด",
         });
-        this.activeBoxIndex = null;
+        return;
       }
-      return {
-        startDrawingBox,
-        changeBox,
-        makeBoxActive,
-        removeBox,
-        stopDrawingBox,
-      };
-    }
+
+      //? xmin = left
+      //? ymin = top
+      //? xmax = left + width
+      //? ymax = top + height
+
+      const detection = props.boxes?.map((box) => ({
+        name: box.label,
+        xmin: box.left,
+        ymin: box.top,
+        xmax: box.left + box.width,
+        ymax: box.top + box.height,
+      }));
+
+      emit("onSave", detection);
+    };
+
+    const onSkip = () => {
+      emit("onSkip");
+    };
 
     return {
       text: ref(""),
       model: ref(null),
       options,
-      ...exp,
-      model: ref(null),
-      options: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
+      onSave,
+      onSkip,
     };
   },
 });

@@ -1,5 +1,4 @@
 export interface ITaskSuccess {
-  _id: string;
   shortcode: string;
   accept: boolean;
   result: IResult;

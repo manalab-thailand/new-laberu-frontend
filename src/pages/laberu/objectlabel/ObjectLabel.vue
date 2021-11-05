@@ -9,7 +9,7 @@
         <div id="app">
           <div
             id="image-wrapper"
-            :style="{ backgroundImage: `url(images/gridbox.png)` }"
+            :style="{ backgroundImage: `url(${this.image_url})` }"
             @mousedown="startDrawingBox"
             @mousemove="changeBox"
             @mouseup="stopDrawingBox"
@@ -37,48 +37,41 @@
           </div>
         </div>
       </div>
-      <div
-        class="text-white flex-col"
-        v-for="(no, index) in boxes"
-        :key="index"
-      >
-        {{ no }}
-        <div v-if="windowWide > 1600">
-          top:{{ no.top * 2 }},left:{{ no.left * 2 }},width:{{
-            no.width * 2
-          }},height:{{ no.height * 2 }}
-        </div>
-        <div v-if="windowWide > 1366 && windowWide <= 1600">
-          top:{{ no.top * 2.4 }},left:{{ no.left * 2.4 }},width:{{
-            no.width * 2.4
-          }},height:{{ no.height * 2.4 }}
-        </div>
-        <div v-if="windowWide > 1024 && windowWide <= 1366">
-          top:{{ (no.top * 48) / 17 }},left:{{ (no.left * 48) / 17 }},width:{{
-            (no.width * 48) / 17
-          }},height:{{ (no.height * 48) / 17 }}
-        </div>
-        <div v-if="windowWide > 800 && windowWide <= 1024">
-          top:{{ no.top * 3.75 }},left:{{ no.left * 3.75 }},width:{{
-            no.width * 3.75
-          }},height:{{ no.height * 3.75 }}
-        </div>
-      </div>
     </div>
     <div class="col">
-      <ObjectLabelSidebar :boxes="boxes" />
+      <ObjectLabelSidebar
+        :boxes="boxes"
+        :project="project"
+        @onSave="onSave($event)"
+        @onSkip="initState"
+      />
     </div>
   </div>
 </template>
 
-<script>
-import { defineComponent, onMounted } from "vue";
+<script lang='ts'>
+import { defineComponent, onMounted, ref, computed } from "vue";
 import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
+import { useRoute, useRouter } from "vue-router";
+import { StateInterface, useStore } from "src/store";
+import { useQuasar } from "quasar";
 import { pick } from "lodash";
+import { ExecException } from "child_process";
+import { IProject } from "src/store/module-project/state";
+import { IUser } from "src/store/module-users/state";
+import { IImageData, ITaskImage } from "src/store/module-task-image/state";
 
-const getCoursorLeft = (e) => {
+interface Boxes {
+  top: number;
+  left: number;
+  label: string;
+  width: number;
+  height: number;
+}
+
+const getCoursorLeft = (e: any) => {
   let vertical = 0;
   // if (window.innerWidth <= 1920 && window.innerWidth > 1600) vertical = 202;
   // else if (window.innerWidth <= 1600 && window.innerWidth > 1360)
@@ -92,29 +85,125 @@ const getCoursorLeft = (e) => {
   return e.pageX - 255;
 };
 
-const getCoursorTop = (e) => {
+const getCoursorTop = (e: any) => {
   return e.pageY - 147;
 };
 
 export default defineComponent({
   components: { Box, ObjectLabelSidebar, ObjectLabelHeader },
-  data: function () {
-    return {
-      windowSize: window.innerHeight + "+" + window.innerWidth,
-      windowWide: window.innerWidth,
-      drawingBox: {
-        active: false,
-        top: 0,
-        left: 0,
-        height: 0,
-        width: 0,
-      },
-      boxes: [],
-      activeBoxIndex: null,
-    };
+  data: () => ({
+    windowSize: window.innerHeight + "+" + window.innerWidth,
+    windowWide: window.innerWidth,
+    drawingBox: {
+      active: false,
+      top: 0,
+      left: 0,
+      height: 0,
+      width: 0,
+    },
+    boxes: [] as Boxes[],
+    activeBoxIndex: null,
+
+    project: {},
+    user: {},
+    taskImage: {},
+    imageData: {},
+    image_url: ref<string>(),
+    startedAt: new Date(),
+  }),
+  mounted() {
+    this.project = computed(() =>
+      this.$store.state.moduleProjects.projects.find(
+        (project) => project._id == this.$route.query.project_id
+      )
+    );
+    this.user = computed(() => this.$store.state.moduleAuth.user);
+
+    this.initState();
   },
   methods: {
-    startDrawingBox(e) {
+    async initState() {
+      try {
+        this.$q.loading.show();
+
+        this.boxes = [];
+
+        const resp = await this.$store.dispatch(
+          "moduleTaskImage/getTaskImage",
+          {
+            user_id: (this.user as IUser)._id,
+            project_id: (this.project as IProject)?._id,
+          }
+        );
+
+        if (!resp) {
+          this.$q.notify({
+            color: "red-5",
+            textColor: "white",
+            icon: "warning",
+            message: "Task image not avaliable for you",
+          });
+          this.$router.go(-1);
+          return;
+        }
+
+        this.taskImage = computed(
+          () => this.$store.state.moduleTaskImage.task_image
+        );
+        this.imageData = computed(
+          () => this.$store.state.moduleTaskImage.image_data
+        );
+
+        this.startedAt = new Date();
+        this.image_url = `${(this.project as IProject)?.base_image_url}/${
+          (this.taskImage as ITaskImage).shortcode
+        }.${(this.project as IProject)?.image_type}`;
+      } catch (error) {
+        throw new Error((error as ExecException).message);
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+    async onSave(data: any) {
+      const size = {
+        width: (this.imageData as IImageData).labelling.width,
+        height: (this.imageData as IImageData).labelling.height,
+      };
+
+      const result = data.map((x: any) => ({
+        size,
+        detection: x,
+      }));
+
+      const taskSuccess = ref({
+        shortcode: (this.taskImage as ITaskImage).shortcode,
+        result: {
+          labelling: result,
+        },
+        task_id: (this.taskImage as ITaskImage)._id,
+        user_id: (this.user as IUser)._id,
+        project_id: (this.project as IProject)?._id,
+        custom: {
+          user_id: (this.user as IUser)._id,
+          group_id: null,
+        },
+        startedAt: this.startedAt,
+      });
+
+      try {
+        this.$q.loading.show();
+        await this.$store.dispatch(
+          "moduleTaskSuccess/createTaskSuccess",
+          taskSuccess.value
+        );
+        await this.initState();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$q.loading.hide();
+      }
+    },
+    startDrawingBox(e: any) {
       this.drawingBox = {
         width: 0,
         height: 0,
@@ -123,7 +212,7 @@ export default defineComponent({
         active: true,
       };
     },
-    changeBox(e) {
+    changeBox(e: any) {
       if (this.drawingBox.active) {
         this.drawingBox = {
           ...this.drawingBox,
@@ -137,7 +226,7 @@ export default defineComponent({
         if (this.drawingBox.width > 5) {
           this.boxes.push({
             ...pick(this.drawingBox, ["width", "height", "top", "left"]),
-          });
+          } as any);
         }
         this.drawingBox = {
           active: false,
@@ -148,10 +237,10 @@ export default defineComponent({
         };
       }
     },
-    makeBoxActive(i) {
+    makeBoxActive(i: any) {
       this.activeBoxIndex = i;
     },
-    removeBox(i) {
+    removeBox(i: any) {
       this.boxes = this.boxes.filter((elem, index) => {
         return index !== i;
       });

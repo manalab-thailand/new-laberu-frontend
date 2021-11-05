@@ -17,7 +17,7 @@
         <q-item-label
           class="text-white q-px-lg q-py-md"
           style="font-size: 16px"
-          >{{ imageData.annotation }}</q-item-label
+          >{{ imageData.annotation.decsription }}</q-item-label
         >
         <q-item-label class="description-crop">action</q-item-label>
         <q-scroll-area style="height: 30vh">
@@ -44,9 +44,15 @@
             </div>
           </div>
         </q-scroll-area>
-        <div class="row justify-end q-gutter-x-md q-pa-md">
+        <div class="row justify-between q-gutter-x-md q-pa-md">
           <!-- <q-btn dense label="Skip" style="background: white; width: 75px" />
              -->
+          <q-btn
+            dense
+            label="Skip"
+            @click="onSkip"
+            style="background: #98da56; width: 75px"
+          />
           <q-btn
             dense
             label="Submit"
@@ -65,6 +71,7 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
 import { IImageData } from "src/store/module-task-image/state";
 import { defineComponent, ref } from "vue";
@@ -73,10 +80,14 @@ export default defineComponent({
   props: {
     project: Object as () => IProject,
     imageData: Object as () => IImageData,
+    descriptions: String,
   },
   setup(props, { emit }) {
+    const q = useQuasar();
+
     const text = ref("");
     const texts = ref<string[]>([]);
+
     const pressEnter = () => {
       if (text.value.replace(/ /g, "") != "") {
         texts.value.push(text.value);
@@ -86,7 +97,21 @@ export default defineComponent({
     };
 
     const onSave = () => {
+      if (texts.value.length < 5) {
+        q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "กรุณากรอกอย่างน้อย 5 คำ",
+        });
+        return;
+      }
       emit("onSave", texts.value);
+      texts.value = [];
+    };
+
+    const onSkip = () => {
+      emit("onSkip");
     };
 
     return {
@@ -94,6 +119,7 @@ export default defineComponent({
       texts,
       pressEnter,
       onSave,
+      onSkip,
     };
   },
 });

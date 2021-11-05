@@ -1,4 +1,5 @@
 export interface IImageData {
+  _id: string;
   shortcode: string;
   annotation: IAnnotation;
   labelling: ILabelling;
@@ -10,7 +11,7 @@ export interface IImageData {
 }
 
 export interface IAnnotation {
-  description: string;
+  decsription: string;
 }
 
 export interface IClassification {}
@@ -21,6 +22,7 @@ export interface ILabelling {
 }
 
 export interface ITaskImage {
+  _id: string;
   shortcode: string;
   status: TaskImageStatus;
   process: TaskImageProcess;
