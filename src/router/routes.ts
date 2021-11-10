@@ -26,6 +26,11 @@ const routes: RouteRecordRaw[] = [
         component: () =>
           import("pages/laberu/classification/classification.vue"),
       },
+      {
+        path: "profile",
+        name: "profile",
+        component: () => import("pages/laberu/profile/profile.vue"),
+      },
     ],
   },
   {

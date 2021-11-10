@@ -19,6 +19,7 @@ import homeHeader from "src/pages/laberu/home/home-header.vue";
 import ProjectList from "src/pages/laberu/home/project-list.vue";
 import { useStore } from "src/store";
 export default defineComponent({
+  name: "home",
   components: {
     ProjectList,
     homeHeader,

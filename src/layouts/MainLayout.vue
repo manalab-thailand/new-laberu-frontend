@@ -41,19 +41,57 @@
         <div class="q-pa-sm">
           <div class="flex-col">
             <div>Menu</div>
-            <q-item clickable v-ripple style="align-items: center">
+            <q-item
+              clickable
+              v-ripple
+              :to="{ name: 'home' }"
+              style="align-items: center"
+            >
               <q-item-list> Home </q-item-list>
             </q-item>
-            <q-expansion-item label="Project">
-              <q-item clickable v-ripple class="switch-project-btn">
-                <q-item-label style="align-items: center">
-                  classification1
-                </q-item-label>
-              </q-item>
-            </q-expansion-item>
-            <q-item clickable v-ripple style="align-items: center">
-              <q-item-list> Profile </q-item-list>
-            </q-item>
+            <q-list>
+              <q-expansion-item expand-separator label="Classification">
+                <q-item
+                  v-ripple
+                  clickable
+                  style="
+                    align-items: center;
+                    margin-left: 10px;
+                    color: rgba(118, 114, 114, 1);
+                  "
+                >
+                  {}
+                </q-item>
+              </q-expansion-item></q-list
+            >
+            <q-list>
+              <q-expansion-item expand-separator label=" Profile">
+                <q-item
+                  v-ripple
+                  clickable
+                  style="
+                    align-items: center;
+                    margin-left: 10px;
+                    color: rgba(118, 114, 114, 1);
+                  "
+                  :to="{ name: 'profile' }"
+                >
+                  ข้อมูลทั่วไป/General
+                </q-item>
+
+                <q-item
+                  v-ripple
+                  clickable
+                  style="
+                    align-items: center;
+                    margin-left: 10px;
+                    color: rgba(118, 114, 114, 1);
+                  "
+                >
+                  โอนเงิน/Payment
+                </q-item>
+              </q-expansion-item></q-list
+            >
           </div>
         </div>
       </q-scroll-area>

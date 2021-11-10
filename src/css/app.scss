@@ -16,6 +16,29 @@ body {
   display: flex;
 }
 
+.color-1 {
+  color: #000;
+}
+
+.color-2 {
+  color: rgba(118, 114, 114, 1);
+}
+
+.font-style {
+  font-size: 16px;
+  align-items: Left;
+  min-width: 200px;
+  margin: 1em 0;
+}
+
+.the-box {
+  border: solid 1px #d15eff;
+  background: white;
+  margin: 2em 0 0 0;
+  width: 100%;
+  max-width: 50em;
+}
+
 .content-sidebar {
   display: flex;
 }
