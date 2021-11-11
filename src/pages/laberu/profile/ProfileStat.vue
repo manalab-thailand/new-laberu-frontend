@@ -45,20 +45,6 @@ export default defineComponent({
       { name: "carbs", label: "Carbs (g)", field: "carbs" },
       { name: "protein", label: "Protein (g)", field: "protein" },
       { name: "sodium", label: "Sodium (mg)", field: "sodium" },
-      {
-        name: "calcium",
-        label: "Calcium (%)",
-        field: "calcium",
-        sortable: true,
-        sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-      },
-      {
-        name: "iron",
-        label: "Iron (%)",
-        field: "iron",
-        sortable: true,
-        sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
-      },
     ];
 
     const rows = [
@@ -69,8 +55,6 @@ export default defineComponent({
         carbs: 24,
         protein: 4.0,
         sodium: 87,
-        calcium: "14%",
-        iron: "1%",
       },
       {
         name: "Ice cream sandwich",
@@ -79,8 +63,6 @@ export default defineComponent({
         carbs: 37,
         protein: 4.3,
         sodium: 129,
-        calcium: "8%",
-        iron: "1%",
       },
     ];
 

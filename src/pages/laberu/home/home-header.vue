@@ -14,9 +14,10 @@ export default {
 <style scoped lang="scss">
 .home-header {
   font-size: calc(2em + 2vw);
-  color: #ffffff;
+  color: #625966;
   font-weight: 900;
   letter-spacing: 10px;
   text-shadow: 3px 3px #acacac;
+  background: #fff;
 }
 </style>

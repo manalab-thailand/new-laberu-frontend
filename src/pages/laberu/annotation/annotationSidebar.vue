@@ -15,7 +15,7 @@
           >example description</q-item-label
         >
         <q-item-label
-          class="text-white q-px-lg q-py-md"
+          class="text-black q-px-lg q-py-md"
           style="font-size: 16px"
           >{{ imageData.annotation.decsription }}</q-item-label
         >

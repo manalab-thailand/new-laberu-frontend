@@ -2,11 +2,16 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-toolbar-title class="text-bold row" style="flex-wrap: nowrap">
+        <q-toolbar-title
+          @click="$router.push({ name: 'home' })"
+          class="text-bold row"
+          style="flex-wrap: nowrap"
+        >
           <q-avatar size="28px">
             <img src="../images/bg-icon.png" />
           </q-avatar>
           <div
+            class="cursor-pointer"
             style="
               font-weight: bold;
               letter-spacing: 5px;
@@ -17,20 +22,20 @@
             ABERU.TECH
           </div>
           <q-space />
-          <q-btn
+          <!-- <q-btn
             color="black"
             flat
             @click="leftDrawerOpen = !leftDrawerOpen"
             round
             dense
             icon="menu"
-          />
+          /> -->
         </q-toolbar-title>
         <q-btn color="black" flat round dense icon="account_circle" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
+    <!-- <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       :width="200"
@@ -78,24 +83,12 @@
                 >
                   ข้อมูลทั่วไป/General
                 </q-item>
-
-                <q-item
-                  v-ripple
-                  clickable
-                  style="
-                    align-items: center;
-                    margin-left: 10px;
-                    color: rgba(118, 114, 114, 1);
-                  "
-                >
-                  โอนเงิน/Payment
-                </q-item>
               </q-expansion-item></q-list
             >
           </div>
         </div>
       </q-scroll-area>
-    </q-drawer>
+    </q-drawer> -->
 
     <q-page-container>
       <router-view />
