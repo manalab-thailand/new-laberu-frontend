@@ -1,27 +1,90 @@
 <template>
-  <div class="the-box q-pa-md">
-    <div class="flex-row items-center">
-      <div style="font-size: 24px">ข้อมูลทั่วไป/General</div>
+  <div class="the-box">
+    <div class="flex-row items-center text-black">
+      <div class="title-font">ข้อมูลทั่วไป/General</div>
     </div>
-    <div class="flex-row" style="gap: 20px">
-      <div class="col-4">
-        <div class="font-style color-2 row justify-end">ชื่อ/Name:</div>
-        <div class="font-style color-2 row justify-end">นามสกุล/Surname:</div>
-        <div class="font-style color-2 row justify-end">อีเมลล์/Email:</div>
-        <div class="font-style color-2 row justify-end">
-          เบอร์โทรศัพท์/Phone No.:
+    <div class="flex-row main-sec">
+      <div class="flex-col sub-sec">
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            ชื่อ
+            <div class="eng">/Name</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ user.firstname }}</div>
         </div>
-        <div class="font-style color-2 row justify-end">อาชีพ/Career:</div>
-        <div class="font-style color-2 row justify-end">จังหวัด/Province:</div>
-        <div class="font-style color-2 row justify-end">ธนาคาร/Bank:</div>
-        <div class="font-style color-2 row justify-end">
-          เลขบัญชีธนาคาร/Account No.:
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            นามสกุล
+            <div class="eng">/Surname</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ user.lastname }}</div>
         </div>
-        <div class="font-style color-2 row justify-end">
-          เจ้าของบัญชี/Account Name:
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            อีเมลล์
+            <div class="eng">/Email</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ emailHide(user.email) }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            เบอร์โทรศัพท์
+            <div class="eng">/Phone No</div>
+            :
+          </div>
+          <div class="font-style color-1">
+            {{ cardHide(user.phone_number) }}
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            อาชีพ
+            <div class="eng">/Career</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ user.career }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            จังหวัด
+            <div class="eng">/Province</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ user.province }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            ธนาคาร
+            <div class="eng">/Bank</div>
+            :
+          </div>
+          <div class="font-style color-1">{{ user.payment.bank_name }}</div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            เลขบัญชีธนาคาร
+            <div class="eng">/Account No</div>
+            :
+          </div>
+          <div class="font-style color-1">
+            {{ cardHide(user.payment.bank_account_no) }}
+          </div>
+        </div>
+        <div class="flex-row">
+          <div class="font-style w-400 color-2 row">
+            เจ้าของบัญชี
+            <div class="eng">/Account Name</div>
+            :
+          </div>
+          <div class="font-style color-1">
+            {{ user.payment.bank_account_name }}
+          </div>
         </div>
       </div>
-      <div class="col">
+      <!-- <div class="flex-col">
         <div class="font-style color-1">{{ user.firstname }}</div>
         <div class="font-style color-1">{{ user.lastname }}</div>
         <div class="font-style color-1">{{ emailHide(user.email) }}</div>
@@ -38,9 +101,9 @@
           {{ user.payment.bank_account_name }}
         </div>
         <div class="edit-btn">
-          <q-btn color="white" text-color="black" label="Standard" />
+          <q-btn color="light-blue-6" no-caps text-color="white" label="Edit" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -94,5 +157,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang='scss'>
-</style>
+<style scoped lang="scss"></style>

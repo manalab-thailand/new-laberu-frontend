@@ -31,7 +31,14 @@
             icon="menu"
           /> -->
         </q-toolbar-title>
-        <q-btn color="black" flat round dense icon="account_circle" />
+        <q-btn
+          :to="{ name: 'profile' }"
+          color="black"
+          flat
+          round
+          dense
+          icon="account_circle"
+        />
       </q-toolbar>
     </q-header>
 

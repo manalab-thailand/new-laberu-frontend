@@ -1,70 +1,110 @@
 <template>
-  <div class="the-box stat-table q-pa-md">
-    <div class="flex-row items-center">
+  <div class="stat-table">
+    <!-- <div class="flex-row items-center text-black">
       <div style="font-size: 24px">สถิติ/Stat</div>
-    </div>
-    <div class="q-pa-md">
-      <q-table
-        class="stat-table"
-        title="Treats"
-        :rows="rows"
-        :columns="columns"
-        row-key="name"
-      />
-    </div>
+    </div> -->
+    <q-table
+      class="stat-table"
+      title="สถิติ/Stat"
+      :rows="rows"
+      :columns="columns"
+      row-key="name"
+    />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useStore } from "src/store";
+import { IProject } from "src/store/module-project/state";
+import { useRouter } from "vue-router";
 
+interface TotalImage {
+  total: Number;
+  project_name: string;
+  label_type: string;
+  paid: Number;
+  pending: Number;
+  total_price: Number;
+}
 export default defineComponent({
   setup() {
     const store = useStore();
-    const user = computed(() => store.state.moduleAuth.user);
+    const router = useRouter();
+    const user = computed(() => store.state.moduleProjects.projects);
 
     const columns = [
       {
-        name: "name",
+        name: "project_name",
         required: true,
-        label: "Dessert (100g serving)",
+        label: "project_name",
         align: "left",
-        field: (row) => row.name,
-        format: (val) => `${val}`,
+        field: "project_name",
         sortable: true,
       },
       {
-        name: "calories",
-        align: "center",
-        label: "Calories",
-        field: "calories",
+        name: "label_type",
+        align: "left",
+        label: "label_type",
+        field: "label_type",
         sortable: true,
       },
-      { name: "fat", label: "Fat (g)", field: "fat", sortable: true },
-      { name: "carbs", label: "Carbs (g)", field: "carbs" },
-      { name: "protein", label: "Protein (g)", field: "protein" },
-      { name: "sodium", label: "Sodium (mg)", field: "sodium" },
+      {
+        name: "total",
+        label: "total",
+        field: "total",
+        sortable: true,
+      },
+      {
+        name: "total_price",
+        label: "total_price",
+        field: "total_price",
+        sortable: true,
+      },
+      {
+        name: "pending",
+        label: "pending",
+        field: "pending",
+        sortable: true,
+      },
+      {
+        name: "paid",
+        label: "paid",
+        field: "paid",
+        sortable: true,
+      },
     ];
 
-    const rows = [
-      {
-        name: "Frozen Yogurt",
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        sodium: 87,
-      },
-      {
-        name: "Ice cream sandwich",
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        sodium: 129,
-      },
-    ];
+    const rows = ref<TotalImage[]>([]);
+
+    onMounted(() => {
+      rows.value = [
+        {
+          total: 123,
+          project_name: "Road Surface Condition",
+          label_type: "annotation",
+          paid: 100,
+          pending: 23,
+          total_price: 100,
+        },
+        {
+          total: 456,
+          project_name: "Road Surface Condition Road",
+          label_type: "labelling",
+          paid: 200,
+          pending: 23,
+          total_price: 100,
+        },
+        {
+          total: 789,
+          project_name: "Road Surface Condition 25",
+          label_type: "classification",
+          paid: 300,
+          pending: 23,
+          total_price: 100,
+        },
+      ];
+    });
 
     return {
       rows,
