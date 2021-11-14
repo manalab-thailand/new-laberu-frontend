@@ -87,44 +87,6 @@ export default defineComponent({
       },
     };
   },
-  // setup() {
-  //   const submitResult = ref([]);
-
-  //   return {
-  //     text: ref(""),
-  //     model: ref(null),
-  //     preferred: ref("rock"),
-  //     accepted: ref([]),
-  //     submitResult,
-  //     options: [
-  //       {
-  //         label: "snake",
-  //         value: "snake",
-  //       },
-  //       {
-  //         label: "python",
-  //         value: "python",
-  //       },
-  //       {
-  //         label: "cobra",
-  //         value: "cobra",
-  //       },
-  //     ],
-  //     onSubmit(evt) {
-  //       const formData = new FormData(evt.target);
-  //       const data = [];
-
-  //       for (const [label, value] of formData.entries()) {
-  //         data.push({
-  //           label,
-  //           value,
-  //         });
-  //       }
-
-  //       submitResult.value = data;
-  //     },
-  //   };
-  // },
 });
 </script>
 
