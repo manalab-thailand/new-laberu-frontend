@@ -15,23 +15,28 @@
             Quick Guidelines
           </q-item-label>
           <q-item-label class="description-crop">action</q-item-label>
-          <q-scroll-area style="height: 30vh">
+          <q-scroll-area style="height: 30vh" v-if="options">
             <div class="q-pa-md">
               <div
-                class="text-white classification-toggle-btn"
-                v-for="(action, index) in actions"
+                class="text-black classification-toggle-btn"
+                v-for="(option, index) in options"
                 :key="index"
               >
-                <q-toggle
-                  v-model="action.value"
-                  left-label
-                  :label="action.label"
+                <q-checkbox
+                  v-model="result[index].value"
+                  :label="option.label"
+                  :color="color[index]"
                 />
               </div>
             </div>
           </q-scroll-area>
           <div class="row justify-end q-gutter-x-md q-pa-md">
-            <q-btn dense label="Skip" style="background: white; width: 75px" />
+            <q-btn
+              dense
+              label="Skip"
+              style="background: white; width: 75px"
+              @click="onSkip()"
+            />
             <q-btn
               dense
               label="Submit"
@@ -49,42 +54,73 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from "vue";
+<script lang='ts'>
+import { useQuasar } from "quasar";
+import { IProject } from "src/store/module-project/state";
+import { IImageData } from "src/store/module-task-image/state";
+import { defineComponent, ref, watch, toRef } from "vue";
 
 export default defineComponent({
+  props: {
+    project: Object as () => IProject,
+    imageData: Object as () => IImageData,
+  },
   setup(props, { emit }) {
-    return {
-      actions: ref([
-        {
-          label: "ads",
-          value: false,
-        },
-        {
-          label: "snake",
-          value: false,
-        },
-        {
-          label: "food",
-          value: false,
-        },
-        {
-          label: "travel",
-          value: false,
-        },
-      ]),
-      onSubmit(evt) {
-        const formData = new FormData(evt.target);
-        const data = [];
+    const q = useQuasar();
 
-        for (const [label, value] of formData.entries()) {
-          data.push({
-            label,
-            value,
-          });
-        }
-        emit("onSubmit", data);
-      },
+    const options = props.project?.config_input.classification!.map(
+      (config) => ({
+        label: config.display_name,
+        value: config.value,
+      })
+    );
+
+    const color = ref(["teal", "orange", "red", "cyan"]);
+
+    const result = ref(
+      options!.map((option) => ({
+        label: option.value,
+        value: false,
+      }))
+    );
+
+    const onSubmit = () => {
+      const validateInput = result.value.filter((val) => !val.value);
+      if (validateInput.length == result.value.length) {
+        q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "กรุณาใส่ติ๊กถูกสักช่องไอสัดดด",
+        });
+        return;
+      }
+
+      const classResult = result.value.reduce((state, cur) => {
+        return {
+          ...state,
+          [cur.label]: cur.value,
+        };
+      }, {} as any);
+
+      emit("onSave", classResult);
+
+      result.value = options!.map((option) => ({
+        label: option.value,
+        value: false,
+      }));
+    };
+
+    const onSkip = () => {
+      emit("onSkip");
+    };
+
+    return {
+      onSubmit,
+      onSkip,
+      options,
+      result,
+      color,
     };
   },
 });
