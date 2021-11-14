@@ -32,7 +32,5 @@ export default defineComponent({
   gap: 2em;
 }
 
-.page-container {
-  max-width: 1400px;
-}
+
 </style>

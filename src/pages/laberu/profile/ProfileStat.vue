@@ -1,15 +1,93 @@
 <template>
   <div class="stat-table">
-    <!-- <div class="flex-row items-center text-black">
-      <div style="font-size: 24px">สถิติ/Stat</div>
-    </div> -->
-    <q-table
+    <div class="flex-row items-center text-black title-font">สถิติ/Stat</div>
+    <div v-for="(item, index) in rows" :key="index">
+      <div class="orientation-landscape">
+        <q-card class="my-card flex-row" style="overflow: auto">
+          <div class="col card-wrapper">
+            <div class="flex-col">
+              <div class="title">ชื่อโปรเจค</div>
+              <div style="font-size: 16px">{{ item.project_name }}</div>
+            </div>
+          </div>
+          <q-separator vertical inset />
+          <div class="col">
+            <div class="flex-col">
+              <div class="title">ประเภทงาน</div>
+              <div style="font-size: 16px">{{ item.label_type }}</div>
+            </div>
+          </div>
+          <q-separator vertical inset />
+          <div class="col">
+            <div class="flex-col">
+              <div class="title">ทำไปแล้ว</div>
+              <div style="font-size: 16px">{{ item.total }}</div>
+            </div>
+          </div>
+          <q-separator vertical inset />
+          <div class="col">
+            <div class="flex-col">
+              <div class="title">Made(฿)</div>
+              <div style="font-size: 16px">{{ item.total_price }}</div>
+            </div>
+          </div>
+          <q-separator vertical inset />
+          <div class="col">
+            <div class="flex-col">
+              <div class="title">จ่ายแล้ว</div>
+              <div style="font-size: 16px">{{ item.paid }}</div>
+            </div>
+          </div>
+          <q-separator vertical inset />
+          <div class="col">
+            <div class="flex-col">
+              <div class="title">รอจ่าย</div>
+              <div style="font-size: 16px">{{ item.pending }}</div>
+            </div>
+          </div>
+        </q-card>
+      </div>
+      <div class="orientation-portrait">
+        <q-card class="my-card flex-col" style="overflow: auto">
+          <div class="flex-row">
+            <div class="title">ชื่อโปรเจค:</div>
+            <div class="under-title">{{ item.project_name }}</div>
+          </div>
+
+          <div class="flex-row">
+            <div class="title">ประเภทงาน:</div>
+            <div class="under-title">{{ item.label_type }}</div>
+          </div>
+
+          <div class="flex-row">
+            <div class="title">ทำไปแล้ว:</div>
+            <div class="under-title">{{ item.total }}</div>
+          </div>
+
+          <div class="flex-row">
+            <div class="title">Made(฿):</div>
+            <div class="under-title">{{ item.total_price }}</div>
+          </div>
+
+          <div class="flex-row">
+            <div class="title">จ่ายแล้ว:</div>
+            <div class="under-title">{{ item.paid }}</div>
+          </div>
+
+          <div class="flex-row">
+            <div class="title">รอจ่าย:</div>
+            <div class="under-title">{{ item.pending }}</div>
+          </div>
+        </q-card>
+      </div>
+    </div>
+    <!-- <q-table
       class="stat-table"
       title="สถิติ/Stat"
       :rows="rows"
       :columns="columns"
       row-key="name"
-    />
+    /> -->
   </div>
 </template>
 
