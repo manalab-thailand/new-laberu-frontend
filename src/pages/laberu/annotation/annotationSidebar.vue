@@ -17,7 +17,7 @@
         <q-item-label
           class="text-black q-px-lg q-py-md"
           style="font-size: 16px"
-          >{{ imageData.annotation.decsription }}</q-item-label
+          >{{ imageData.annotation?.decsription }}</q-item-label
         >
         <q-item-label class="description-crop">action</q-item-label>
         <q-scroll-area style="height: 30vh">
