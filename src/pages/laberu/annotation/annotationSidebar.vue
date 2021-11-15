@@ -17,27 +17,31 @@
       <div class="description-crop">action</div>
 
       <div class="q-pa-md">
-        <q-input
-          bg-color="white"
-          outlined
+        <q-select
+          label="Mode: 'add-unique'"
+          filled
           v-model="text"
-          label="Outlined"
-          v-on:keyup.enter="pressEnter()"
+          use-input
+          use-chips
+          multiple
+          hide-dropdown-icon
+          input-debounce="0"
+          new-value-mode="add-unique"
         />
-        <div class="flex-row tag-wrapper">
-          <div v-for="(tag, index) in texts" :key="index">
-            <q-btn flat dense no-caps rounded unelevated
-              ><q-badge
-                style="padding: 5px 10px; border-radius: 100px"
-                rounded
-                color="primary"
-              >
-                {{ tag }}
-              </q-badge></q-btn
-            >
-          </div>
-        </div>
       </div>
+
+      <q-btn
+        dense
+        label="Skip"
+        @click="onSkip"
+        style="background: #98da56; width: 75px"
+      />
+      <q-btn
+        dense
+        label="Submit"
+        @click="onSave"
+        style="background: #98da56; width: 75px"
+      />
 
       <div class="row justify-between q-gutter-x-md q-pa-md">
         <!-- <q-btn dense label="Skip" style="background: white; width: 75px" />
@@ -69,6 +73,7 @@
 import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
 import { IImageData } from "src/store/module-task-image/state";
+import { log } from "util";
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
@@ -80,19 +85,10 @@ export default defineComponent({
   setup(props, { emit }) {
     const q = useQuasar();
 
-    const text = ref("");
-    const texts = ref<string[]>([]);
-
-    const pressEnter = () => {
-      if (text.value.replace(/ /g, "") != "") {
-        texts.value.push(text.value);
-      }
-      text.value = "";
-      return text.value;
-    };
+    const text = ref<any>(null);
 
     const onSave = () => {
-      if (texts.value.length < 5) {
+      if (text.value.length < 5) {
         q.notify({
           color: "red-5",
           textColor: "white",
@@ -101,8 +97,8 @@ export default defineComponent({
         });
         return;
       }
-      emit("onSave", texts.value);
-      texts.value = [];
+      emit("onSave", text.value);
+      text.value = null;
     };
 
     const onSkip = () => {
@@ -111,8 +107,6 @@ export default defineComponent({
 
     return {
       text,
-      texts,
-      pressEnter,
       onSave,
       onSkip,
     };
