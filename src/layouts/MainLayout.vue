@@ -42,61 +42,6 @@
       </q-toolbar>
     </q-header>
 
-    <!-- <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      :width="200"
-      :breakpoint="700"
-      elevated
-    >
-      <q-scroll-area class="fit">
-        <div class="q-pa-sm">
-          <div class="flex-col">
-            <div>Menu</div>
-            <q-item
-              clickable
-              v-ripple
-              :to="{ name: 'home' }"
-              style="align-items: center"
-            >
-              <q-item-list> Home </q-item-list>
-            </q-item>
-            <q-list>
-              <q-expansion-item expand-separator label="Classification">
-                <q-item
-                  v-ripple
-                  clickable
-                  style="
-                    align-items: center;
-                    margin-left: 10px;
-                    color: rgba(118, 114, 114, 1);
-                  "
-                >
-                  {}
-                </q-item>
-              </q-expansion-item></q-list
-            >
-            <q-list>
-              <q-expansion-item expand-separator label=" Profile">
-                <q-item
-                  v-ripple
-                  clickable
-                  style="
-                    align-items: center;
-                    margin-left: 10px;
-                    color: rgba(118, 114, 114, 1);
-                  "
-                  :to="{ name: 'profile' }"
-                >
-                  ข้อมูลทั่วไป/General
-                </q-item>
-              </q-expansion-item></q-list
-            >
-          </div>
-        </div>
-      </q-scroll-area>
-    </q-drawer> -->
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -122,11 +67,11 @@ export default defineComponent({
     const route = useRoute();
     const currentPage = computed(() => route.name);
     console.log(currentPage.value);
-    const leftDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(false);
     return {
-      leftDrawerOpen,
+      rightDrawerOpen,
       toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
+        rightDrawerOpen.value = !rightDrawerOpen.value;
       },
     };
   },

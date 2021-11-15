@@ -1,14 +1,12 @@
 <template>
-  <div class="flex-col items-center q-pa-md">
-    <div class="flex-container">
-      <home-header />
-      <div class="q-my-lg grid-ish">
-        <ProjectList
-          v-for="(project, index) in projects"
-          :key="index"
-          :item="project"
-        />
-      </div>
+  <div class="page-container">
+    <home-header />
+    <div class="q-my-lg grid-ish">
+      <ProjectList
+        v-for="(project, index) in projects"
+        :key="index"
+        :item="project"
+      />
     </div>
   </div>
 </template>

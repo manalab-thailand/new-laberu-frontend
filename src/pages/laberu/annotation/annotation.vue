@@ -3,19 +3,23 @@
     <div class="col">
       <annotationHeader />
       <div class="row justify-center q-mb-lg">
-        <div
-          class="sub-image-wrapper"
-          :style="{ backgroundImage: `url(${image_url})` }"
-        ></div>
+        <div class="main-img-wrapper">
+          <div
+            :style="{ backgroundImage: `url(${image_url})` }"
+            class="sub-img-wrapper"
+          ></div>
+        </div>
       </div>
     </div>
     <div class="col">
+      <div class="row items-center">
       <annotationSidebar
         :project="project"
         :imageData="imageData"
         @onSave="onSave($event)"
         @onSkip="initState()"
       />
+      </div>
     </div>
   </div>
 </template>
@@ -138,12 +142,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.sub-image-wrapper {
-  max-width: 50vw;
+.sub-img-wrapper {
   width: 100%;
-  height: 28.25vw;
+  height: 100%;
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
+}
+.main-img-wrapper {
+  width: 50vw;
+  height: 500px;
   position: relative;
 }
 </style>

@@ -1,72 +1,67 @@
 <template>
   <div class="label-tools" v-if="imageData">
-    <q-list>
-      <q-item class="flex-col" style="padding: 0">
-        <q-item-label class="row justify-between items-center header-crop">
-          <div class="header">Labelling tools</div>
-          <div class="flex-row">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-          </div>
-        </q-item-label>
-        <q-item-label class="sub-header-crop"> Quick Guidelines </q-item-label>
-        <q-item-label class="description-crop"
-          >example description</q-item-label
-        >
-        <q-item-label
-          class="text-black q-px-lg q-py-md"
-          style="font-size: 16px"
-          >{{ imageData.annotation?.decsription }}</q-item-label
-        >
-        <q-item-label class="description-crop">action</q-item-label>
-        <q-scroll-area style="height: 30vh">
-          <div class="q-pa-md">
-            <q-input
-              bg-color="white"
-              outlined
-              v-model="text"
-              label="Outlined"
-              v-on:keyup.enter="pressEnter()"
-            />
-            <div class="flex-row tag-wrapper">
-              <div v-for="(tag, index) in texts" :key="index">
-                <q-btn flat dense no-caps rounded unelevated
-                  ><q-badge
-                    style="padding: 5px 10px; border-radius: 100px"
-                    rounded
-                    color="primary"
-                  >
-                    {{ tag }}
-                  </q-badge></q-btn
-                >
-              </div>
-            </div>
-          </div>
-        </q-scroll-area>
-        <div class="row justify-between q-gutter-x-md q-pa-md">
-          <!-- <q-btn dense label="Skip" style="background: white; width: 75px" />
-             -->
-          <q-btn
-            dense
-            label="Skip"
-            @click="onSkip"
-            style="background: #98da56; width: 75px"
-          />
-          <q-btn
-            dense
-            label="Submit"
-            @click="onSave"
-            style="background: #98da56; width: 75px"
-          />
+    <div class="flex-col" style="padding: 0">
+      <div class="row justify-between items-center header-crop">
+        <div class="header">Labelling tools</div>
+        <div class="flex-row">
+          <div class="circle"></div>
+          <div class="circle"></div>
+          <div class="circle"></div>
         </div>
-        <q-item-label class="document-crop row justify-between items-center"
-          ><div>document</div>
-          <div>
-            <q-btn icon="zoom_out_map" size="15px" dense flat /></div
-        ></q-item-label>
-      </q-item>
-    </q-list>
+      </div>
+      <div class="sub-header-crop">Quick Guidelines</div>
+      <div class="description-crop">example description</div>
+      <div class="text-black q-px-lg q-py-md" style="font-size: 16px">
+        {{ imageData.annotation?.decsription }}
+      </div>
+      <div class="description-crop">action</div>
+
+      <div class="q-pa-md">
+        <q-input
+          bg-color="white"
+          outlined
+          v-model="text"
+          label="Outlined"
+          v-on:keyup.enter="pressEnter()"
+        />
+        <div class="flex-row tag-wrapper">
+          <div v-for="(tag, index) in texts" :key="index">
+            <q-btn flat dense no-caps rounded unelevated
+              ><q-badge
+                style="padding: 5px 10px; border-radius: 100px"
+                rounded
+                color="primary"
+              >
+                {{ tag }}
+              </q-badge></q-btn
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-between q-gutter-x-md q-pa-md">
+        <!-- <q-btn dense label="Skip" style="background: white; width: 75px" />
+             -->
+        <q-btn
+          dense
+          label="Skip"
+          @click="onSkip"
+          style="background: #98da56; width: 75px"
+        />
+        <q-btn
+          dense
+          label="Submit"
+          @click="onSave"
+          style="background: #98da56; width: 75px"
+        />
+      </div>
+      <div class="document-crop row justify-between items-center">
+        <div>document</div>
+        <div>
+          <q-btn icon="zoom_out_map" size="15px" dense flat />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

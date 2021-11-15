@@ -18,6 +18,6 @@ export default {
   font-weight: 900;
   letter-spacing: 10px;
   text-shadow: 3px 3px #acacac;
-  background: #fff;
+
 }
 </style>

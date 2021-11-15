@@ -1,9 +1,8 @@
 <template>
   <div class="flex-col items-center q-px-md">
     <div class="flex-container">
-      <div class="row q-my-md text-center items-center">
-        <div class="circle"></div>
-        <div class="q-mx-md pages-header">Annotation</div>
+      <div class="row q-my-md items-center">
+        <div class="q-mx-md pages-header">Annotation + projectname</div>
       </div>
     </div>
   </div>

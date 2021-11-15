@@ -82,7 +82,7 @@ const getCoursorLeft = (e: any) => {
   //   vertical = 200;
   // else if (window.innerWidth <= 1024 && window.innerWidth > 800) vertical = 320;
 
-  return e.pageX - 255;
+  return e.pageX - 55;
 };
 
 const getCoursorTop = (e: any) => {
