@@ -114,6 +114,30 @@ body {
   gap: 1em;
 }
 
+.img-css {
+  .outer-img-wrapper {
+    margin-top: 2em;
+    width: 80%;
+    height: fit-content;
+    color: rgb(0, 0, 0);
+    border-radius: 5px;
+  }
+
+  img {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  .inner-img-wrapper {
+    position: relative;
+    padding-bottom: 75%;
+  }
+}
+
 #app {
   padding: 0 4em;
   #image-wrapper {
@@ -123,32 +147,32 @@ body {
   }
   @media only screen and(min-width:1920px) {
     #image-wrapper {
-      width: 960px;
-      height: 540px;
+      width: 1152px;
+      height: 648px;
     }
   }
   @media only screen and(max-width:1920px) {
     #image-wrapper {
-      width: 960px;
-      height: 540px;
+      width: 1152px;
+      height: 648px;
     }
   }
   @media only screen and(max-width:1600px) {
     #image-wrapper {
-      width: 800px;
-      height: 450px;
+      width: 960px;
+      height: 540px;
     }
   }
   @media only screen and(max-width:1366px) {
     #image-wrapper {
-      width: 680px;
-      height: 384px;
+      width: 816px;
+      height: 460.8px;
     }
   }
   @media only screen and(max-width:1024px) {
     #image-wrapper {
-      width: 512px;
-      height: 288px;
+      width: 614.4px;
+      height: 345.6px;
     }
   }
 
@@ -179,17 +203,40 @@ body {
     }
   }
 }
+.scrollable {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.to-center {
+  align-items: center;
+}
+.label-overflow {
+  max-height: 300px;
+  min-height: 200px;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+.annotation-overflow {
+  max-height: 180px;
+  overflow: auto;
+}
 
 .content-sidebar {
   display: flex;
 }
 
 .content-sidebar > *:nth-child(1) {
-  flex: 1 1 68%;
+  flex: 1 1 70%;
 }
 
 .content-sidebar > *:nth-child(2) {
-  flex: 1 1 32%;
+  flex: 1 1 30%;
   height: fit-content;
   background: #ffffff;
 }
@@ -217,7 +264,6 @@ body {
   background: #2d7fcb;
   color: white;
   padding: 0.5em 1em;
-  position: absolute;
   width: 100%;
   bottom: 0;
 }
@@ -271,4 +317,5 @@ body {
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
+  max-width: 90vw;
 }

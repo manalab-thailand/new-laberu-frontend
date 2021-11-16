@@ -12,7 +12,8 @@
         </q-item-label>
         <q-item-label class="sub-header-crop"> Quick Guidelines </q-item-label>
         <q-item-label class="description-crop">action</q-item-label>
-        <div class="row justify-center col-12 q-mt-sm" v-if="boxes">
+
+        <div class="q-mt-sm flex-col to-center label-overflow" v-if="boxes">
           <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
             <q-select
               style="width: 300px"
@@ -25,17 +26,18 @@
             />
           </div>
         </div>
-        <div class="row justify-end q-gutter-x-md q-pa-md">
+
+        <div class="row justify-between q-pa-md">
           <q-btn
             dense
             label="Skip"
-            @click="onSkip()"
-            style="background: white; width: 75px"
+            @click="onSkip"
+            style="background: #98da56; width: 75px"
           />
           <q-btn
             dense
-            @click="onSave()"
             label="Submit"
+            @click="onSave"
             style="background: #98da56; width: 75px"
           />
         </div>
@@ -49,7 +51,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { IProject } from "src/store/module-project/state";
 import { defineComponent, ref, computed } from "vue";
 import { useRoute } from "vue-router";
@@ -130,5 +132,19 @@ export default defineComponent({
 <style lang="scss" scoped>
 .q-select {
   margin-bottom: -1.5em;
+}
+
+.label-overflow::-webkit-scrollbar {
+  width: 5px;
+}
+.label-overflow::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background: #b4b4b4;
+  box-shadow: inset 2px 2px 5px 0 rgba(rgb(194, 70, 70), 0.5);
+}
+.label-overflow::-webkit-scrollbar-track {
+  margin: 0 400px 0 400px;
+  background-color: #dbdbdb;
+  border-radius: 100px;
 }
 </style>

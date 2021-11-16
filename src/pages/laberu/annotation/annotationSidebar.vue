@@ -1,6 +1,6 @@
 <template>
   <div class="label-tools" v-if="imageData">
-    <div class="flex-col" style="padding: 0">
+    <div class="flex-col">
       <div class="row justify-between items-center header-crop">
         <div class="header">Labelling tools</div>
         <div class="flex-row">
@@ -16,8 +16,9 @@
       </div>
       <div class="description-crop">action</div>
 
-      <div class="q-pa-md">
+      <div class="q-pa-md scrollable">
         <q-select
+          class="annotation-overflow"
           label="Mode: 'add-unique'"
           filled
           v-model="text"
@@ -30,22 +31,7 @@
         />
       </div>
 
-      <q-btn
-        dense
-        label="Skip"
-        @click="onSkip"
-        style="background: #98da56; width: 75px"
-      />
-      <q-btn
-        dense
-        label="Submit"
-        @click="onSave"
-        style="background: #98da56; width: 75px"
-      />
-
-      <div class="row justify-between q-gutter-x-md q-pa-md">
-        <!-- <q-btn dense label="Skip" style="background: white; width: 75px" />
-             -->
+      <div class="row justify-between q-pa-md">
         <q-btn
           dense
           label="Skip"
@@ -59,6 +45,7 @@
           style="background: #98da56; width: 75px"
         />
       </div>
+
       <div class="document-crop row justify-between items-center">
         <div>document</div>
         <div>
@@ -120,6 +107,7 @@ export default defineComponent({
     min-width: 5em;
   }
 }
+
 
 .tag-wrapper {
   max-width: 32vw;

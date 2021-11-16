@@ -1,8 +1,7 @@
 <template>
-      <div class="flex-row justify-center">
-        <div class="home-header">SELECT PROJECT</div>
-      </div>
-      <q-separator class="q-my-md" dark size="2px" />
+  <div class="flex-row justify-center">
+    <div class="home-header">SELECT PROJECT</div>
+  </div>
 </template>
 
 <script>
@@ -18,6 +17,7 @@ export default {
   font-weight: 900;
   letter-spacing: 10px;
   text-shadow: 3px 3px #acacac;
-
+  text-align: center;
+  margin: 2rem 0;
 }
 </style>

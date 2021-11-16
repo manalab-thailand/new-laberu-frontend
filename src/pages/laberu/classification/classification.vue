@@ -1,19 +1,19 @@
 <template>
   <div class="content-sidebar" style="flex-wrap: wrap">
     <div class="col">
-      <ClassificationHeader />
-      <div class="row justify-center q-mb-lg">
-        <!-- <div
-          class="sub-image-wrapper"
-          :style="{ backgroundImage: `url(images/gridbox.png)` }"
-        ></div> -->
-        <div
-          class="sub-image-wrapper"
-          :style="{ backgroundImage: `url(${image_url})` }"
-        ></div>
+      <div class="row justify-center img-css">
+        <div class="outer-img-wrapper">
+          <div class="inner-img-wrapper">
+            <img
+              :src="image_url"
+              style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="col">
+      <ClassificationHeader />
       <ClassificationSidebar
         :project="project"
         :imageData="imageData"
@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent, ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ClassificationSidebar from "src/pages/laberu/classification/ClassificationSidebar.vue";

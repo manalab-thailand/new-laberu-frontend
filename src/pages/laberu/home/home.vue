@@ -1,12 +1,23 @@
 <template>
   <div class="page-container">
     <home-header />
-    <div class="q-my-lg grid-ish">
-      <ProjectList
-        v-for="(project, index) in projects"
-        :key="index"
-        :item="project"
-      />
+    <div class="orientation-portrait">
+      <div class="flex-row justify-center project-card-list">
+        <ProjectList
+          v-for="(project, index) in projects"
+          :key="index"
+          :item="project"
+        />
+      </div>
+    </div>
+    <div class="orientation-landscape">
+      <div class="flex-row justify-start project-card-list">
+        <ProjectList
+          v-for="(project, index) in projects"
+          :key="index"
+          :item="project"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -39,20 +50,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.home-header {
-  font-size: calc(2em + 2vw);
-  color: #ffffff;
-  font-weight: 900;
-  letter-spacing: 10px;
-  text-shadow: 3px 3px #acacac;
-}
-.grid-ish {
-  display: flex;
+.project-card-list {
+  padding: 20px;
   flex-wrap: wrap;
-  gap: 1em;
-}
-
-.grid-ish > * {
-  flex: 0 1 30%;
+  gap: 2vw 1vw;
 }
 </style>

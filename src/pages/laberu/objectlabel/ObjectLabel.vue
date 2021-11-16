@@ -1,11 +1,7 @@
 <template>
   <div class="content-sidebar" style="flex-wrap: nowrap">
     <div class="col">
-      <ObjectLabelHeader />
-      <div class="text-white row justify-center">
-        {{ windowSize }}
-      </div>
-      <div class="row">
+      <div class="row" style="margin-top:2em">
         <div id="app">
           <div
             id="image-wrapper"
@@ -39,6 +35,7 @@
       </div>
     </div>
     <div class="col">
+      <ObjectLabelHeader />
       <ObjectLabelSidebar
         :boxes="boxes"
         :project="project"
@@ -49,7 +46,7 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent, onMounted, ref, computed } from "vue";
 import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
@@ -86,7 +83,7 @@ const getCoursorLeft = (e: any) => {
 };
 
 const getCoursorTop = (e: any) => {
-  return e.pageY - 147;
+  return e.pageY - 71;
 };
 
 export default defineComponent({

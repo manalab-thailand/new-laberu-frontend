@@ -1,9 +1,7 @@
 <template>
   <div class="flex-col items-center q-px-md">
-    <div class="flex-container">
-      <div class="row q-my-md text-center items-center">
-        <div class="q-mx-md pages-header">Classification</div>
-      </div>
+    <div class="flex-row q-my-md justify-center items-center">
+      <div class="q-mx-md pages-header">Classification</div>
     </div>
   </div>
 </template>
