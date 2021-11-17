@@ -1,78 +1,225 @@
 <template>
-  <div
-    class="row justify-center items-center"
-    style="background: linear-gradient(#8274c5, #5a4a9f); height: 100%"
-  >
-    <div class="column q-pa-lg">
-      <div class="row">
-        <q-card square class="shadow-24" style="width: 400px; height: 525px">
-          <q-card-section class="bg-deep-purple-7">
-            <h4 class="text-h4 text-white q-my-md">Laberu.tech</h4>
-            <div
-              class="absolute-bottom-right q-pr-md"
-              style="transform: translateY(50%)"
-            >
-              <q-btn fab icon="add" color="purple-4" />
+  <div class="content-sidebar">
+    <div class="col login-img">
+      <div class="">
+        <!--source: https://codepen.io/alvaromontoro/pen/RmRjvg -->
+        <div class="animated-title">
+          <div class="text-top">
+            <div>
+              <span>Welcome to</span>
+              <span>LABERU.TECH</span>
             </div>
-          </q-card-section>
-          <q-card-section>
-            <q-form class="q-px-sm q-pt-xl">
-              <q-input
-                square
-                clearable
-                v-model="email"
-                type="email"
-                label="Email"
+          </div>
+          <div class="text-bottom">
+            <div class="row">
+              Image Labelling Platform. Let’s Get
+              <div
+                class="q-ml-md fancy-link cursor-pointer"
+                style="padding-bottom: 0; text-shadow: 2px 2px 5px #d15eff"
               >
-                <template v-slot:prepend>
-                  <q-icon name="email" />
-                </template>
-              </q-input>
-              <q-input
-                square
-                clearable
-                v-model="password"
-                type="password"
-                label="Password"
-              >
-                <template v-slot:prepend>
-                  <q-icon name="lock" />
-                </template>
-              </q-input>
-            </q-form>
-          </q-card-section>
-          <q-card-section>
-            <div class="text-center q-pa-md q-gutter-md">
-              <q-btn round color="indigo-7">
-                <q-icon name="fab fa-facebook-f" size="1.2rem" />
-              </q-btn>
-              <q-btn round color="red-8" @click="onClickLoginGoogle()">
-                <q-icon name="fab fa-google-plus-g" size="1.2rem" />
-              </q-btn>
-              <q-btn round color="light-blue-5">
-                <q-icon name="fab fa-twitter" size="1.2rem" />
-              </q-btn>
+                Start
+              </div>
             </div>
-          </q-card-section>
-          <q-card-actions class="q-px-lg">
-            <q-btn
-              unelevated
-              size="lg"
-              color="purple-4"
-              class="full-width text-white"
-              label="Sign In"
-              @click="onLoginWithFirebase()"
-            />
-          </q-card-actions>
-          <q-card-section class="text-center q-pa-sm">
-            <p class="text-grey-6">Forgot your password?</p>
-          </q-card-section>
-        </q-card>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="height: 100vh; padding: 5em 4em">
+      <div class="top-section q-mb-sm">Hello ! Welcome to LABERU</div>
+      <div class="sub-top-section">
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry.
+      </div>
+      <div class="q-my-md">
+        <div class="text-bold q-mb-sm" style="color: #888888">
+          Email address
+        </div>
+        <div>
+          <q-input clearable v-model="email" type="email" filled />
+        </div>
+      </div>
+      <div class="q-my-md">
+        <div class="text-bold q-mb-sm" style="color: #888888">Password</div>
+        <div>
+          <q-input
+            clearable
+            v-model="password"
+            type="password"
+            filled
+            label="Password"
+          />
+        </div>
+      </div>
+      <q-btn label="Sign In" class="signin-btn" />
+      <div class="flex-row items-center">
+        <div class="-or- col"></div>
+        <div class="or">Or</div>
+        <div class="-or- col"></div>
+      </div>
+      <div>
+        <q-btn class="google-btn" no-caps
+          ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with
+          Google</q-btn
+        >
+      </div>
+      <div class="flex-row q-my-md" style="color:#888888">
+        Don’t have an account ?
+        <div class="fancy-link text-bold q-ml-sm cursor-pointer">Click Here</div>
       </div>
     </div>
   </div>
 </template>
+<style lang="scss">
+.google-btn {
+  font-family: Inter, Arial, sans-serif;
+  color: #888888;
+  font-size: 14px;
+  width: 100%;
+  background: #fff;
+}
 
+.top-section {
+  font-weight: bold;
+  font-size: calc(10px + 1vw);
+}
+
+.sub-top-section {
+  color: #888888;
+  font-size: 13px;
+}
+
+.or {
+  margin: 0 1em;
+  font-weight: Bold;
+  font-size: 20px;
+  color: #888888;
+}
+
+.-or- {
+  height: 30px;
+  padding-bottom: 10px;
+  width: 100%;
+  margin: 20px auto;
+  float: left;
+}
+
+.-or-:after {
+  content: "";
+  display: block;
+  margin-top: 15px;
+  border-bottom: 2px solid #888888;
+}
+.signin-btn {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  color: white;
+  background: #149bfc;
+  width: 100%;
+}
+@keyframes showTopText {
+  0% {
+    transform: translate3d(0, 100%, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(0, 60%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes showBottomText {
+  0% {
+    transform: translate3d(0, -100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.animated-title {
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+  height: 100%;
+  left: 70%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+.animated-title > div {
+  height: 50%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+}
+.animated-title > div div {
+  font-size: 2vw;
+  padding: 2vmin 0;
+  position: absolute;
+}
+.animated-title > div div span {
+  display: block;
+}
+.animated-title > div.text-top {
+  border-bottom: 5px solid #a4da6f;
+  border-radius: 1px;
+  width: 40vw;
+  top: 0;
+}
+.animated-title > div.text-top div {
+  animation: showTopText 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  bottom: 0;
+  transform: translate(0, 100%);
+}
+.animated-title > div.text-top div span:first-child {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.43);
+  color: linear(red, blue);
+  font-weight: 500;
+}
+.animated-title > div.text-top div span:nth-child(2) {
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-weight: bold;
+  font-size: 5vw;
+}
+.animated-title > div.text-bottom {
+  bottom: 0;
+  align-items: baseline;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.43);
+}
+.animated-title > div.text-bottom div {
+  animation: showBottomText 0.5s;
+  animation-delay: 1.75s;
+  animation-fill-mode: forwards;
+  top: 0;
+  transform: translate(0, -100%);
+  display: inline;
+}
+
+.fancy-link {
+  background-image: linear-gradient(#d15eff, #ffffff);
+  background-size: 0% 3px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 300ms ease;
+
+  text-decoration: none;
+}
+
+.fancy-link:hover {
+  background-size: 100% 3px;
+}
+
+.login-img {
+  height: 100vh;
+  background-image: url("/images/loginImg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+</style>
 <script lang="ts">
 import { StateInterface, useStore } from "src/store";
 import { IAuthState } from "src/store/module-auth/state";
@@ -175,5 +322,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style></style>
