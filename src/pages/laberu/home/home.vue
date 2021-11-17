@@ -22,12 +22,12 @@
   </div> -->
   <HomeBanner />
   <div class="flex-row justify-center">
-    <div style="max-width:1440px">
+    <div style="max-width: 1440px">
       <div class="flex-row project-card-list">
         <ProjectList
           v-for="(project, index) in projects"
           :key="index"
-          :item="project"
+          :project="project"
         />
       </div>
     </div>
@@ -40,6 +40,7 @@ import homeHeader from "src/pages/laberu/home/home-header.vue";
 import ProjectList from "src/pages/laberu/home/project-list.vue";
 import HomeBanner from "src/pages/laberu/home/HomeBanner.vue";
 import { useStore } from "src/store";
+import { useQuasar } from "quasar";
 export default defineComponent({
   name: "home",
   components: {
@@ -48,12 +49,18 @@ export default defineComponent({
     HomeBanner,
   },
   setup() {
+    const q = useQuasar();
     const store = useStore();
 
     onMounted(async () => {
       try {
-        store.dispatch("moduleProjects/getProjects");
-      } catch (error) {}
+        q.loading.show();
+        await store.dispatch("moduleProjects/getProjects");
+      } catch (error) {
+        console.log(error);
+      } finally {
+        q.loading.hide();
+      }
     });
     const projects = computed(() => store.state.moduleProjects.projects);
     return {

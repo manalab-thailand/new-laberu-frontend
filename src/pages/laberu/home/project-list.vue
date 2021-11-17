@@ -1,93 +1,143 @@
 <template>
-  <div v-if="item" class="project-card">
-    <div v-if="item.label_type == 'labelling'" class="card-width">
+  <div v-if="project" class="project-card">
+    <div class="card-width">
       <div class="flex-row items-center q-pa-md">
         <div><q-icon name="image_search" size="30px" /></div>
-        <div class="text-bold q-mx-sm">Object Labelling/ตีกรอบรูปภาพ</div>
+        <div class="text-bold q-mx-sm">
+          {{ project.label_type }}/{{ labelThai(project.label_type) }}
+        </div>
       </div>
       <div class="flex-row justify-center project-name q-mb-md">
-        {{ item.project_name }}
+        {{ project.project_name }}
       </div>
       <div class="flex-row getstart-hover">
         <q-btn
           dense
           flat
           no-caps
+          color="primary"
           class="text-white col"
-          @click="
-            $router.push({
-              path: 'labelling',
-              query: {
-                project_id: item?._id,
-              },
-            })
-          "
-          >Get Start!<q-icon name="arrow_right_alt"
-        /></q-btn>
+          label="Get Start"
+          icon-right="arrow_right_alt"
+          @click="onSelectedProject(project)"
+        />
       </div>
-    </div>
-    <div v-else-if="item.label_type == 'annotation'" class="card-width">
-      <div class="flex-row items-center q-pa-md">
-        <div><q-icon name="image_search" size="30px" /></div>
-        <div class="text-bold q-mx-sm">Annotation/การบรรยายรูปภาพ</div>
-      </div>
-      <div class="flex-row justify-center project-name q-mb-md">
-        {{ item.project_name }}
-      </div>
-      <div class="flex-row getstart-hover">
+      <div class="flex-row">
         <q-btn
           dense
           flat
           no-caps
-          class="text-white col"
-          @click="
-            $router.push({
-              path: 'annotation',
-              query: {
-                project_id: item?._id,
-              },
-            })
-          "
-          >Get Start!<q-icon name="arrow_right_alt"
-        /></q-btn>
+          :color="colorButton(project.label_type)"
+          label="Get Start"
+          icon-right="arrow_right_alt"
+          @click="onSelectedProject(project)"
+        />
       </div>
-    </div>
-    <div v-else class="card-width">
-      <div class="flex-row items-center q-pa-md">
-        <div><q-icon name="image_search" size="30px" /></div>
-        <div class="text-bold q-mx-sm">Classification/การจัดหมวดหมู่รูปภาพ</div>
-      </div>
-      <div class="flex-row justify-center project-name q-mb-md">
-        {{ item.project_name }}
-      </div>
-      <div class="flex-row getstart-hover">
-        <q-btn
-          dense
-          flat
-          no-caps
-          class="text-white col"
-          @click="
-            $router.push({
-              path: 'classification',
-              query: {
-                project_id: item?._id,
-              },
-            })
-          "
-          >Get Start!<q-icon name="arrow_right_alt"
-        /></q-btn>
-      </div>
+      <q-dialog v-model="customDialog">
+        <q-card style="width: 700px">
+          <q-card-section>
+            <div class="text-h6">Select Group</div>
+          </q-card-section>
+
+          <q-card-section class="q-pt-none">
+            <q-select
+              :options="customAttribute"
+              emit-value
+              map-options
+              v-model="group_id"
+            />
+          </q-card-section>
+
+          <q-card-actions align="right">
+            <q-btn
+              flat
+              label="OK"
+              color="primary"
+              @click="pushPage()"
+              v-close-popup
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { IProject } from "src/store/module-project/state";
-export default {
+import { useRouter } from "vue-router";
+import { defineComponent, ref } from "vue";
+export default defineComponent({
   props: {
-    item: Object as () => IProject | undefined,
+    project: Object as () => IProject | undefined,
   },
-};
+  setup() {
+    const router = useRouter();
+
+    const arrType = [
+      {
+        label_type: "classification",
+        thai_name: "การจัดหมวดหมู่รูปภาพ",
+        color: "primary",
+      },
+      {
+        label_type: "labelling",
+        thai_name: "การตีกรอบรูปภาพ",
+        color: "negative",
+      },
+      {
+        label_type: "annotation",
+        thai_name: "การอธิบายรูปภาพ",
+        color: "positive",
+      },
+    ];
+
+    const labelThai = (label_type: string) => {
+      return arrType.find((type) => type.label_type == label_type)!.thai_name;
+    };
+
+    const colorButton = (label_type: string) => {
+      return arrType.find((type) => type.label_type == label_type)!.color;
+    };
+
+    const customAttribute = ref<{ label: string; value: string }[]>([]);
+    const customDialog = ref(false);
+    const selectedProject = ref<IProject>();
+    const group_id = ref("");
+    const onSelectedProject = (project: IProject | undefined) => {
+      selectedProject.value = project!;
+      if (project!.require_custom) {
+        customAttribute.value = project!.custom_attribute.map((custom) => ({
+          label: custom.display_name,
+          value: custom.value,
+        }));
+        customDialog.value = !customDialog.value;
+      } else {
+        pushPage();
+      }
+    };
+
+    const pushPage = () => {
+      router.push({
+        path: selectedProject.value!.label_type,
+        query: {
+          group_id: group_id.value,
+          project_id: selectedProject.value?._id,
+        },
+      });
+    };
+
+    return {
+      labelThai,
+      onSelectedProject,
+      pushPage,
+      colorButton,
+      group_id,
+      customAttribute,
+      customDialog,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -112,7 +162,7 @@ export default {
 
 .project-card:hover {
   transform: scale(1.05) translateY(-5px);
-   box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.4);
 }
 
 .getstart-hover {
