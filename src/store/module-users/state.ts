@@ -6,13 +6,13 @@ export interface IUser {
   phone_number: string;
   career: string;
   province: string;
-  status: UserStatus;
-  role: UserRole;
-  uid: string;
+  status?: UserStatus;
+  role?: UserRole;
+  uid?: string;
   payment: IPayment;
-  createdAt: string;
-  updatedAt: string;
-  update_by: string;
+  createdAt?: string;
+  updatedAt?: string;
+  update_by?: string;
 }
 
 export interface IPayment {

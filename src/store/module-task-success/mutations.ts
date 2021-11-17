@@ -1,6 +1,10 @@
 import { MutationTree } from "vuex";
-import { ITaskSuccess, ITaskSuccessState, PaymentStatus } from "./state";
+import { ITaskSuccessState, IUserTaskSuccess } from "./state";
 
-const mutation: MutationTree<ITaskSuccessState> = {};
+const mutation: MutationTree<ITaskSuccessState> = {
+  onGetTaskSuccessByUserId(state, payload: IUserTaskSuccess[]) {
+    state.user_task_success = payload;
+  },
+};
 
 export default mutation;

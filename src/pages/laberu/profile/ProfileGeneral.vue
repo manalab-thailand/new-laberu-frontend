@@ -1,7 +1,20 @@
 <template>
   <div class="the-box">
-    <div class="flex-row items-center text-black">
+    <div class="flex-row justify-between items-center text-black">
       <div class="title-font">ข้อมูลทั่วไป/General</div>
+      <div class="">
+        <q-btn
+          label="Edit User"
+          color="primary"
+          @click="editUserDialog = !editUserDialog"
+        />
+      </div>
+      <q-dialog v-model="editUserDialog" v-if="user">
+        <EditUser
+          :user="user"
+          @onUpdateUser="editUserDialog = !editUserDialog"
+        />
+      </q-dialog>
     </div>
     <div class="flex-row main-sec">
       <div class="flex-col sub-sec">
@@ -111,6 +124,7 @@
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useStore } from "src/store";
+import EditUser from "./edit-user/edit-user.vue";
 
 function cardHide(card) {
   let hideNum = [];
@@ -143,13 +157,19 @@ function emailHide(card) {
   return hideNum.join("");
 }
 export default defineComponent({
+  components: {
+    EditUser,
+  },
   setup() {
     const store = useStore();
     const user = computed(() => store.state.moduleAuth.user);
 
+    const editUserDialog = ref(false);
+
     return {
       text: ref(""),
       user,
+      editUserDialog,
       cardHide,
       emailHide,
     };

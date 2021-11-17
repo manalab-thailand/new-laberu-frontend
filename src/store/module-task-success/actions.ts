@@ -29,6 +29,24 @@ const actions: ActionTree<ITaskSuccessState, StateInterface> = {
       throw new Error((error as ExecException).message);
     }
   },
+
+  getTaskSuccessByUserId: async ({ commit, rootState }, { user_id }) => {
+    try {
+      const { data } = await api.post(
+        "task-success/find-by-user",
+        { user_id },
+        {
+          headers: {
+            Authorization: `Bearer ${rootState.moduleAuth.authentication.access_token}`,
+          },
+        }
+      );
+
+      commit("onGetTaskSuccessByUserId", data);
+    } catch (error) {
+      throw new Error((error as ExecException).message);
+    }
+  },
 };
 
 export default actions;

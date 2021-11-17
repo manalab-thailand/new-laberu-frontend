@@ -96,6 +96,7 @@ import { defineComponent, ref, onMounted, computed } from "vue";
 import { useStore } from "src/store";
 import { IProject } from "src/store/module-project/state";
 import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 interface TotalImage {
   total: Number;
@@ -108,8 +109,9 @@ interface TotalImage {
 export default defineComponent({
   setup() {
     const store = useStore();
+    const q = useQuasar();
     const router = useRouter();
-    const user = computed(() => store.state.moduleProjects.projects);
+    const user = computed(() => store.state.moduleAuth.user);
 
     const columns = [
       {
@@ -153,36 +155,23 @@ export default defineComponent({
       },
     ];
 
-    const rows = ref<TotalImage[]>([]);
+    onMounted(async () => {
+      try {
+        q.loading.show();
 
-    onMounted(() => {
-      rows.value = [
-        {
-          total: 123,
-          project_name: "Road Surface Condition",
-          label_type: "annotation",
-          paid: 100,
-          pending: 23,
-          total_price: 100,
-        },
-        {
-          total: 456,
-          project_name: "Road Surface Condition Road",
-          label_type: "labelling",
-          paid: 200,
-          pending: 23,
-          total_price: 100,
-        },
-        {
-          total: 789,
-          project_name: "Road Surface Condition 25",
-          label_type: "classification",
-          paid: 300,
-          pending: 23,
-          total_price: 100,
-        },
-      ];
+        await store.dispatch("moduleTaskSuccess/getTaskSuccessByUserId", {
+          user_id: "616d538699d65337fca871d5",
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        q.loading.hide();
+      }
     });
+
+    const rows = computed(
+      () => store.state.moduleTaskSuccess.user_task_success
+    );
 
     return {
       rows,

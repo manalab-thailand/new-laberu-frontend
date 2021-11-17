@@ -58,12 +58,23 @@ export interface ICustom {
   group_id: string;
 }
 
+export interface IUserTaskSuccess {
+  total: number;
+  total_price: number;
+  paid: number;
+  pending: number;
+  project_name: string;
+  label_type: string;
+}
+
 export interface ITaskSuccessState {
   task_success: ITaskSuccess[];
+  user_task_success: IUserTaskSuccess[];
 }
 
 const taskSuccessState = (): ITaskSuccessState => ({
   task_success: [] as ITaskSuccess[],
+  user_task_success: [] as IUserTaskSuccess[],
 });
 
 export default taskSuccessState;
