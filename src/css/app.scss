@@ -227,6 +227,20 @@ body {
   overflow: auto;
 }
 
+.fancy-link {
+  background-image: linear-gradient(#d15eff, #ffffff);
+  background-size: 0% 3px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 300ms ease;
+
+  text-decoration: none;
+}
+
+.fancy-link:hover {
+  background-size: 100% 3px;
+}
+
 .content-sidebar {
   display: flex;
 }

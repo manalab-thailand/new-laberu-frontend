@@ -50,7 +50,7 @@
           />
         </div>
       </div>
-      <q-btn label="Sign In" class="signin-btn" />
+      <q-btn label="Sign In" class="signin-btn" @click="onLoginWithFirebase" />
       <div class="flex-row items-center">
         <div class="-or- col"></div>
         <div class="or">Or</div>
@@ -62,9 +62,11 @@
           Google</q-btn
         >
       </div>
-      <div class="flex-row q-my-md" style="color:#888888">
+      <div class="flex-row q-my-md" style="color: #888888">
         Don’t have an account ?
-        <div class="fancy-link text-bold q-ml-sm cursor-pointer">Click Here</div>
+        <div class="fancy-link text-bold q-ml-sm cursor-pointer">
+          Click Here
+        </div>
       </div>
     </div>
   </div>
@@ -196,20 +198,6 @@
   top: 0;
   transform: translate(0, -100%);
   display: inline;
-}
-
-.fancy-link {
-  background-image: linear-gradient(#d15eff, #ffffff);
-  background-size: 0% 3px;
-  background-repeat: no-repeat;
-  background-position: left bottom;
-  transition: background-size 300ms ease;
-
-  text-decoration: none;
-}
-
-.fancy-link:hover {
-  background-size: 100% 3px;
 }
 
 .login-img {
