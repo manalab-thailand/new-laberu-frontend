@@ -31,6 +31,4 @@ export default defineComponent({
   justify-content: center;
   gap: 2em;
 }
-
-
 </style>
