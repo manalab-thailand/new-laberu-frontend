@@ -1,72 +1,67 @@
 <template>
   <div v-if="project" class="project-card">
-    <div class="card-width">
-      <div class="flex-row items-center q-pa-md">
-        <div><q-icon name="image_search" size="30px" /></div>
-        <div class="text-bold q-mx-sm">
-          {{ project.label_type }}/{{ labelThai(project.label_type) }}
-        </div>
-      </div>
-      <div class="flex-row justify-center project-name q-mb-md">
-        {{ project.project_name }}
-      </div>
-      <div class="flex-row getstart-hover">
-        <q-btn
-          dense
-          flat
-          no-caps
-          color="primary"
-          class="text-white col"
-          label="Get Start"
-          icon-right="arrow_right_alt"
-          @click="onSelectedProject(project)"
-        />
-      </div>
-      <div class="flex-row">
-        <q-btn
-          dense
-          flat
-          no-caps
-          :color="colorButton(project.label_type)"
-          label="Get Start"
-          icon-right="arrow_right_alt"
-          @click="onSelectedProject(project)"
-        />
-      </div>
-      <q-dialog v-model="customDialog">
-        <q-card style="width: 700px">
-          <q-card-section>
-            <div class="text-h6">Select Group</div>
-          </q-card-section>
-
-          <q-card-section class="q-pt-none">
-            <q-select
-              :options="customAttribute"
-              emit-value
-              map-options
-              v-model="group_id"
-            />
-          </q-card-section>
-
-          <q-card-actions align="right">
-            <q-btn
-              flat
-              label="OK"
-              color="primary"
-              @click="pushPage()"
-              v-close-popup
-            />
-          </q-card-actions>
-        </q-card>
-      </q-dialog>
+    <div class="flex-row items-center">
+      <img style="width: 100%" :src="randomImage(project.label_type)" alt="" />
     </div>
+    <div class="flex-row justify-start text-section q-my-md">
+      {{
+        project.label_type == "labelling"
+          ? "Object Label"
+          : capFirstLetter(project.label_type)
+      }}
+      {{ labelThai(project.label_type) }}
+    </div>
+    <div class="flex-row justify-start sub-text-section q-my-md">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis nam
+      minima voluptate sunt praesentium aperiam quam optio magni explicabo
+      voluptatem.
+    </div>
+    <div class="flex-row justify-end">
+      <q-btn
+        dense
+        flat
+        no-caps
+        label="Get Start"
+        class="get-start-btn"
+        @click="onSelectedProject(project)"
+      />
+    </div>
+    <q-dialog v-model="customDialog">
+      <q-card style="width: 700px">
+        <q-card-section>
+          <div class="text-h6">Select Group</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none flex-row">
+          <q-select
+            :options="customAttribute"
+            emit-value
+            map-options
+            v-model="group_id"
+            label="Group"
+            class="col"
+          />
+          <q-input class="col" label="password" />
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="OK"
+            color="primary"
+            @click="pushPage()"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { IProject } from "src/store/module-project/state";
 import { useRouter } from "vue-router";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 export default defineComponent({
   props: {
     project: Object as () => IProject | undefined,
@@ -79,18 +74,43 @@ export default defineComponent({
         label_type: "classification",
         thai_name: "การจัดหมวดหมู่รูปภาพ",
         color: "primary",
+        image: [
+          "/images/classification/c1.png",
+          "/images/classification/c2.png",
+          "/images/classification/c3.png",
+        ],
       },
       {
         label_type: "labelling",
         thai_name: "การตีกรอบรูปภาพ",
         color: "negative",
+        image: [
+          "/images/labelling/l1.png",
+          "/images/labelling/l2.png",
+          "/images/labelling/l3.png",
+        ],
       },
       {
         label_type: "annotation",
         thai_name: "การอธิบายรูปภาพ",
         color: "positive",
+        image: [
+          "/images/annotation/a1.png",
+          "/images/annotation/a2.png",
+          "/images/annotation/a3.png",
+        ],
       },
     ];
+
+    const randomImage = (label_type: string) => {
+      return arrType.find((type) => type.label_type == label_type)!.image[
+        Math.floor(Math.random() * 2)
+      ];
+    };
+
+    const capFirstLetter = (project_name: string) => {
+      return project_name.charAt(0).toUpperCase() + project_name.slice(1);
+    };
 
     const labelThai = (label_type: string) => {
       return arrType.find((type) => type.label_type == label_type)!.thai_name;
@@ -135,48 +155,37 @@ export default defineComponent({
       group_id,
       customAttribute,
       customDialog,
+
+      randomImage,
+      capFirstLetter,
     };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.project-name {
+.get-start-btn {
+  font-family: Inter;
+  font-weight: Medium;
+  font-size: 14px;
+  padding: 5px 1em;
+  color: #fff;
+  background: #149bfc;
+  border-radius: 0;
+}
+
+.text-section {
   width: 100%;
-  text-align: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: rgb(57, 56, 87);
+  text-align: start;
+  font-size: 16px;
+  font-weight: 700;
+  color: #242424;
 }
 
-.project-card {
+.sub-text-section {
+  font-size: 14px;
+  text-align: start;
   width: 100%;
-  max-width: 400px;
-  min-width: 250px;
-  display: flex;
-  border-radius: 5px;
-  background: rgb(255, 255, 255);
-  transition: all 0.3s;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.4);
-}
-
-.project-card:hover {
-  transform: scale(1.05) translateY(-5px);
-  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.4);
-}
-
-.getstart-hover {
-  text-align: center;
-  width: 100%;
-  max-width: 400px;
-  background: #d15eff;
-}
-
-.getstart-hover:hover {
-  background: #195cd1;
-}
-
-.card-width {
-  width: 100%;
+  color: #888888;
 }
 </style>

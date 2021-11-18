@@ -333,3 +333,28 @@ body {
   overflow: hidden;
   max-width: 90vw;
 }
+
+.project-card-list {
+  flex-wrap: wrap;
+  max-width: 1440px;
+  &:after {
+    flex: auto;
+  }
+  .project-card {
+    margin: 2em 3em;
+    min-width: 395px;
+  }
+}
+
+@media only screen and(max-width: 1440px) {
+  .project-card-list {
+    justify-content: center;
+  }
+}
+@media only screen and(max-width: 420px) {
+  .project-card-list {
+    .project-card {
+      min-width: 300px;
+    }
+  }
+}

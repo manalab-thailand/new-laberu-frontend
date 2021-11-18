@@ -1,33 +1,14 @@
 <template>
-  <!-- <div class="page-container">
-    <home-header />
-    <div class="orientation-portrait">
-      <div class="flex-row justify-center project-card-list">
-        <ProjectList
-          v-for="(project, index) in projects"
-          :key="index"
-          :item="project"
-        />
-      </div>
-    </div>
-    <div class="orientation-landscape">
-      <div class="flex-row justify-start project-card-list">
-        <ProjectList
-          v-for="(project, index) in projects"
-          :key="index"
-          :item="project"
-        />
-      </div>
-    </div>
-  </div> -->
   <HomeBanner />
   <div class="flex-row justify-center">
-    <div style="max-width: 1440px">
+    <div>
       <div class="flex-row project-card-list">
         <ProjectList
           v-for="(project, index) in projects"
           :key="index"
           :project="project"
+          :style="`width: ${widthPerItem}%`"
+          class="project-card"
         />
       </div>
     </div>
@@ -63,17 +44,18 @@ export default defineComponent({
       }
     });
     const projects = computed(() => store.state.moduleProjects.projects);
+
+    const widthPerItem = computed(() => {
+      const { width } = q.screen;
+      const itemPerRow = width < 1000 ? `${width / 2}`.charAt(0) : "4";
+      return 100 / parseInt(itemPerRow, 10) - 2;
+    });
     return {
       projects,
+      widthPerItem,
     };
   },
 });
 </script>
 
-<style scoped lang="scss">
-.project-card-list {
-  padding: 20px;
-  flex-wrap: wrap;
-  gap: 2vw 1vw;
-}
-</style>
+<style scoped lang="scss"></style>
