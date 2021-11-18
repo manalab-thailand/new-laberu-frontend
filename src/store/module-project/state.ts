@@ -9,6 +9,7 @@ export interface IProject {
   label_count: number;
   price_image: number;
   require_custom: boolean;
+  custom_attribute: ICustomAttribute[];
   config_input: IProjectConfigInput;
   process: ProjectProcess;
   project_owner: string;
@@ -54,6 +55,11 @@ export interface ILabellingConfigInput {
 }
 
 export interface IClassificationConfigInput {
+  display_name: string;
+  value: string;
+}
+
+export interface ICustomAttribute {
   display_name: string;
   value: string;
 }

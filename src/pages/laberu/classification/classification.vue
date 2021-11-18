@@ -49,7 +49,7 @@ export default defineComponent({
     const store = useStore();
     const q = useQuasar();
 
-    const project_id = route.query.project_id as string;
+    const { project_id, group_id } = route.query;
 
     const project = computed(() =>
       store.state.moduleProjects.projects.find(
@@ -114,7 +114,7 @@ export default defineComponent({
         project_id: project.value?._id,
         custom: {
           user_id: user.value._id,
-          group_id: null,
+          group_id: group_id ? group_id : null,
         },
         startedAt: startedAt.value,
       });

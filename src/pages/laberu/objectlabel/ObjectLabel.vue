@@ -1,7 +1,7 @@
 <template>
   <div class="content-sidebar" style="flex-wrap: nowrap">
     <div class="col">
-      <div class="row" style="margin-top:2em">
+      <div class="row" style="margin-top: 2em">
         <div id="app">
           <div
             id="image-wrapper"
@@ -182,7 +182,9 @@ export default defineComponent({
         project_id: (this.project as IProject)?._id,
         custom: {
           user_id: (this.user as IUser)._id,
-          group_id: null,
+          group_id: this.$route.query.group_id
+            ? this.$route.query.group_id
+            : null,
         },
         startedAt: this.startedAt,
       });
