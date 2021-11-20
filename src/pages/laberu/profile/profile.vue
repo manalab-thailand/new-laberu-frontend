@@ -1,8 +1,43 @@
 <template>
-  <div class="page-container">
-    <div class="flex-row flex-wrap q-my-lg">
-      <ProfileGeneral />
-      <ProfileStat />
+  <!-- <div class="flex-row flex-wrap q-my-lg">
+    <div class="col"><ProfileGeneral /></div>
+    <div class="col"><ProfileStat /></div>
+  </div> -->
+  <div class="flex-row justify-center">
+    <div class="flex-container">
+      <div class="flex-col items-center">
+        <div
+          class="flex-col"
+          style="
+            max-width: 500px;
+            margin: 2em 0;
+            padding: 0 1em;
+            text-align: center;
+          "
+        >
+          <div class="profile-title flex-row items-center justify-center">
+            Laberu Profile
+            <q-icon class="q-ml-sm" name="thumb_up" color="blue" />
+          </div>
+          <div class="profile-desc">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi
+            nobis, consequuntur asperiores autem aut aliquam.
+          </div>
+        </div>
+
+        <div class="orientation-portrait">
+          <div class="wrap-block">
+            <div class="col"><ProfileGeneral /></div>
+            <div class="col"><ProfileStat /></div>
+          </div>
+        </div>
+        <div class="orientation-landscape">
+          <div class="wrap-flex">
+            <div class="col"><ProfileGeneral /></div>
+            <div class="col"><ProfileStat /></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -20,15 +55,22 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.border {
-  border: black 2px solid;
-  min-width: 300px;
+// @media (min-height: 1060px) and(max-width:1024px) {
+//   .flex-wrap {
+//     display: block;
+//   }
+// }
+
+.flex-wrap > * {
+  flex: 1 1 50%;
 }
 
-.flex-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2em;
+.profile-title {
+  font-weight: 500;
+  font-size: 25px;
+}
+.profile-desc {
+  color: #7a7a7a;
+  font-size: 14px;
 }
 </style>

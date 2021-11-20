@@ -1,5 +1,5 @@
 <template>
-  <div class="content-sidebar" style="flex-wrap: wrap">
+  <!-- <div class="content-sidebar" style="flex-wrap: wrap">
     <div class="col">
       <div class="row justify-center img-css">
         <div class="outer-img-wrapper">
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col">
-      <annotationHeader />
+
       <annotationSidebar
         :project="project"
         :imageData="imageData"
@@ -21,7 +21,8 @@
         @onSkip="initState()"
       />
     </div>
-  </div>
+  </div> -->
+<div></div>
 </template>
 
 <style lang="scss" scoped>

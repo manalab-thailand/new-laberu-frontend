@@ -1,12 +1,10 @@
 <template>
   <div v-if="user">
     <div class="text-weight-bold text-h6">User Infomation</div>
-    <div class="row justify-evently">
+    <div class="flex-row justify-between">
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pr-sm col-6"
-        dense
+        class="col"
         label="Firstname"
         v-model="user.firstname"
         lazy-rules
@@ -14,21 +12,17 @@
       />
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pl-sm col-6"
-        dense
+        class="col"
         label="Lastname"
         v-model="user.lastname"
         lazy-rules
         :rules="[(val) => !!val || 'Field is required']"
       />
     </div>
-    <div class="row justify-evently">
+    <div class="flex-row justify-between">
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pr-sm col-8"
-        dense
+        class="col"
         label="Email"
         v-model="user.email"
         readonly
@@ -37,21 +31,17 @@
       />
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pl-sm col-4"
-        dense
+        class="col"
         label="Phone Number"
         v-model="user.phone_number"
         lazy-rules
         :rules="[(val) => !!val || 'Field is required']"
       />
     </div>
-    <div class="row justify-evently">
+    <div class="flex-row justify-between">
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pr-sm col-6"
-        dense
+        class="col"
         label="Career"
         v-model="user.career"
         lazy-rules
@@ -59,9 +49,7 @@
       />
       <q-input
         ref="nameRef"
-        outlined
-        class="q-pl-sm col-6"
-        dense
+        class="col"
         label="Province"
         v-model="user.province"
         lazy-rules
@@ -83,5 +71,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-</style>
+<style scoped lang="scss"></style>

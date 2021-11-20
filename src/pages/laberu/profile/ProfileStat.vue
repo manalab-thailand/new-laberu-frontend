@@ -1,96 +1,39 @@
 <template>
-  <div class="stat-table">
-    <div class="flex-row items-center text-black title-font">สถิติ/Stat</div>
-    <div v-for="(item, index) in rows" :key="index">
-      <div class="orientation-landscape">
-        <q-card class="my-card flex-row" style="overflow: auto">
-          <div class="col card-wrapper">
-            <div class="flex-col">
-              <div class="title">ชื่อโปรเจค</div>
-              <div style="font-size: 16px">{{ item.project_name }}</div>
-            </div>
-          </div>
-          <q-separator vertical inset />
-          <div class="col">
-            <div class="flex-col">
-              <div class="title">ประเภทงาน</div>
-              <div style="font-size: 16px">{{ item.label_type }}</div>
-            </div>
-          </div>
-          <q-separator vertical inset />
-          <div class="col">
-            <div class="flex-col">
-              <div class="title">ทำไปแล้ว</div>
-              <div style="font-size: 16px">{{ item.total }}</div>
-            </div>
-          </div>
-          <q-separator vertical inset />
-          <div class="col">
-            <div class="flex-col">
-              <div class="title">Made(฿)</div>
-              <div style="font-size: 16px">{{ item.total_price }}</div>
-            </div>
-          </div>
-          <q-separator vertical inset />
-          <div class="col">
-            <div class="flex-col">
-              <div class="title">จ่ายแล้ว</div>
-              <div style="font-size: 16px">{{ item.paid }}</div>
-            </div>
-          </div>
-          <q-separator vertical inset />
-          <div class="col">
-            <div class="flex-col">
-              <div class="title">รอจ่าย</div>
-              <div style="font-size: 16px">{{ item.pending }}</div>
-            </div>
-          </div>
-        </q-card>
-      </div>
-      <div class="orientation-portrait">
-        <q-card class="my-card flex-col" style="overflow: auto">
-          <div class="flex-row">
-            <div class="title">ชื่อโปรเจค:</div>
-            <div class="under-title">{{ item.project_name }}</div>
-          </div>
-
-          <div class="flex-row">
-            <div class="title">ประเภทงาน:</div>
-            <div class="under-title">{{ item.label_type }}</div>
-          </div>
-
-          <div class="flex-row">
-            <div class="title">ทำไปแล้ว:</div>
-            <div class="under-title">{{ item.total }}</div>
-          </div>
-
-          <div class="flex-row">
-            <div class="title">Made(฿):</div>
-            <div class="under-title">{{ item.total_price }}</div>
-          </div>
-
-          <div class="flex-row">
-            <div class="title">จ่ายแล้ว:</div>
-            <div class="under-title">{{ item.paid }}</div>
-          </div>
-
-          <div class="flex-row">
-            <div class="title">รอจ่าย:</div>
-            <div class="under-title">{{ item.pending }}</div>
-          </div>
-        </q-card>
-      </div>
+  <div class="sub-profile-box">
+    <div class="flex-row items-center text-black sub-box-title">
+      Stat <q-icon class="q-ml-sm" name="query_stats" color="blue" />
     </div>
-    <!-- <q-table
-      class="stat-table"
-      title="สถิติ/Stat"
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-    /> -->
+    <q-scroll-area style="height: 600px; max-width: 100%">
+      <div class="operation-overflow">
+        <div class="flex-row q-mb-md">
+          <div class="col columns-header">Project Name</div>
+          <div class="col columns-header">Type</div>
+          <div class="col columns-header">Done</div>
+          <div class="col columns-header">Total Price(฿)</div>
+          <div class="col columns-header">Paid</div>
+          <div class="col columns-header">Pending</div>
+        </div>
+
+        <div v-for="(item, index) in rows" :key="index">
+          <div class="col">
+            <div class="flex-row">
+              <div class="col columns-item" style="color: #149bfc">
+                {{ item.project_name }}
+              </div>
+              <div class="col columns-item">{{ item.label_type }}</div>
+              <div class="col columns-item">{{ item.total }}</div>
+              <div class="col columns-item">{{ item.total_price }}</div>
+              <div class="col columns-item">{{ item.paid }}</div>
+              <div class="col columns-item">{{ item.pending }}</div>
+            </div>
+            <q-separator style="background: #7a7a7a; margin: 1em 0" />
+          </div>
+        </div>
+      </div>
+    </q-scroll-area>
   </div>
 </template>
-
+<style scoped lang="scss"></style>
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useStore } from "src/store";
@@ -160,7 +103,7 @@ export default defineComponent({
         q.loading.show();
 
         await store.dispatch("moduleTaskSuccess/getTaskSuccessByUserId", {
-          user_id: "616d538699d65337fca871d5",
+          user_id: user.value._id,
         });
       } catch (error) {
         console.log(error);
@@ -180,5 +123,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped lang="scss"></style>

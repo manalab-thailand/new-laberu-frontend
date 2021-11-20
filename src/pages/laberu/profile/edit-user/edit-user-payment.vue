@@ -3,9 +3,8 @@
   <div class="row justify-evently" v-if="user">
     <q-select
       ref="nameRef"
-      outlined
-      class="q-pr-sm col-8"
-      dense
+      class="col-8"
+    
       label="Bank Account"
       v-model="user.payment.bank_name"
       map-options
@@ -16,9 +15,8 @@
     />
     <q-input
       ref="nameRef"
-      outlined
-      class="q-pl-sm col-4"
-      dense
+      class="col"
+    
       label="Bank Account No"
       v-model="user.payment.bank_account_no"
       lazy-rules
@@ -26,9 +24,8 @@
     />
     <q-input
       ref="nameRef"
-      outlined
       class="col-12"
-      dense
+    
       label="Bank Account Name"
       v-model="user.payment.bank_account_name"
       lazy-rules
@@ -62,5 +59,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-</style>
+<style></style>

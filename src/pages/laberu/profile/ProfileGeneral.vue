@@ -1,14 +1,79 @@
 <template>
-  <div class="the-box">
-    <div class="flex-row justify-between items-center text-black">
-      <div class="title-font">ข้อมูลทั่วไป/General</div>
-      <div class="">
-        <q-btn
-          label="Edit User"
-          color="primary"
-          @click="editUserDialog = !editUserDialog"
-        />
+  <div class="main-profile-box">
+    <div class="flex-row main-box-title items-center">
+      Edit Profile <q-icon name="account_circle" class="q-ml-sm" color="blue" />
+    </div>
+    <div class="flex-row profile-wrap">
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Name:</div>
+          <q-input dense outlined :placeholder="user.firstname" />
+        </div>
       </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Surname:</div>
+          <q-input dense outlined :placeholder="user.lastname" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Email:</div>
+          <q-input dense outlined :placeholder="emailHide(user.email)" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Tel:</div>
+          <q-input dense outlined :placeholder="cardHide(user.phone_number)" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Career:</div>
+          <q-input dense outlined :placeholder="user.career" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Province:</div>
+          <q-input dense outlined :placeholder="user.province" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Bank:</div>
+          <q-input dense outlined :placeholder="user.payment.bank_name" />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Acc. No:</div>
+          <q-input
+            dense
+            outlined
+            :placeholder="cardHide(user.payment.bank_account_no)"
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex-row items-center">
+          <div class="rows-header">Acc. Name:</div>
+          <q-input
+            dense
+            outlined
+            :placeholder="user.payment.bank_account_name"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="flex-row justify-end">
+      <q-btn
+        label="Edit User"
+        color="primary"
+        @click="editUserDialog = !editUserDialog"
+      />
+
       <q-dialog v-model="editUserDialog" v-if="user">
         <EditUser
           :user="user"
@@ -16,111 +81,20 @@
         />
       </q-dialog>
     </div>
-    <div class="flex-row main-sec">
-      <div class="flex-col sub-sec">
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            ชื่อ
-            <div class="eng">/Name</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ user.firstname }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            นามสกุล
-            <div class="eng">/Surname</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ user.lastname }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            อีเมลล์
-            <div class="eng">/Email</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ emailHide(user.email) }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            เบอร์โทรศัพท์
-            <div class="eng">/Phone No</div>
-            :
-          </div>
-          <div class="font-style color-1">
-            {{ cardHide(user.phone_number) }}
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            อาชีพ
-            <div class="eng">/Career</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ user.career }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            จังหวัด
-            <div class="eng">/Province</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ user.province }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            ธนาคาร
-            <div class="eng">/Bank</div>
-            :
-          </div>
-          <div class="font-style color-1">{{ user.payment.bank_name }}</div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            เลขบัญชีธนาคาร
-            <div class="eng">/Account No</div>
-            :
-          </div>
-          <div class="font-style color-1">
-            {{ cardHide(user.payment.bank_account_no) }}
-          </div>
-        </div>
-        <div class="flex-row">
-          <div class="font-style w-400 color-2 row">
-            เจ้าของบัญชี
-            <div class="eng">/Account Name</div>
-            :
-          </div>
-          <div class="font-style color-1">
-            {{ user.payment.bank_account_name }}
-          </div>
-        </div>
-      </div>
-      <!-- <div class="flex-col">
-        <div class="font-style color-1">{{ user.firstname }}</div>
-        <div class="font-style color-1">{{ user.lastname }}</div>
-        <div class="font-style color-1">{{ emailHide(user.email) }}</div>
-        <div class="font-style color-1">
-          {{ cardHide(user.phone_number) }}
-        </div>
-        <div class="font-style color-1">{{ user.career }}</div>
-        <div class="font-style color-1">{{ user.province }}</div>
-        <div class="font-style color-1">{{ user.payment.bank_name }}</div>
-        <div class="font-style color-1">
-          {{ cardHide(user.payment.bank_account_no) }}
-        </div>
-        <div class="font-style color-1">
-          {{ user.payment.bank_account_name }}
-        </div>
-        <div class="edit-btn">
-          <q-btn color="light-blue-6" no-caps text-color="white" label="Edit" />
-        </div>
-      </div> -->
-    </div>
   </div>
 </template>
+<style scoped lang="scss">
+.col {
+  min-width: 200px;
+  margin: 10px 0;
+  justify-content: center;
+  display: flex;
+}
 
+.q-input {
+  padding: 0 1em;
+}
+</style>
 <script>
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { useStore } from "src/store";
@@ -176,5 +150,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped lang="scss"></style>
