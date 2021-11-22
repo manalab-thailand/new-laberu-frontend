@@ -1,22 +1,37 @@
 <template>
   <div class="label-tools" v-if="imageData">
     <div class="flex-col">
-      <div class="row justify-between items-center header-crop">
-        <div class="header">Labelling tools</div>
-        <div class="flex-row">
-          <div class="circle"></div>
-          <div class="circle"></div>
-          <div class="circle"></div>
+      <div class="flex-row items-center" style="position: relative">
+        <div class="sidebar-header">Annotation tools</div>
+        <!-- document btn -->
+        <div class="doc-btn cursor-pointer">
+          <img class="doc-icon" src="/images/docBtn.png" alt="" />
         </div>
       </div>
-      <div class="sub-header-crop">Quick Guidelines</div>
-      <div class="description-crop">example description</div>
-      <div class="text-black q-px-lg q-py-md" style="font-size: 16px">
+      <div
+        class="flex-row text-blck text-bold q-mt-md q-mb-sm"
+        style="font-size: 16px"
+      >
+        Quick Guidelines
+      </div>
+      <div class="flex-row sidebar-desc">
         {{ imageData.annotation?.decsription }}
       </div>
-      <div class="description-crop">action</div>
 
-      <div class="q-pa-md scrollable">
+      <!-- wrapped -->
+      <div class="orientation-portrait">
+        <div class="flex-row">
+          <div class="act-perform-bar-p">Action Performance</div>
+        </div>
+      </div>
+      <!-- unwrap -->
+      <div class="orientation-landscape">
+        <div class="flex-row">
+          <div class="act-perform-bar-l">Action Performance</div>
+        </div>
+      </div>
+
+      <div class="flex-row label-sec">
         <q-select
           class="annotation-overflow"
           label="Mode: 'add-unique'"
@@ -31,26 +46,19 @@
         />
       </div>
 
-      <div class="row justify-between q-pa-md">
+      <div class="flex-row justify-end q-mt-md q-gutter-x-md">
         <q-btn
           dense
+          no-caps
           label="Skip"
-          @click="onSkip"
-          style="background: #98da56; width: 75px"
+          style="background: #7a7a7a; padding: 5px 1em; color: white"
         />
         <q-btn
           dense
+          no-caps
           label="Submit"
-          @click="onSave"
-          style="background: #98da56; width: 75px"
+          style="background: #149bfc; padding: 5px 1em; color: white"
         />
-      </div>
-
-      <div class="document-crop row justify-between items-center">
-        <div>document</div>
-        <div>
-          <q-btn icon="zoom_out_map" size="15px" dense flat />
-        </div>
       </div>
     </div>
   </div>
@@ -101,19 +109,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
-.classification-toggle-btn {
-  .q-toggle__label {
-    min-width: 5em;
-  }
-}
-
-
-.tag-wrapper {
-  max-width: 32vw;
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 1em;
-  gap: 0.2em 0.5em;
-}
-</style>
+<style lang="scss"></style>

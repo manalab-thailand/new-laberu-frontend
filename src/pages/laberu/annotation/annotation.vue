@@ -1,19 +1,23 @@
 <template>
-  <!-- <div class="content-sidebar" style="flex-wrap: wrap">
-    <div class="col">
-      <div class="row justify-center img-css">
-        <div class="outer-img-wrapper">
-          <div class="inner-img-wrapper">
-            <img
-              :src="image_url"
-              style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
-            />
-          </div>
+  <div class="content-sidebar">
+    <div class="col img-wrapper">
+      <div class="orientation-portrait">
+        <div
+          class="img-bg-s"
+          :style="{ backgroundImage: `url(${this.image_url})` }"
+        ></div>
+      </div>
+      <div class="orientation-landscape">
+        <div class="flex-row justify-center items-center" style="height: 90vh">
+          <div
+            class="img-bg"
+            :style="{ backgroundImage: `url(${this.image_url})` }"
+          ></div>
         </div>
       </div>
     </div>
-    <div class="col">
 
+    <div class="col">
       <annotationSidebar
         :project="project"
         :imageData="imageData"
@@ -21,31 +25,14 @@
         @onSkip="initState()"
       />
     </div>
-  </div> -->
-<div></div>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.sub-img-wrapper {
-  top: 50%;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.main-img-wrapper {
-  justify-content: center;
-  width: 50vw;
-  height: 50vh;
-  position: relative;
-}
-</style>
+<style lang="scss" scoped></style>
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted } from "vue";
 import annotationSidebar from "src/pages/laberu/annotation/annotationSidebar.vue";
-import annotationHeader from "pages/laberu/annotation/annotationHeader.vue";
 import { useRoute, useRouter } from "vue-router";
 import { StateInterface, useStore } from "src/store";
 import { useQuasar } from "quasar";
@@ -54,7 +41,6 @@ import { ExecException } from "child_process";
 export default defineComponent({
   components: {
     annotationSidebar,
-    annotationHeader,
   },
   setup() {
     const route = useRoute();

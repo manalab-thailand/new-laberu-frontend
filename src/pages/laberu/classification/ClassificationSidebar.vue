@@ -1,60 +1,74 @@
 <template>
-  <div class="label-tools">
-    <q-list
-      ><q-form @submit="onSubmit">
-        <q-item class="flex-col" style="padding: 0">
-          <q-item-label class="row justify-between items-center header-crop">
-            <div class="header">Labelling tools</div>
-            <div class="flex-row">
-              <div class="circle"></div>
-              <div class="circle"></div>
-              <div class="circle"></div>
-            </div>
-          </q-item-label>
-          <q-item-label class="sub-header-crop">
-            Quick Guidelines
-          </q-item-label>
-          <q-item-label class="description-crop">action</q-item-label>
-          <q-scroll-area style="height: 30vh" v-if="options">
-            <div class="q-pa-md">
-              <div
-                class="text-black classification-toggle-btn"
-                v-for="(option, index) in options"
-                :key="index"
-              >
-                <q-checkbox
-                  v-model="result[index].value"
-                  :label="option.label"
-                  :color="color[index]"
-                />
-              </div>
-            </div>
-          </q-scroll-area>
-          <div class="row justify-end q-gutter-x-md q-pa-md">
-            <q-btn
-              dense
-              label="Skip"
-              style="background: white; width: 75px"
-              @click="onSkip()"
-            />
-            <q-btn
-              dense
-              label="Submit"
-              type="submit"
-              style="background: #98da56; width: 75px"
+  <div class="label-tools" v-if="imageData">
+    <div class="flex-col">
+      <div class="flex-row items-center" style="position: relative">
+        <div class="sidebar-header">Annotation tools</div>
+        <!-- document btn -->
+        <div class="doc-btn cursor-pointer">
+          <img class="doc-icon" src="/images/docBtn.png" alt="" />
+        </div>
+      </div>
+
+      <!-- wrapped -->
+      <div class="orientation-portrait">
+        <div class="flex-row">
+          <div class="act-perform-bar-p">Action Performance</div>
+        </div>
+      </div>
+      <!-- unwrap -->
+      <div class="orientation-landscape">
+        <div class="flex-row">
+          <div class="act-perform-bar-l">Action Performance</div>
+        </div>
+      </div>
+      <q-form @submit="onSubmit" v-if="options">
+        <div
+          class="flex-row label-sec checkbox-wrapper classification-toggle-btn"
+        >
+          <div v-for="(option, index) in options" :key="index">
+            <q-checkbox
+              v-model="result[index].value"
+              :label="option.label"
+              :color="color[index]"
             />
           </div>
-          <q-item-label class="document-crop row justify-between items-center"
-            ><div>document</div>
-            <div>
-              <q-btn icon="zoom_out_map" size="15px" dense flat /></div
-          ></q-item-label> </q-item
-      ></q-form>
-    </q-list>
+        </div>
+        <div class="flex-row justify-end q-mt-md q-gutter-x-md">
+          <q-btn
+            dense
+            no-caps
+            label="Skip"
+            style="background: #7a7a7a; padding: 5px 1em; color: white"
+          />
+          <q-btn
+            dense
+            no-caps
+            label="Submit"
+            style="background: #149bfc; padding: 5px 1em; color: white"
+          />
+        </div>
+      </q-form>
+    </div>
   </div>
 </template>
+<style lang="scss">
+.checkbox-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 256px;
+}
 
-<script lang='ts'>
+.checkbox-wrapper > * {
+  flex: 0 1 50%;
+}
+
+.classification-toggle-btn {
+  .q-toggle__label {
+    min-width: 5em;
+  }
+}
+</style>
+<script lang="ts">
 import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
 import { IImageData } from "src/store/module-task-image/state";
@@ -125,11 +139,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style lang="scss">
-.classification-toggle-btn {
-  .q-toggle__label {
-    min-width: 5em;
-  }
-}
-</style>

@@ -1,19 +1,23 @@
 <template>
-  <div class="content-sidebar" style="flex-wrap: wrap">
-    <div class="col">
-      <div class="row justify-center img-css">
-        <div class="outer-img-wrapper">
-          <div class="inner-img-wrapper">
-            <img
-              :src="image_url"
-              style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px"
-            />
-          </div>
+  <div class="content-sidebar">
+    <div class="col img-wrapper">
+      <div class="orientation-portrait">
+        <div
+          class="img-bg-s"
+          :style="{ backgroundImage: `url(${this.image_url})` }"
+        ></div>
+      </div>
+      <div class="orientation-landscape">
+        <div class="flex-row justify-center items-center" style="height: 90vh">
+          <div
+            class="img-bg"
+            :style="{ backgroundImage: `url(${this.image_url})` }"
+          ></div>
         </div>
       </div>
     </div>
+
     <div class="col">
-      <ClassificationHeader />
       <ClassificationSidebar
         :project="project"
         :imageData="imageData"
@@ -28,7 +32,6 @@
 import { defineComponent, ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ClassificationSidebar from "src/pages/laberu/classification/ClassificationSidebar.vue";
-import ClassificationHeader from "pages/laberu/classification/ClassificationHeader.vue";
 import { useStore } from "src/store";
 import { useQuasar } from "quasar";
 import { ExecException } from "child_process";
@@ -41,7 +44,6 @@ interface IEventResult {
 export default defineComponent({
   components: {
     ClassificationSidebar,
-    ClassificationHeader,
   },
   setup() {
     const route = useRoute();

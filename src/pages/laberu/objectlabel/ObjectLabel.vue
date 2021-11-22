@@ -35,7 +35,6 @@
       </div>
     </div>
     <div class="col">
-      <ObjectLabelHeader />
       <ObjectLabelSidebar
         :boxes="boxes"
         :project="project"
@@ -48,7 +47,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, computed } from "vue";
-import ObjectLabelHeader from "pages/laberu/objectlabel/ObjectLabelHeader.vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
 import { useRoute, useRouter } from "vue-router";
@@ -79,15 +77,15 @@ const getCoursorLeft = (e: any) => {
   //   vertical = 200;
   // else if (window.innerWidth <= 1024 && window.innerWidth > 800) vertical = 320;
 
-  return e.pageX - 55;
+  return e.pageX - 56;
 };
 
 const getCoursorTop = (e: any) => {
-  return e.pageY - 71;
+  return e.pageY - 78;
 };
 
 export default defineComponent({
-  components: { Box, ObjectLabelSidebar, ObjectLabelHeader },
+  components: { Box, ObjectLabelSidebar },
   data: () => ({
     windowSize: window.innerHeight + "+" + window.innerWidth,
     windowWide: window.innerWidth,
