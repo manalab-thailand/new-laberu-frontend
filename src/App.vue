@@ -11,15 +11,15 @@ export default defineComponent({
   setup() {
     const router = useRouter();
 
-    onMounted(() =>
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          router.push({ name: "home" });
-        } else {
-          router.push({ name: "login" });
-        }
-      })
-    );
+    // onMounted(() =>
+    //   auth.onAuthStateChanged((user) => {
+    //     if (user) {
+    //       router.push({ name: "home" });
+    //     } else {
+    //       router.push({ name: "login" });
+    //     }
+    //   })
+    // );
   },
 });
 </script>
