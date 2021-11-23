@@ -2,23 +2,18 @@ import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "/",
+    path: "/laberu",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "/",
-        name: "/",
-        component: () => import("pages/login.vue"),
+        path: "",
+        name: "home",
+        component: () => import("pages/laberu/home/home.vue"),
       },
       {
         path: "register",
         name: "register",
         component: () => import("pages/laberu/register/register.vue"),
-      },
-      {
-        path: "home",
-        name: "home",
-        component: () => import("pages/laberu/home/home.vue"),
       },
       {
         path: "annotation",
@@ -44,7 +39,8 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: "/login",
+    path: "/",
+    name: "login",
     component: () => import("src/pages/login.vue"),
   },
 

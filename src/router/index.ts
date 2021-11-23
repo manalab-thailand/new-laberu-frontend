@@ -6,7 +6,6 @@ import {
   createWebHistory,
 } from "vue-router";
 import { StateInterface } from "../store";
-import { getCurrentUser } from "../boot/firebase";
 import routes from "./routes";
 
 /*
@@ -35,15 +34,6 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
     history: createHistory(
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
-  });
-
-  Router.beforeEach(async (to, from, next) => {
-    const auth = to.meta.requiresAuth;
-    if (auth && !(await getCurrentUser)) {
-      next("/");
-    } else {
-      next();
-    }
   });
 
   return Router;
