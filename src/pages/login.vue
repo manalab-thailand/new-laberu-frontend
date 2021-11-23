@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="col" style="height: 100vh; padding: 5em 4em">
+    <div class="col" style="height: 100vh; padding: 3em">
       <!-- <div class="top-section q-mb-sm">Hello ! Welcome to LABERU</div>
       <div class="sub-top-section">
         Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -57,7 +57,7 @@
         <div class="-or- col"></div>
       </div>
       <div>
-        <q-btn class="google-btn" no-caps
+        <q-btn unelevated outline class="google-btn" no-caps
           ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with
           Google</q-btn
         >
@@ -68,57 +68,6 @@
           Click Here
         </div>
       </div> -->
-      <div class="top-section q-mb-sm">Sign Up</div>
-      <div class="sub-top-section">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has
-      </div>
-      <div class="q-my-md">
-        <div class="text-bold q-mb-sm" style="color: #888888">
-          Email address
-        </div>
-        <div>
-          <q-input v-model="email" type="email" filled />
-        </div>
-      </div>
-      <div class="q-my-md">
-        <div class="text-bold q-mb-sm" style="color: #888888">Password</div>
-        <div>
-          <q-input v-model="password" type="password" filled label="Password" />
-        </div>
-      </div>
-      <div class="q-my-md">
-        <div class="text-bold q-mb-sm" style="color: #888888">
-          Confirm Password
-        </div>
-        <div>
-          <q-input
-            v-model="password"
-            type="password"
-            filled
-            label="Confirm Password"
-          />
-        </div>
-      </div>
-
-      <q-btn label="Sign In" class="signin-btn" />
-      <div class="flex-row items-center">
-        <div class="-or- col"></div>
-        <div class="or">Or</div>
-        <div class="-or- col"></div>
-      </div>
-      <div>
-        <q-btn class="google-btn" no-caps
-          ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with
-          Google</q-btn
-        >
-      </div>
-      <div class="flex-row q-my-md" style="color: #888888">
-        Don’t have an account ?
-        <div class="fancy-link text-bold q-ml-sm cursor-pointer">
-          Click Here
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -169,6 +118,12 @@
   background: #149bfc;
   width: 100%;
 }
+
+.signup-btn {
+  font-size: 14px;
+  color: #149bfc;
+}
+
 @keyframes showTopText {
   0% {
     transform: translate3d(0, 100%, 0);
