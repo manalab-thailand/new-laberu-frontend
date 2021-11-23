@@ -11,6 +11,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/login.vue"),
       },
       {
+        path: "register",
+        name: "register",
+        component: () => import("pages/laberu/register/register.vue"),
+      },
+      {
         path: "home",
         name: "home",
         component: () => import("pages/laberu/home/home.vue"),
