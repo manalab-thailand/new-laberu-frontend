@@ -15,16 +15,7 @@ const firebaseConfig = {
 
 const firebase = initializeApp(firebaseConfig);
 
-const auth = firebaseAuth.getAuth(firebase);
-
-const getCurrentUser = async () => {
-  return await new Promise((resolve, reject) => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      unsubscribe();
-      resolve(user);
-    }, reject);
-  });
-};
+export const auth = firebaseAuth.getAuth();
 
 const loginWithFirebase = async (email: string, password: string) => {
   try {
@@ -52,4 +43,4 @@ export default boot(async ({ app }) => {
   app.config.globalProperties.$firebase = firebase;
 });
 
-export { getCurrentUser, loginWithGoogle, loginWithFirebase };
+export { loginWithGoogle, loginWithFirebase };

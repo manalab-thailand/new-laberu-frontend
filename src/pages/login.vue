@@ -101,7 +101,7 @@
         </div>
       </div>
 
-      <q-btn label="Sign In" class="signin-btn" />
+      <q-btn label="Sign In" class="signin-btn" @click="onLoginWithFirebase" />
       <div class="flex-row items-center">
         <div class="-or- col"></div>
         <div class="or">Or</div>
@@ -264,11 +264,7 @@ import { StateInterface, useStore } from "src/store";
 import { IAuthState } from "src/store/module-auth/state";
 import { defineComponent, ref } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
-import {
-  getCurrentUser,
-  loginWithGoogle,
-  loginWithFirebase,
-} from "../boot/firebase";
+import { loginWithGoogle, loginWithFirebase } from "../boot/firebase";
 import { Store } from "vuex";
 import { QVueGlobals, useQuasar } from "quasar";
 import { ok } from "assert";
@@ -278,20 +274,19 @@ const authentication = (
   router: Router,
   q: QVueGlobals
 ) => {
-  const email = ref<string>("doublepor.pp@gmail.com");
-  const password = ref<string>("0957520816");
+  const email = ref<string>("doublepor@gmail.com");
+  const password = ref<string>("zxc123**");
   const uid = ref<string | undefined>("");
   const currentUser = ref<IAuthState>();
 
   const onLoginWithFirebase = async () => {
     try {
       q.loading.show();
-      // const user = await loginWithFirebase(email.value, password.value);
-      // if (user) {
-      //   uid.value = user?.uid;
-
-      // }
-      uid.value = "6130613022";
+      const user = await loginWithFirebase(email.value, password.value);
+      if (user) {
+        uid.value = user!.uid;
+      }
+      // uid.value = "6130613022";
       setAuhentication();
     } catch (error) {
       q.notify({
@@ -326,17 +321,27 @@ const authentication = (
   const setAuhentication = async () => {
     await store.dispatch("moduleAuth/onLogin", { uid: uid.value });
     const user = store.state.moduleAuth.user;
-    const { role } = user;
-    if (role == "user") {
-      currentUser.value = store.state.moduleAuth;
-      router.push({ name: "home" });
-    } else {
+    const { status } = user;
+
+    if (status !== "active") {
       q.dialog({
         title: "Unauthorized access",
-        message: "Permission denied accessing this website",
+        message: "Your account has been disabled",
         ok: true,
+        persistent: true,
+      }).onOk(async () => {
+        router.push({ name: "login" });
       });
     }
+
+    q.dialog({
+      title: "Unauthorized access",
+      message: "Your account has been disabled",
+      ok: true,
+      persistent: true,
+    }).onOk(async () => {
+      router.push({ name: "login" });
+    });
   };
 
   return {
