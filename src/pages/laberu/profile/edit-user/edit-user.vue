@@ -4,10 +4,7 @@
       <div class="text-h4 text-weight-bold text-center">Manage User</div>
     </q-card-section>
     <q-card-section>
-      <q-form
-        @submit="onSubmitUpdate(editUser)"
-        class="q-gutter-x-lg q-gutter-y-xs q-px-md"
-      >
+      <q-form @submit="onSubmitUpdate(editUser)" class="q-gutter-x-lg q-px-md">
         <EditUserInformation :user="editUser" />
         <!-- <EditUserAuthorization :user="user" /> -->
         <EditUserPayment :user="editUser" />
@@ -99,3 +96,9 @@ const UpdateUserFunction = (
   return { onSubmitUpdate };
 };
 </script>
+
+<style land="scss" scoped>
+.my-card .col {
+  margin: 0;
+}
+</style>

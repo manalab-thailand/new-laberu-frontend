@@ -3,10 +3,16 @@
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
         <div class="sidebar-header">Annotation tools</div>
+        <q-icon name="construction" size="20px" />
         <!-- document btn -->
-        <div class="doc-btn cursor-pointer">
+        <a
+          href="https://www.w3schools.com"
+          target="_blank"
+          class="doc-btn cursor-pointer"
+        >
           <img class="doc-icon" src="/images/docBtn.png" alt="" />
-        </div>
+          <q-tooltip> Guide Document </q-tooltip>
+        </a>
       </div>
 
       <!-- wrapped -->
@@ -22,13 +28,13 @@
         </div>
       </div>
 
-      <div class="flex-row label-sec">
-        <!-- not done yet -->
-        <!-- <div class="q-mt-sm flex-col to-center label-overflow" v-if="boxes">
+      <div class="flex-row justify-center label-sec">
+        <div class="flex-col" v-if="boxes.length > 0">
           <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
             <q-select
               style="width: 300px"
               bg-color="white"
+              label="Select Related Object"
               outlined
               emit-value
               map-options
@@ -37,8 +43,7 @@
             />
           </div>
         </div>
-        <div v-else class="text-black">aefaefaef aef</div> -->
-        <div v-if="boxes">drag to start labelling</div>
+        <div v-else class="drag-to-label q-mt-sm">drag to start labelling</div>
       </div>
 
       <div class="flex-row justify-end q-mt-md q-gutter-x-md">
@@ -138,6 +143,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.drag-to-label {
+  border: dashed 2px rgb(71, 156, 71);
+  border-radius: 5px;
+  padding: 1em;
+  text-align: center;
+  width: 100%;
+}
+
 .q-select {
   margin-bottom: -1.5em;
 }

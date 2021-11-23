@@ -3,10 +3,16 @@
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
         <div class="sidebar-header">Annotation tools</div>
+        <q-icon name="construction" size="20px" />
         <!-- document btn -->
-        <div class="doc-btn cursor-pointer">
+        <a
+          href="https://www.w3schools.com"
+          target="_blank"
+          class="doc-btn cursor-pointer"
+        >
           <img class="doc-icon" src="/images/docBtn.png" alt="" />
-        </div>
+          <q-tooltip> Guide Document </q-tooltip>
+        </a>
       </div>
 
       <!-- wrapped -->
@@ -35,12 +41,14 @@
         </div>
         <div class="flex-row justify-end q-mt-md q-gutter-x-md">
           <q-btn
+            @click="onSkip"
             dense
             no-caps
             label="Skip"
             style="background: #7a7a7a; padding: 5px 1em; color: white"
           />
           <q-btn
+            type="submit"
             dense
             no-caps
             label="Submit"

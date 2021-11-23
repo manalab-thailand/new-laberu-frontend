@@ -71,4 +71,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.my-card .col {
+  margin: 0;
+}
+</style>

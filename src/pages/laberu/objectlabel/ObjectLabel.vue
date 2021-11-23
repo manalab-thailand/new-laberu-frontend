@@ -68,15 +68,6 @@ interface Boxes {
 
 const getCoursorLeft = (e: any) => {
   let vertical = 0;
-  // if (window.innerWidth <= 1920 && window.innerWidth > 1600) vertical = 202;
-  // else if (window.innerWidth <= 1600 && window.innerWidth > 1360)
-  //   vertical = 218;
-  // else if (window.innerWidth <= 1360 && window.innerWidth > 1250)
-  //   vertical = 250 + (1360 - window.innerWidth) / 2;
-  // else if (window.innerWidth <= 1250 && window.innerWidth > 1024)
-  //   vertical = 200;
-  // else if (window.innerWidth <= 1024 && window.innerWidth > 800) vertical = 320;
-
   return e.pageX - 56;
 };
 

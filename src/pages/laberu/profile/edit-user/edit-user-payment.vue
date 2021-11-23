@@ -4,7 +4,6 @@
     <q-select
       ref="nameRef"
       class="col-8"
-    
       label="Bank Account"
       v-model="user.payment.bank_name"
       map-options
@@ -16,7 +15,6 @@
     <q-input
       ref="nameRef"
       class="col"
-    
       label="Bank Account No"
       v-model="user.payment.bank_account_no"
       lazy-rules
@@ -25,7 +23,6 @@
     <q-input
       ref="nameRef"
       class="col-12"
-    
       label="Bank Account Name"
       v-model="user.payment.bank_account_name"
       lazy-rules
@@ -59,4 +56,8 @@ export default defineComponent({
 });
 </script>
 
-<style></style>
+<style land="scss" scoped>
+.my-card .col {
+  margin: 0;
+}
+</style>

@@ -139,7 +139,7 @@ export default defineComponent({
 
     const pushPage = () => {
       router.push({
-        path: selectedProject.value!.label_type,
+        name: selectedProject.value!.label_type,
         query: {
           group_id: group_id.value,
           project_id: selectedProject.value?._id,
