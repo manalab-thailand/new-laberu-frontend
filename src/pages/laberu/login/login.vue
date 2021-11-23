@@ -33,11 +33,31 @@
       >
         Don’t have an account ?
         <div
-          @click="isComponent = 'Register'"
+          @click="isComponent = 'RegisterEmail'"
           class="fancy-link text-bold q-ml-sm cursor-pointer"
         >
           Click Here
         </div>
+      </div>
+      <div class="flex-row q-my-md" v-else style="color: #888888">
+        Have an account ?
+        <div
+          @click="isComponent = 'LoginComponent'"
+          class="fancy-link text-bold q-ml-sm cursor-pointer"
+        >
+          Click Here
+        </div>
+      </div>
+      <div class="flex-row items-center">
+        <div class="-or- col"></div>
+        <div class="or">Or</div>
+        <div class="-or- col"></div>
+      </div>
+      <div>
+        <q-btn unelevated outline class="google-btn" no-caps
+          ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with
+          Google</q-btn
+        >
       </div>
     </div>
   </div>
@@ -48,17 +68,16 @@ import { StateInterface, useStore } from "src/store";
 import { IAuthState } from "src/store/module-auth/state";
 import { defineComponent, ref } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
-import { loginWithGoogle, loginWithFirebase } from "../boot/firebase";
+import { loginWithGoogle, loginWithFirebase } from "src/boot/firebase";
 import { Store } from "vuex";
 import { QVueGlobals, useQuasar } from "quasar";
-import { ok } from "assert";
-import LoginComponent from "src/pages/laberu/LoginComponent.vue";
-import Register from "src/pages/laberu/register/register.vue";
+import LoginComponent from "src/pages/laberu/login/LoginComponent.vue";
+import RegisterEmail from "src/pages/laberu/login/register-email.vue";
 export default defineComponent({
   name: "LoginPage",
   components: {
     LoginComponent,
-    Register,
+    RegisterEmail,
   },
   setup() {
     const store = useStore();
@@ -66,7 +85,7 @@ export default defineComponent({
     const q = useQuasar();
 
     const isComponent = ref("LoginComponent");
-    const isRegister = ref("Register");
+    const isRegister = ref("RegisterEmail");
 
     return {
       ...authentication(store, router, q),

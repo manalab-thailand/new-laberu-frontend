@@ -1,6 +1,6 @@
 <template>
   <div class="content-sidebar-60">
-    <div class="col">
+    <div class="col-6">
       <div class="login-img">
         <!--source: https://codepen.io/alvaromontoro/pen/RmRjvg -->
         <div class="animated-title">
@@ -24,90 +24,21 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="flex-row justify-center items-center">
-        <div
-          style="
-            display: flex;
-            margin-top: 3em;
-            padding: 0 2em;
-            width: 100%;
-            justify-content: center;
-          "
-        >
-          <div class="flex-col">
-            <div class="top-section q-mb-xs">Sign Up</div>
-            <div class="q-my-md">
-              <div class="text-bold q-mb-xs" style="color: #888888">
-                First Name
-              </div>
-              <q-input v-model="firstname" filled />
-            </div>
-            <div class="q-my-md">
-              <div class="text-bold q-mb-xs" style="color: #888888">
-                Last Name
-              </div>
-              <div>
-                <q-input style="width: 100%" v-model="Lastname" filled />
-              </div>
-            </div>
-            <div class="q-my-md">
-              <div class="text-bold q-mb-xs" style="color: #888888">
-                phone number
-              </div>
-              <div>
-                <q-input v-model="phone_number" filled />
-              </div>
-            </div>
-            <div class="q-my-md">
-              <div class="text-bold q-mb-xs" style="color: #888888">Career</div>
-              <div>
-                <q-input v-model="career" filled />
-              </div>
-            </div>
-            <div class="q-my-md">
-              <div class="text-bold q-mb-xs" style="color: #888888">
-                Province
-              </div>
-              <div>
-                <q-input v-model="province" filled />
-              </div>
-            </div>
-
-            <div class="flex-row justify-end">
-              <q-btn unelevated flat label="Next" class="signup-btn" />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-6">
+      <RegisterInformation />
     </div>
   </div>
 </template>
 <style lang="scss"></style>
 <script lang="ts">
-import { IPayment } from "src/store/module-users/state";
 import { defineComponent, ref, reactive } from "vue";
+import RegisterInformation from "./register-information.vue";
 
 export default defineComponent({
   name: "register",
-  setup() {
-    const user = reactive({
-      firstname: ref(""),
-      lastname: ref(""),
-      email: ref(""),
-      phone_number: ref(""),
-      career: ref(""),
-      province: ref(""),
-
-      payment: {
-        bank_name: ref(""),
-        bank_account_no: ref(""),
-        bank_account_name: ref(""),
-      },
-    });
-    return {
-      ...user,
-    };
+  components: {
+    RegisterInformation,
   },
+  setup() {},
 });
 </script>

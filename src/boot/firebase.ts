@@ -39,8 +39,21 @@ const loginWithGoogle = async () => {
   }
 };
 
+const registerWithFirebase = async (email: string, password: string) => {
+  try {
+    const { user } = await firebaseAuth.createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return user;
+  } catch (error) {
+    throw new Error((error as ExecException).message);
+  }
+};
+
 export default boot(async ({ app }) => {
   app.config.globalProperties.$firebase = firebase;
 });
 
-export { loginWithGoogle, loginWithFirebase };
+export { loginWithGoogle, loginWithFirebase, registerWithFirebase };

@@ -22,23 +22,13 @@
     </div>
   </div>
   <q-btn label="Sign In" class="signin-btn" @click="onLoginWithFirebase" />
-  <div class="flex-row items-center">
-    <div class="-or- col"></div>
-    <div class="or">Or</div>
-    <div class="-or- col"></div>
-  </div>
-  <div>
-    <q-btn unelevated outline class="google-btn" no-caps
-      ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with Google</q-btn
-    >
-  </div>
 </template>
 <script lang="ts">
 import { StateInterface, useStore } from "src/store";
 import { IAuthState } from "src/store/module-auth/state";
 import { defineComponent, ref } from "vue";
 import { useRouter, useRoute, Router } from "vue-router";
-import { loginWithGoogle, loginWithFirebase } from "../../boot/firebase";
+import { loginWithGoogle, loginWithFirebase } from "src/boot/firebase";
 import { Store } from "vuex";
 import { QVueGlobals, useQuasar } from "quasar";
 import { ok } from "assert";
