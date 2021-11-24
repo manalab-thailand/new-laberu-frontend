@@ -9,6 +9,11 @@ const mutation: MutationTree<IAuthState> = {
     state.authentication = authentication;
   },
 
+  onUserNotRegistered(state, payload: { uid: string; email: string }) {
+    state.user.uid = payload.uid;
+    state.user.email = payload.email;
+  },
+
   onUpdateUser(state, payload: IUser) {
     state.user.firstname = payload.firstname;
     state.user.lastname = payload.lastname;

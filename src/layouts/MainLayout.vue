@@ -39,6 +39,13 @@
           dense
           icon="account_circle"
         />
+        <q-btn
+          label="logout"
+          icon="logout"
+          class="text-black text-weight-bold"
+          flat
+          @click="logoutFirebase()"
+        />
       </q-toolbar>
     </q-header>
 
@@ -49,30 +56,25 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-import { useRoute } from "vue-router";
-
-import { defineComponent, ref } from "vue";
-import router from "src/router";
-
+import { logout } from "src/boot/firebase";
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "MainLayout",
-
   components: {
     EssentialLink,
   },
+  setup() {
+    const router = useRouter();
 
-  setup(props, emit) {
-    const route = useRoute();
-    const currentPage = computed(() => route.name);
-    console.log(currentPage.value);
-    const rightDrawerOpen = ref(false);
+    const logoutFirebase = async () => {
+      await logout();
+      router.push({ name: "login" });
+    };
+
     return {
-      rightDrawerOpen,
-      toggleLeftDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value;
-      },
+      logoutFirebase,
     };
   },
 });

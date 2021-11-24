@@ -4,7 +4,6 @@
     <div class="q-my-md">
       <div class="text-bold q-mb-sm" style="color: #888888">Email address</div>
       <q-input
-        clearable
         v-model="email"
         type="email"
         label="Email"
@@ -16,13 +15,20 @@
       <div class="text-bold q-mb-sm" style="color: #888888">Password</div>
       <div>
         <q-input
-          clearable
           v-model="password"
-          type="password"
-          filled
           label="Password"
+          filled
+          :type="isPwd ? 'password' : 'text'"
           :rules="[(val) => !!val || 'Field is require']"
-        />
+        >
+          <template v-slot:append>
+            <q-icon
+              :name="isPwd ? 'visibility_off' : 'visibility'"
+              class="cursor-pointer"
+              @click="isPwd = !isPwd"
+            />
+          </template>
+        </q-input>
       </div>
     </div>
     <div class="q-my-md">
@@ -31,9 +37,8 @@
       </div>
       <div>
         <q-input
-          clearable
           v-model="confirmPwd"
-          type="password"
+          :type="isPwd ? 'password' : 'text'"
           filled
           label="Confirm Password"
           :rules="[(val) => !!val || 'Field is require']"
@@ -59,29 +64,40 @@ export default defineComponent({
     const email = ref<string>();
     const password = ref<string>();
     const confirmPwd = ref<string>();
+    const isPwd = ref<boolean>(true);
 
     const registerFirebase = async () => {
-      if (password != confirmPwd) {
+      if (password.value != confirmPwd.value) {
         q.dialog({
           title: "Password not match",
           message: "Plaese check your password or confirm password",
-          persistent: true,
-        }).onOk(() => {
-          window.location.reload();
+          ok: true,
         });
         return;
       }
 
-      //   const user = await registerWithFirebase(email.value!, password.value!);
+      try {
+        q.loading.show();
 
-      if (true) {
-        q.dialog({
-          title: "Register Success",
-          message: "Your account has registered successful",
-          persistent: true,
-        }).onOk(() => {
-          window.location.reload();
+        const user = await registerWithFirebase(email.value!, password.value!);
+
+        if (user) {
+          q.dialog({
+            title: "Register Success",
+            message: "Your account has registered successful",
+            persistent: true,
+          }).onOk(() => {
+            window.location.reload();
+          });
+        }
+      } catch (error) {
+        q.notify({
+          message: `${error}`,
+          icon: "warning",
+          color: "negative",
         });
+      } finally {
+        q.loading.hide();
       }
     };
 
@@ -89,6 +105,7 @@ export default defineComponent({
       email,
       password,
       confirmPwd,
+      isPwd,
       registerFirebase,
     };
   },

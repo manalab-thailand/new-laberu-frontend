@@ -32,26 +32,26 @@
           <div class="text-h6">Select Group</div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none flex-row">
+        <q-card-section class="q-pt-none q-gutter-x-md flex-row">
           <q-select
             :options="customAttribute"
             emit-value
             map-options
+            ref="groupInput"
             v-model="group_id"
             label="Group"
             class="col"
           />
-          <q-input class="col" label="password" />
+          <q-input
+            class="col"
+            label="password"
+            v-model="accessPwd"
+            @keyup.enter="validateAccessPwd()"
+          />
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn
-            flat
-            label="OK"
-            color="primary"
-            @click="pushPage()"
-            v-close-popup
-          />
+          <q-btn flat label="OK" color="primary" @click="validateAccessPwd()" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -62,11 +62,13 @@
 import { IProject } from "src/store/module-project/state";
 import { useRouter } from "vue-router";
 import { defineComponent, ref, onMounted } from "vue";
+import { useQuasar } from "quasar";
 export default defineComponent({
   props: {
     project: Object as () => IProject | undefined,
   },
-  setup() {
+  setup(props) {
+    const q = useQuasar();
     const router = useRouter();
 
     const arrType = [
@@ -123,7 +125,9 @@ export default defineComponent({
     const customAttribute = ref<{ label: string; value: string }[]>([]);
     const customDialog = ref(false);
     const selectedProject = ref<IProject>();
+    const groupInput = ref();
     const group_id = ref("");
+
     const onSelectedProject = (project: IProject | undefined) => {
       selectedProject.value = project!;
       if (project!.require_custom) {
@@ -134,6 +138,25 @@ export default defineComponent({
         customDialog.value = !customDialog.value;
       } else {
         pushPage();
+      }
+    };
+
+    const accessPwd = ref<string>();
+
+    const validateAccessPwd = () => {
+      if (!group_id.value) {
+        groupInput.value.focus();
+        return;
+      }
+
+      if (props.project?.access_password == accessPwd.value) {
+        customDialog.value = false;
+        pushPage();
+      } else {
+        q.notify({
+          message: "Invalid access password",
+          color: "negative",
+        });
       }
     };
 
@@ -152,12 +175,14 @@ export default defineComponent({
       onSelectedProject,
       pushPage,
       colorButton,
-      group_id,
-      customAttribute,
-      customDialog,
-
+      validateAccessPwd,
       randomImage,
       capFirstLetter,
+      group_id,
+      groupInput,
+      customAttribute,
+      customDialog,
+      accessPwd,
     };
   },
 });

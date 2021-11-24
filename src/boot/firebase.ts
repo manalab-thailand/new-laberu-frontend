@@ -17,6 +17,15 @@ const firebase = initializeApp(firebaseConfig);
 
 export const auth = firebaseAuth.getAuth();
 
+const onAuthStateChanged = async () => {
+  return await new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
+};
+
 const loginWithFirebase = async (email: string, password: string) => {
   try {
     const { user } = await firebaseAuth.signInWithEmailAndPassword(
@@ -52,8 +61,18 @@ const registerWithFirebase = async (email: string, password: string) => {
   }
 };
 
+const logout = async () => {
+  return await firebaseAuth.signOut(auth);
+};
+
 export default boot(async ({ app }) => {
   app.config.globalProperties.$firebase = firebase;
 });
 
-export { loginWithGoogle, loginWithFirebase, registerWithFirebase };
+export {
+  loginWithGoogle,
+  loginWithFirebase,
+  registerWithFirebase,
+  onAuthStateChanged,
+  logout,
+};

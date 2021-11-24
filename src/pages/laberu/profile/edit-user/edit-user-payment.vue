@@ -3,7 +3,7 @@
   <div class="row justify-evently" v-if="user">
     <q-select
       ref="nameRef"
-      class="col-8"
+      class="col-12"
       label="Bank Account"
       v-model="user.payment.bank_name"
       map-options
@@ -14,7 +14,7 @@
     />
     <q-input
       ref="nameRef"
-      class="col"
+      class="col-6"
       label="Bank Account No"
       v-model="user.payment.bank_account_no"
       lazy-rules
@@ -22,7 +22,7 @@
     />
     <q-input
       ref="nameRef"
-      class="col-12"
+      class="col-6"
       label="Bank Account Name"
       v-model="user.payment.bank_account_name"
       lazy-rules

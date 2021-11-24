@@ -16,6 +16,8 @@ export interface IProject {
   createdAt: Date;
   updatedAt: Date;
   update_by: string;
+  access_password: string;
+  export_password: string;
 }
 
 export enum ProjectType {

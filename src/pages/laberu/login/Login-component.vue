@@ -6,32 +6,37 @@
   <div class="q-my-md">
     <div class="text-bold q-mb-sm" style="color: #888888">Email address</div>
     <div>
-      <q-input clearable v-model="email" type="email" filled />
+      <q-input v-model="email" type="email" filled />
     </div>
   </div>
   <div class="q-my-md">
     <div class="text-bold q-mb-sm" style="color: #888888">Password</div>
     <div>
       <q-input
-        clearable
         v-model="password"
-        type="password"
+        :type="isPwd ? 'password' : 'text'"
         filled
         label="Password"
-      />
+      >
+        <template v-slot:append>
+          <q-icon
+            :name="isPwd ? 'visibility_off' : 'visibility'"
+            class="cursor-pointer"
+            @click="isPwd = !isPwd"
+          />
+        </template>
+      </q-input>
     </div>
   </div>
   <q-btn label="Sign In" class="signin-btn" @click="onLoginWithFirebase" />
 </template>
 <script lang="ts">
 import { StateInterface, useStore } from "src/store";
-import { IAuthState } from "src/store/module-auth/state";
 import { defineComponent, ref } from "vue";
-import { useRouter, useRoute, Router } from "vue-router";
-import { loginWithGoogle, loginWithFirebase } from "src/boot/firebase";
+import { useRouter, Router } from "vue-router";
+import { loginWithFirebase } from "src/boot/firebase";
 import { Store } from "vuex";
 import { QVueGlobals, useQuasar } from "quasar";
-import { ok } from "assert";
 
 export default defineComponent({
   name: "LoginPage",
@@ -51,10 +56,10 @@ const authentication = (
   router: Router,
   q: QVueGlobals
 ) => {
-  const email = ref<string>("doublepor@gmail.com");
+  const email = ref<string>("user2@gmail.com");
   const password = ref<string>("zxc123**");
   const uid = ref<string | undefined>("");
-  const currentUser = ref<IAuthState>();
+  const isPwd = ref<boolean>();
 
   const onLoginWithFirebase = async () => {
     try {
@@ -62,26 +67,6 @@ const authentication = (
       const user = await loginWithFirebase(email.value, password.value);
       if (user) {
         uid.value = user!.uid;
-      }
-      // uid.value = "6130613022";
-      setAuhentication();
-    } catch (error) {
-      q.notify({
-        message: `${error}`,
-        icon: "warning",
-        color: "negative",
-      });
-    } finally {
-      q.loading.hide();
-    }
-  };
-
-  const onClickLoginGoogle = async () => {
-    try {
-      q.loading.show();
-      const result = await loginWithGoogle();
-      if (result) {
-        uid.value = result?.user.uid;
         setAuhentication();
       }
     } catch (error) {
@@ -96,35 +81,36 @@ const authentication = (
   };
 
   const setAuhentication = async () => {
-    await store.dispatch("moduleAuth/onLogin", { uid: uid.value });
+    const response = await store.dispatch("moduleAuth/onLogin", {
+      uid: uid.value,
+      email: email.value,
+    });
+
+    if (response.status === 404) {
+      router.push({ name: "register" });
+      return;
+    }
+
     const user = store.state.moduleAuth.user;
-    const { status } = user;
 
-    // if (status !== "active") {
-    //   q.dialog({
-    //     title: "Unauthorized access",
-    //     message: "Your account has been disabled",
-    //     ok: true,
-    //     persistent: true,
-    //   }).onOk(async () => {
-    //     router.push({ name: "login" });
-    //   });
-    // }
+    if (user.status !== "active") {
+      q.dialog({
+        title: "Unauthorized access",
+        message: "Your account has been disabled",
+        ok: true,
+        persistent: true,
+      }).onOk(async () => {
+        router.push({ name: "login" });
+      });
+    }
 
-    // q.dialog({
-    //   title: "Unauthorized access",
-    //   message: "Your account has been disabled",
-    //   ok: true,
-    //   persistent: true,
-    // }).onOk(async () => {
-    //   router.push({ name: "login" });
-    // });
+    router.push({ name: "home" });
   };
 
   return {
     onLoginWithFirebase,
-    onClickLoginGoogle,
     setAuhentication,
+    isPwd,
     email,
     password,
   };
