@@ -79,6 +79,7 @@ import { defineComponent, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "src/store";
 import { useQuasar } from "quasar";
+import { IImageData, ITaskImage } from "src/store/module-task-image/state";
 
 interface Boxes {
   top: number;
@@ -92,6 +93,8 @@ export default defineComponent({
   props: {
     boxes: {} as () => Boxes[],
     project: {} as () => IProject,
+    taskImage: {} as () => ITaskImage,
+    imageData: {} as () => IImageData,
   },
   setup(props, { emit }) {
     const route = useRoute();
@@ -139,15 +142,27 @@ export default defineComponent({
       //? xmax = left + width
       //? ymax = top + height
 
-      const detection = props.boxes?.map((box) => ({
-        name: box.label,
-        xmin: box.left,
-        ymin: box.top,
-        xmax: box.left + box.width,
-        ymax: box.top + box.height,
-      }));
+      const detection = props.boxes?.map((box) => {
+        return {
+          name: box.label,
+          xmin: convertSizeX(box.left),
+          ymin: convertSizeY(box.top),
+          xmax: convertSizeX(box.left + box.width),
+          ymax: convertSizeY(box.top + box.height),
+        };
+      });
 
       emit("onSave", detection);
+    };
+
+    const convertSizeX = (detection: number) => {
+      const realSizeX = Number(props.imageData!.labelling.width);
+      return (realSizeX / 100) * ((detection / 1024) * 100);
+    };
+
+    const convertSizeY = (detection: number) => {
+      const realSizeY = Number(props.imageData!.labelling.height);
+      return (realSizeY / 100) * ((detection / 576) * 100);
     };
 
     const onSkip = () => {
