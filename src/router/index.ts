@@ -1,4 +1,5 @@
 import { route } from "quasar/wrappers";
+import { onAuthStateChanged } from "src/boot/firebase";
 import {
   createMemoryHistory,
   createRouter,
@@ -34,6 +35,19 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
     history: createHistory(
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
+  });
+
+  Router.beforeEach(async (to, from, next) => {
+    const requireAuth = to.matched.some((record) => record.meta.requiresAuth);
+    const currentUser = await onAuthStateChanged();
+
+    if (requireAuth && currentUser) {
+      next();
+    } else if (requireAuth && !currentUser) {
+      next({ name: "login" });
+    } else {
+      next();
+    }
   });
 
   return Router;

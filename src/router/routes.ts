@@ -2,7 +2,13 @@ import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
+    path: "/",
+    name: "login",
+    component: () => import("src/pages/laberu/login/login.vue"),
+  },
+  {
     path: "/laberu",
+    meta: { requiresAuth: true },
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
@@ -38,17 +44,6 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
-  {
-    path: "/",
-    name: "login",
-    component: () => import("src/pages/laberu/login/login.vue"),
-  },
-  {
-    path: "/register-information",
-    name: "registerInformation",
-    component: () => import("src/pages/laberu/register/register.vue"),
-  },
-
   // Always leave this as last one,
   // but you can also remove it
   {

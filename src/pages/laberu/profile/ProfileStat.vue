@@ -10,8 +10,8 @@
           <div class="col columns-header">Type</div>
           <div class="col columns-header">Done</div>
           <div class="col columns-header">Total Price(฿)</div>
-          <div class="col columns-header">Paid</div>
-          <div class="col columns-header">Pending</div>
+          <div class="col columns-header">Paid(฿)</div>
+          <div class="col columns-header">Pending(฿)</div>
         </div>
 
         <div v-for="(item, index) in rows" :key="index">
@@ -22,9 +22,11 @@
               </div>
               <div class="col columns-item">{{ item.label_type }}</div>
               <div class="col columns-item">{{ item.total }}</div>
-              <div class="col columns-item">{{ item.total_price }}</div>
-              <div class="col columns-item">{{ item.paid }}</div>
-              <div class="col columns-item">{{ item.pending }}</div>
+              <div class="col columns-item">
+                {{ item.total_price.toFixed(2) }}
+              </div>
+              <div class="col columns-item">{{ item.paid.toFixed(2) }}</div>
+              <div class="col columns-item">{{ item.pending.toFixed(2) }}</div>
             </div>
             <q-separator style="background: #7a7a7a; margin: 1em 0" />
           </div>
@@ -35,9 +37,8 @@
 </template>
 <style scoped lang="scss"></style>
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, onMounted, computed } from "vue";
 import { useStore } from "src/store";
-import { IProject } from "src/store/module-project/state";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 
@@ -53,7 +54,6 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const q = useQuasar();
-    const router = useRouter();
     const user = computed(() => store.state.moduleAuth.user);
 
     const columns = [

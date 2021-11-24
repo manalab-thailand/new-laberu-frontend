@@ -58,12 +58,14 @@
           no-caps
           label="Skip"
           style="background: #7a7a7a; padding: 5px 1em; color: white"
+          @click="onSkip()"
         />
         <q-btn
           dense
           no-caps
           label="Submit"
           style="background: #149bfc; padding: 5px 1em; color: white"
+          @click="onSave()"
         />
       </div>
     </div>

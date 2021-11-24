@@ -1,7 +1,7 @@
 <template>
   <div class="main-profile-box">
     <div class="flex-row main-box-title items-center">
-      Edit Profile <q-icon name="account_circle" class="q-ml-sm" color="blue" />
+      Profile <q-icon name="account_circle" class="q-ml-sm" color="blue" />
     </div>
     <div class="flex-row profile-wrap">
       <div class="col">
@@ -67,8 +67,9 @@
         </div>
       </div>
     </div>
-    <div class="flex-row justify-end">
+    <div class="flex-row justify-center q-mt-sm">
       <q-btn
+        class="text-weight-bold"
         label="Edit User"
         color="primary"
         @click="editUserDialog = !editUserDialog"

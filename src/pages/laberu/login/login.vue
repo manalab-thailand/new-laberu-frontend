@@ -71,7 +71,7 @@ import { useRouter, useRoute, Router } from "vue-router";
 import { loginWithGoogle, loginWithFirebase } from "src/boot/firebase";
 import { Store } from "vuex";
 import { QVueGlobals, useQuasar } from "quasar";
-import LoginComponent from "src/pages/laberu/login/LoginComponent.vue";
+import LoginComponent from "src/pages/laberu/login/Login-component.vue";
 import RegisterEmail from "src/pages/laberu/login/register-email.vue";
 export default defineComponent({
   name: "LoginPage",
@@ -99,37 +99,18 @@ const authentication = (
   router: Router,
   q: QVueGlobals
 ) => {
-  const email = ref<string>("doublepor@gmail.com");
-  const password = ref<string>("zxc123**");
+  const email = ref<string>("");
+  const password = ref<string>("");
   const uid = ref<string | undefined>("");
   const currentUser = ref<IAuthState>();
-
-  const onLoginWithFirebase = async () => {
-    try {
-      q.loading.show();
-      const user = await loginWithFirebase(email.value, password.value);
-      if (user) {
-        uid.value = user!.uid;
-      }
-      // uid.value = "6130613022";
-      setAuhentication();
-    } catch (error) {
-      q.notify({
-        message: `${error}`,
-        icon: "warning",
-        color: "negative",
-      });
-    } finally {
-      q.loading.hide();
-    }
-  };
 
   const onClickLoginGoogle = async () => {
     try {
       q.loading.show();
       const result = await loginWithGoogle();
       if (result) {
-        uid.value = result?.user.uid;
+        uid.value = result.user.uid!;
+        email.value = result.user.email!;
         setAuhentication();
       }
     } catch (error) {
@@ -144,7 +125,16 @@ const authentication = (
   };
 
   const setAuhentication = async () => {
-    await store.dispatch("moduleAuth/onLogin", { uid: uid.value });
+    const response = await store.dispatch("moduleAuth/onLogin", {
+      uid: uid.value,
+      email: email.value,
+    });
+
+    if (response.status === 404) {
+      router.push({ name: "register" });
+      return;
+    }
+
     const user = store.state.moduleAuth.user;
     const { status } = user;
 
@@ -159,18 +149,10 @@ const authentication = (
       });
     }
 
-    q.dialog({
-      title: "Unauthorized access",
-      message: "Your account has been disabled",
-      ok: true,
-      persistent: true,
-    }).onOk(async () => {
-      router.push({ name: "login" });
-    });
+    router.push({ name: "home" });
   };
 
   return {
-    onLoginWithFirebase,
     onClickLoginGoogle,
     setAuhentication,
     email,

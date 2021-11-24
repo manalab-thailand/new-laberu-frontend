@@ -11,6 +11,7 @@
 
         <div class="row justify-center">
           <q-btn
+            dense
             label="Submit Update"
             color="primary"
             class="text-weight-bold"

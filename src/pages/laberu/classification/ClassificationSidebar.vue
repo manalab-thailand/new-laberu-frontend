@@ -2,7 +2,7 @@
   <div class="label-tools" v-if="imageData">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
-        <div class="sidebar-header">Annotation tools</div>
+        <div class="sidebar-header">Classification Tools</div>
         <q-icon name="construction" size="20px" />
         <!-- document btn -->
         <a
@@ -27,35 +27,41 @@
           <div class="act-perform-bar-l">Action Performance</div>
         </div>
       </div>
-      <q-form @submit="onSubmit" v-if="options">
-        <div
-          class="flex-row label-sec checkbox-wrapper classification-toggle-btn"
-        >
-          <div v-for="(option, index) in options" :key="index">
-            <q-checkbox
-              v-model="result[index].value"
-              :label="option.label"
-              :color="color[index]"
-            />
-          </div>
-        </div>
-        <div class="flex-row justify-end q-mt-md q-gutter-x-md">
-          <q-btn
-            @click="onSkip"
-            dense
-            no-caps
-            label="Skip"
-            style="background: #7a7a7a; padding: 5px 1em; color: white"
-          />
-          <q-btn
-            type="submit"
-            dense
-            no-caps
-            label="Submit"
-            style="background: #149bfc; padding: 5px 1em; color: white"
+      <div
+        class="flex-row label-sec checkbox-wrapper classification-toggle-btn"
+        v-if="options"
+      >
+        <div v-for="(option, index) in options" :key="index">
+          <q-checkbox
+            v-model="result[index].value"
+            :label="option.label"
+            :color="color[index]"
           />
         </div>
-      </q-form>
+      </div>
+      <div class="flex-row justify-end q-mt-md q-gutter-x-md">
+        <q-btn
+          @click="onSaveNotFound()"
+          dense
+          no-caps
+          label="Not Found"
+          style="background: #050505; padding: 5px 1em; color: white"
+        />
+        <q-btn
+          @click="onSkip()"
+          dense
+          no-caps
+          label="Skip"
+          style="background: #7a7a7a; padding: 5px 1em; color: white"
+        />
+        <q-btn
+          @click="onSave()"
+          dense
+          no-caps
+          label="Submit"
+          style="background: #149bfc; padding: 5px 1em; color: white"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -106,7 +112,18 @@ export default defineComponent({
       }))
     );
 
-    const onSubmit = () => {
+    const onSaveNotFound = () => {
+      const classResult = result.value.reduce((state, cur) => {
+        return {
+          ...state,
+          [cur.label]: false,
+        };
+      }, {} as any);
+
+      emit("onSave", classResult);
+    };
+
+    const onSave = () => {
       const validateInput = result.value.filter((val) => !val.value);
       if (validateInput.length == result.value.length) {
         q.notify({
@@ -138,8 +155,9 @@ export default defineComponent({
     };
 
     return {
-      onSubmit,
+      onSave,
       onSkip,
+      onSaveNotFound,
       options,
       result,
       color,

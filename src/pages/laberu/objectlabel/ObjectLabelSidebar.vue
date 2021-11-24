@@ -29,7 +29,7 @@
       </div>
 
       <div class="flex-row justify-center label-sec">
-        <div class="flex-col" v-if="boxes.length > 0">
+        <div class="flex-col" v-if="boxes && boxes.length > 0">
           <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
             <q-select
               style="width: 300px"
@@ -50,14 +50,23 @@
         <q-btn
           dense
           no-caps
+          label="Not Found"
+          style="background: #dddddd; padding: 5px 1em; color: black"
+          @click="onSaveNotFound()"
+        />
+        <q-btn
+          dense
+          no-caps
           label="Skip"
           style="background: #7a7a7a; padding: 5px 1em; color: white"
+          @click="onSkip()"
         />
         <q-btn
           dense
           no-caps
           label="Submit"
           style="background: #149bfc; padding: 5px 1em; color: white"
+          @click="onSave()"
         />
       </div>
     </div>
@@ -81,8 +90,8 @@ interface Boxes {
 
 export default defineComponent({
   props: {
-    boxes: Object as () => Boxes[],
-    project: Object as () => IProject,
+    boxes: {} as () => Boxes[],
+    project: {} as () => IProject,
   },
   setup(props, { emit }) {
     const route = useRoute();
@@ -99,6 +108,20 @@ export default defineComponent({
       label: config.display_name,
       value: config.value,
     }));
+
+    const onSaveNotFound = () => {
+      const detection = [
+        {
+          name: "Not Found",
+          xmin: 0,
+          ymin: 0,
+          xmax: 0,
+          ymax: 0,
+        },
+      ];
+
+      emit("onSave", detection);
+    };
 
     const onSave = () => {
       if ((props.boxes?.length as number) < 1) {
@@ -136,6 +159,7 @@ export default defineComponent({
       model: ref(null),
       options,
       onSave,
+      onSaveNotFound,
       onSkip,
     };
   },
