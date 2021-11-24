@@ -4,32 +4,46 @@
       <div class="row" style="margin-top: 2em">
         <div id="app">
           <div
-            id="image-wrapper"
-            :style="{ backgroundImage: `url(${this.image_url})` }"
+            :style="{
+              height: `${this.imageSize.height}px`,
+              width: `${this.imageSize.width}px`,
+              'max-width': '64vw',
+              position: 'relative',
+            }"
             @mousedown="startDrawingBox"
             @mousemove="changeBox"
             @mouseup="stopDrawingBox"
           >
-            <Box
-              v-if="drawingBox.active"
-              :b-width="drawingBox.width"
-              :b-height="drawingBox.height"
-              :b-top="drawingBox.top"
-              :b-left="drawingBox.left"
-            />
-            <Box
-              v-for="(box, i) in boxes"
-              :key="i"
-              :bTop="box.top"
-              :bLeft="box.left"
-              :bLabel="box.label"
-              :bWidth="box.width"
-              :bHeight="box.height"
-              :bActive="i === activeBoxIndex"
-              :on-select="makeBoxActive"
-              :bIndex="i"
-              :on-delete="removeBox"
-            />
+            <div
+              :style="{
+                backgroundImage: `url(${this.image_url})`,
+                'background-repeat': 'no-repeat',
+                'background-size': '100% 100%',
+                position: 'relative',
+                height: '100%',
+              }"
+            >
+              <Box
+                v-if="drawingBox.active"
+                :b-width="drawingBox.width"
+                :b-height="drawingBox.height"
+                :b-top="drawingBox.top"
+                :b-left="drawingBox.left"
+              />
+              <Box
+                v-for="(box, i) in boxes"
+                :key="i"
+                :bTop="box.top"
+                :bLeft="box.left"
+                :bLabel="box.label"
+                :bWidth="box.width"
+                :bHeight="box.height"
+                :bActive="i === activeBoxIndex"
+                :on-select="makeBoxActive"
+                :bIndex="i"
+                :on-delete="removeBox"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -40,6 +54,7 @@
         :project="project"
         :taskImage="taskImage"
         :imageData="imageData"
+        :imageSize="imageSize"
         @onSave="onSave($event)"
         @onSkip="initState"
       />
@@ -48,12 +63,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
-import { useRoute, useRouter } from "vue-router";
-import { StateInterface, useStore } from "src/store";
-import { useQuasar } from "quasar";
 import { pick } from "lodash";
 import { ExecException } from "child_process";
 import { IProject } from "src/store/module-project/state";
@@ -91,7 +103,10 @@ export default defineComponent({
     },
     boxes: [] as Boxes[],
     activeBoxIndex: null,
-
+    imageSize: {
+      width: null as any,
+      height: null as any,
+    },
     project: {},
     user: {},
     taskImage: {},
@@ -106,6 +121,13 @@ export default defineComponent({
       )
     );
     this.user = computed(() => this.$store.state.moduleAuth.user);
+
+    this.imageSize.width = computed(() =>
+      (this.$q.screen.width * 0.7).toFixed(2)
+    );
+    this.imageSize.height = computed(() =>
+      (this.$q.screen.height * 0.7).toFixed(2)
+    );
 
     this.initState();
   },
