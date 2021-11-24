@@ -38,6 +38,8 @@
       <ObjectLabelSidebar
         :boxes="boxes"
         :project="project"
+        :taskImage="taskImage"
+        :imageData="imageData"
         @onSave="onSave($event)"
         @onSkip="initState"
       />
