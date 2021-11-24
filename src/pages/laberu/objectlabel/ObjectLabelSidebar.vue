@@ -52,7 +52,7 @@
           no-caps
           label="Not Found"
           style="background: #dddddd; padding: 5px 1em; color: black"
-          @click="onSaveNotFound()"
+          @click="onSaveNotFound"
         />
         <q-btn
           dense
