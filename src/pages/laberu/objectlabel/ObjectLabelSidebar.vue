@@ -2,7 +2,7 @@
   <div class="label-tools">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
-        <div class="sidebar-header">Annotation tools</div>
+        <div class="sidebar-header">Labelling tools</div>
         <q-icon name="construction" size="20px" />
         <!-- document btn -->
         <a
@@ -45,7 +45,6 @@
         </div>
         <div v-else class="drag-to-label q-mt-sm">drag to start labelling</div>
       </div>
-
       <div class="flex-row justify-end q-mt-md q-gutter-x-md">
         <q-btn
           dense
@@ -95,6 +94,7 @@ export default defineComponent({
     project: {} as () => IProject,
     taskImage: {} as () => ITaskImage,
     imageData: {} as () => IImageData,
+    imageSize: {} as () => { width: string; height: string },
   },
   setup(props, { emit }) {
     const route = useRoute();
@@ -157,12 +157,17 @@ export default defineComponent({
 
     const convertSizeX = (detection: number) => {
       const realSizeX = Number(props.imageData!.labelling.width);
-      return (realSizeX / 100) * ((detection / 1024) * 100);
+      return (
+        (realSizeX / 100) * ((detection / Number(props.imageSize!.width)) * 100)
+      );
     };
 
     const convertSizeY = (detection: number) => {
       const realSizeY = Number(props.imageData!.labelling.height);
-      return (realSizeY / 100) * ((detection / 576) * 100);
+      return (
+        (realSizeY / 100) *
+        ((detection / Number(props.imageSize!.height)) * 100)
+      );
     };
 
     const onSkip = () => {
