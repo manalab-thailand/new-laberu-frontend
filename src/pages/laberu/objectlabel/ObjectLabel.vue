@@ -60,6 +60,27 @@
       />
     </div>
   </div>
+
+  <q-dialog
+    v-model="dialog"
+    persistent
+    transition-show="slide-up"
+    transition-hide="slide-down"
+  >
+    <q-card class="bg-primary text-white">
+      <q-card-section>
+        <div class="text-h6">Alert</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        Your screen is not up to our Platform standards. </q-card-section
+      ><q-card-section class="q-pt-none flex-row justify-center cursor-pointer">
+        <div @click="this.$router.go(-1)" class="fancy-link">
+          Back to Home Page
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts">
@@ -113,6 +134,8 @@ export default defineComponent({
     imageData: {},
     image_url: ref<string>(),
     startedAt: new Date(),
+    dialog: ref(false),
+    maximizedToggle: ref(true),
   }),
   mounted() {
     this.project = computed(() =>
@@ -123,13 +146,17 @@ export default defineComponent({
     this.user = computed(() => this.$store.state.moduleAuth.user);
 
     this.imageSize.width = computed(() =>
-      (this.$q.screen.width * 0.7).toFixed(2)
+      (this.$q.screen.width * 0.64).toFixed(2)
     );
     this.imageSize.height = computed(() =>
-      (this.$q.screen.height * 0.7).toFixed(2)
+      (this.$q.screen.height * 0.64).toFixed(2)
     );
 
-    this.initState();
+    if (!this.screenValidation()) {
+      this.dialog = true;
+    } else {
+      this.initState();
+    }
   },
   methods: {
     async initState() {
@@ -215,6 +242,14 @@ export default defineComponent({
         this.$q.loading.hide();
       }
     },
+
+    screenValidation() {
+      if (window.screen.width < 1000) {
+        return false;
+      }
+      return true;
+    },
+
     startDrawingBox(e: any) {
       this.drawingBox = {
         width: 0,

@@ -32,7 +32,7 @@
         <div class="flex-col" v-if="boxes && boxes.length > 0">
           <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
             <q-select
-              style="width: 300px"
+              style="width: 100%; min-width: 200px; z-index: 1"
               bg-color="white"
               label="Select Related Object"
               outlined
@@ -41,30 +41,44 @@
               v-model="box.label"
               :options="options"
             />
+            <div class="flex-col q-mt-xl" style="z-index: 2">
+              <div>left:{{ convertSizeX(box.left) }}</div>
+              <div>top:{{ convertSizeY(box.top) }}</div>
+              width:{{ convertSizeX(box.left + box.width) }} height:{{
+                convertSizeY(box.top + box.height)
+              }}
+            </div>
           </div>
+          {{ boxes }}
+          {{ imageSize }}
         </div>
         <div v-else class="drag-to-label q-mt-sm">drag to start labelling</div>
       </div>
-      <div class="flex-row justify-end q-mt-md q-gutter-x-md">
+
+      <div class="flex-row justify-center q-mt-md">
         <q-btn
+          no-wrap
           dense
           no-caps
           label="Not Found"
-          style="background: #dddddd; padding: 5px 1em; color: black"
+          style="background: #dddddd; padding: 5px 10px; color: black"
           @click="onSaveNotFound"
         />
         <q-btn
+          no-wrap
           dense
           no-caps
           label="Skip"
-          style="background: #7a7a7a; padding: 5px 1em; color: white"
+          class="q-mx-md"
+          style="background: #7a7a7a; padding: 5px 10px; color: white"
           @click="onSkip()"
         />
         <q-btn
+          no-wrap
           dense
           no-caps
           label="Submit"
-          style="background: #149bfc; padding: 5px 1em; color: white"
+          style="background: #149bfc; padding: 5px 10px; color: white"
           @click="onSave()"
         />
       </div>
@@ -181,6 +195,9 @@ export default defineComponent({
       onSave,
       onSaveNotFound,
       onSkip,
+
+      convertSizeY,
+      convertSizeX,
     };
   },
 });
