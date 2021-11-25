@@ -5,8 +5,8 @@
         <div id="app">
           <div
             :style="{
-              height: `${this.imageSize.height}px`,
-              width: `${this.imageSize.width}px`,
+              height: `${imageSize.height}px`,
+              width: `${imageSize.width}px`,
               'max-width': '64vw',
               position: 'relative',
             }"
@@ -16,7 +16,7 @@
           >
             <div
               :style="{
-                backgroundImage: `url(${this.image_url})`,
+                backgroundImage: `url(${image_url})`,
                 'background-repeat': 'no-repeat',
                 'background-size': '100% 100%',
                 position: 'relative',

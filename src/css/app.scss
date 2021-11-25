@@ -529,11 +529,11 @@ body {
   color: #fff;
   font-family: Inter, Arial, sans-serif;
   height: 100%;
-  left: 70%;
+  left: 60%;
   top: 50%;
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 80%;
 }
 .animated-title > div {
   height: 50%;
@@ -599,4 +599,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.register-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.register-wrap > * {
+  flex: 1 1 45%;
+  min-width: 200px;
 }

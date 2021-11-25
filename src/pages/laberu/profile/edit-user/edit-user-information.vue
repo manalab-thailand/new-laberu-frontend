@@ -91,6 +91,7 @@ export default defineComponent({
       "การคมนาคม",
       "ข้าราชการ",
       "กฏหมาย",
+      "อื่นๆ",
     ]);
 
     const filterFn = (val: string, update: any) => {

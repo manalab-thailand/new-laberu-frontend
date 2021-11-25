@@ -7,7 +7,7 @@
           class="text-bold row"
           style="flex-wrap: nowrap"
         >
-          <q-avatar size="28px">
+          <q-avatar size="28px" class="cursor-pointer">
             <img src="../images/bg-icon.png" />
           </q-avatar>
           <div
@@ -20,16 +20,10 @@
             "
           >
             ABERU.TECH
+            <q-tooltip> Home </q-tooltip>
           </div>
           <q-space />
-          <!-- <q-btn
-            color="black"
-            flat
-            @click="leftDrawerOpen = !leftDrawerOpen"
-            round
-            dense
-            icon="menu"
-          /> -->
+
         </q-toolbar-title>
         <q-btn
           :to="{ name: 'profile' }"
@@ -40,9 +34,9 @@
           icon="account_circle"
         />
         <q-btn
-          label="logout"
+          dense
           icon="logout"
-          class="text-black text-weight-bold"
+          class="text-black text-weight-bold q-mr-md q-ml-sm"
           flat
           @click="logoutFirebase()"
         />
