@@ -1,9 +1,10 @@
 <template>
-  <div class="text-weight-bold text-h6">User Payment</div>
+  <div class="text-weight-bold text-h6 q-pb-sm">User Payment</div>
   <div class="row justify-evently" v-if="user">
     <q-select
-      ref="nameRef"
-      class="col-12"
+      outlined
+      dense
+      class="q-px-sm col-12"
       label="Bank Account"
       v-model="user.payment.bank_name"
       map-options
@@ -13,16 +14,18 @@
       :rules="[(val) => !!val || 'Field is required']"
     />
     <q-input
-      ref="nameRef"
-      class="col-6"
+      outlined
+      dense
+      class="q-px-sm col-md-6 col-12"
       label="Bank Account No"
       v-model="user.payment.bank_account_no"
       lazy-rules
       :rules="[(val) => !!val || 'Field is required']"
     />
     <q-input
-      ref="nameRef"
-      class="col-6"
+      outlined
+      dense
+      class="q-px-sm col-md-6 col-12"
       label="Bank Account Name"
       v-model="user.payment.bank_account_name"
       lazy-rules

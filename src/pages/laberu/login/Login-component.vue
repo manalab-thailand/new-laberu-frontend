@@ -6,7 +6,7 @@
   <div class="q-my-md">
     <div class="text-bold q-mb-sm" style="color: #888888">Email address</div>
     <div>
-      <q-input v-model="email" type="email" filled />
+      <q-input v-model="email" type="email" label="Email" outlined dense />
     </div>
   </div>
   <div class="q-my-md">
@@ -15,8 +15,10 @@
       <q-input
         v-model="password"
         :type="isPwd ? 'password' : 'text'"
-        filled
+        outlined
+        dense
         label="Password"
+        @keyup.enter="onLoginWithFirebase"
       >
         <template v-slot:append>
           <q-icon
@@ -28,11 +30,15 @@
       </q-input>
     </div>
   </div>
-  <q-btn label="Sign In" class="signin-btn" @click="onLoginWithFirebase" />
+  <q-btn
+    label="Sign In"
+    class="signin-btn q-mt-md"
+    @click="onLoginWithFirebase"
+  />
 </template>
 <script lang="ts">
 import { StateInterface, useStore } from "src/store";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useRouter, Router } from "vue-router";
 import { loginWithFirebase } from "src/boot/firebase";
 import { Store } from "vuex";
@@ -46,73 +52,78 @@ export default defineComponent({
     const router = useRouter();
     const q = useQuasar();
 
+    const authentication = () => {
+      const email = ref<string>("");
+      const password = ref<string>("");
+      const uid = ref<string | undefined>("");
+      const isPwd = ref<boolean>(true);
+
+      const onLoginWithFirebase = async () => {
+        try {
+          q.loading.show();
+          const user = await loginWithFirebase(email.value, password.value);
+          if (user) {
+            uid.value = user!.uid;
+            await setAuhentication();
+          }
+        } catch (error) {
+          q.notify({
+            message: `${error}`,
+            icon: "warning",
+            color: "negative",
+          });
+        } finally {
+          q.loading.hide();
+        }
+      };
+
+      const setAuhentication = async () => {
+        try {
+          q.loading.show();
+
+          const response = await store.dispatch("moduleAuth/onLogin", {
+            uid: uid.value,
+            email: email.value,
+          });
+
+          if (response.status === 404) {
+            router.push({ name: "register" });
+            return;
+          }
+
+          const user = computed(() => store.state.moduleAuth.user);
+
+          if (user.value.status !== "active") {
+            q.dialog({
+              title: "Unauthorized access",
+              message: "Your account has been disabled",
+              ok: true,
+              persistent: true,
+            }).onOk(async () => {
+              router.push({ name: "login" });
+            });
+          }
+
+          router.push({ name: "home" });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          q.loading.hide();
+        }
+      };
+
+      return {
+        onLoginWithFirebase,
+        setAuhentication,
+        isPwd,
+        email,
+        password,
+      };
+    };
+
     return {
-      ...authentication(store, router, q),
+      ...authentication(),
     };
   },
 });
-const authentication = (
-  store: Store<StateInterface>,
-  router: Router,
-  q: QVueGlobals
-) => {
-  const email = ref<string>("user2@gmail.com");
-  const password = ref<string>("zxc123**");
-  const uid = ref<string | undefined>("");
-  const isPwd = ref<boolean>();
-
-  const onLoginWithFirebase = async () => {
-    try {
-      q.loading.show();
-      const user = await loginWithFirebase(email.value, password.value);
-      if (user) {
-        uid.value = user!.uid;
-        setAuhentication();
-      }
-    } catch (error) {
-      q.notify({
-        message: `${error}`,
-        icon: "warning",
-        color: "negative",
-      });
-    } finally {
-      q.loading.hide();
-    }
-  };
-
-  const setAuhentication = async () => {
-    const response = await store.dispatch("moduleAuth/onLogin", {
-      uid: uid.value,
-      email: email.value,
-    });
-
-    if (response.status === 404) {
-      router.push({ name: "register" });
-      return;
-    }
-
-    const user = store.state.moduleAuth.user;
-
-    if (user.status !== "active") {
-      q.dialog({
-        title: "Unauthorized access",
-        message: "Your account has been disabled",
-        ok: true,
-        persistent: true,
-      }).onOk(async () => {
-        router.push({ name: "login" });
-      });
-    }
-
-    router.push({ name: "home" });
-  };
-
-  return {
-    onLoginWithFirebase,
-    setAuhentication,
-    isPwd,
-    email,
-    password,
-  };
-};
 </script>

@@ -15,7 +15,15 @@
             text-align: center;
           "
         >
-          <div class="profile-title flex-row items-center justify-center">
+          <div
+            class="
+              profile-title
+              text-weight-bold
+              flex-row
+              items-center
+              justify-center
+            "
+          >
             Laberu Profile
             <q-icon class="q-ml-sm" name="thumb_up" color="blue" />
           </div>
@@ -25,7 +33,16 @@
           </div>
         </div>
 
-        <div class="orientation-portrait">
+        <div class="wrap-block q-gutter-y-md" style="max-width: 700px">
+          <div class="col">
+            <ProfileGeneral />
+          </div>
+          <div class="col">
+            <ProfileStat />
+          </div>
+        </div>
+
+        <!-- <div class="orientation-portrait">
           <div class="wrap-block">
             <div class="col"><ProfileGeneral /></div>
             <div class="col"><ProfileStat /></div>
@@ -36,7 +53,7 @@
             <div class="col"><ProfileGeneral /></div>
             <div class="col"><ProfileStat /></div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

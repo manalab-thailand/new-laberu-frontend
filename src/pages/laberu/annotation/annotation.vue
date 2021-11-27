@@ -34,7 +34,7 @@
 import { defineComponent, ref, computed, onMounted } from "vue";
 import annotationSidebar from "src/pages/laberu/annotation/annotationSidebar.vue";
 import { useRoute, useRouter } from "vue-router";
-import { StateInterface, useStore } from "src/store";
+import { useStore } from "src/store";
 import { useQuasar } from "quasar";
 import { ExecException } from "child_process";
 
@@ -106,7 +106,7 @@ export default defineComponent({
         shortcode: taskImage.value.shortcode,
         result: {
           annotation: {
-            decsription: result,
+            description: result,
           },
         },
         task_id: taskImage.value._id,

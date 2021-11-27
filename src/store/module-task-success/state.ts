@@ -22,7 +22,7 @@ export interface IResult {
 }
 
 export interface IResultAnnotation {
-  decsription: string;
+  description: string;
 }
 
 export interface IResultLabelling {

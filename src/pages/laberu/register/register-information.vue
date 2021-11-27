@@ -1,174 +1,142 @@
-<template>
+divdivdiv<template>
   <div class="flex-row justify-center items-center">
     <div class="flex-col register-style">
-      <div class="top-section q-mb-xs">Register User</div>
+      <div class="top-section q-mb-xs row justify-center q-mb-md">
+        Register User
+      </div>
       <q-form @submit="registerUser()">
-        <q-stepper
-          flat
-          header-class="hidden"
-          v-model="step"
-          ref="stepper"
-          color="primary"
-          animated
-        >
-          <q-step
-            :name="1"
-            title="Select campaign settings"
-            icon="settings"
-            :done="step > 1"
-          >
-            <div class="flex-row register-wrap">
-              <div class="col">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  First Name
-                </div>
-                <q-input
-                  v-model="firstname"
-                  filled
-                  class="min200"
-                  :rules="[(val) => !!val || 'Field is require']"
-                />
-              </div>
-              <div class="col">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Last Name
-                </div>
-                <div>
-                  <q-input
-                    style="width: 100%"
-                    v-model="lastname"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-              <div class="col">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Phone number
-                </div>
-                <div>
-                  <q-input
-                    mask="###-###-####"
-                    v-model="phone_number"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-              <div class="col">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Career
-                </div>
-                <div>
-                  <q-select
-                    behavior="menu"
-                    :options="careerTH"
-                    v-model="career"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-              <div class="col">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Province
-                </div>
-                <div>
-                  <q-select
-                    :options="provinceTH"
-                    use-input
-                    @filter="filterFn"
-                    v-model="province"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
+        <div class="flex-row register-wrap">
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              First Name
             </div>
-          </q-step>
-
-          <q-step
-            :name="2"
-            title="Create an ad group"
-            caption="Optional"
-            icon="create_new_folder"
-            :done="step > 2"
-          >
-            <div class="flex-col">
-              <div class="q-mb-md">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Bank Name
-                </div>
-                <div>
-                  <q-select
-                    :options="bankAccountTH"
-                    v-model="bank_name"
-                    map-options
-                    emit-value
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-              <div class="q-mb-md">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Bank Account Name
-                </div>
-                <div>
-                  <q-input
-                    v-model="bank_account_name"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-              <div class="q-mb-md">
-                <div class="text-bold q-mb-xs" style="color: #888888">
-                  Bank Account Number
-                </div>
-                <div>
-                  <q-input
-                    v-model="bank_account_no"
-                    filled
-                    class="min200"
-                    :rules="[(val) => !!val || 'Field is require']"
-                  />
-                </div>
-              </div>
-            </div> </q-step
-          ><template v-slot:navigation>
-            <q-stepper-navigation class="flex-row justify-end">
-              <q-btn
-                flat
+            <q-input
+              v-model="firstname"
+              outlined
+              dense
+              class="min200"
+              :rules="[(val) => !!val || 'Field is require']"
+            />
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              Last Name
+            </div>
+            <div>
+              <q-input
+                style="width: 100%"
+                v-model="lastname"
+                outlined
                 dense
-                class="signup-btn"
-                @click="$refs.stepper.next()"
-                :label="step === 2 ? 'Submit' : 'Continue'"
-                :type="step === 2 ? 'submit' : ''"
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
               />
-              <q-btn
-                flat
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              Phone number
+            </div>
+            <div>
+              <q-input
+                mask="###-###-####"
+                v-model="phone_number"
+                outlined
                 dense
-                v-if="step > 1"
-                color="primary"
-                @click="$refs.stepper.previous()"
-                label="Back"
-                class="q-ml-sm"
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
               />
-            </q-stepper-navigation> </template
-        ></q-stepper>
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">Career</div>
+            <div>
+              <q-select
+                behavior="menu"
+                :options="careerTH"
+                v-model="career"
+                outlined
+                dense
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">Province</div>
+            <div>
+              <q-select
+                :options="provinceTH"
+                use-input
+                @filter="filterFn"
+                v-model="province"
+                outlined
+                dense
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              Bank Name
+            </div>
+            <div>
+              <q-select
+                :options="bankAccountTH"
+                v-model="bank_name"
+                map-options
+                emit-value
+                outlined
+                dense
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              Bank Account Name
+            </div>
+            <div>
+              <q-input
+                v-model="bank_account_name"
+                outlined
+                dense
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="text-bold q-mb-xs" style="color: #888888">
+              Bank Account Number
+            </div>
+            <div>
+              <q-input
+                v-model="bank_account_no"
+                outlined
+                dense
+                class="min200"
+                :rules="[(val) => !!val || 'Field is require']"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row q-mb-md justify-center">
+          <q-btn
+            label="Register"
+            class="text-weight-bold"
+            no-caps
+            type="submit"
+            color="primary"
+          />
+        </div>
       </q-form>
     </div>
   </div>
 </template>
 <style lang="scss">
-
 .q-stepper {
   box-shadow: none;
 }
@@ -184,8 +152,7 @@
 }
 </style>
 <script lang="ts">
-import { IPayment } from "src/store/module-users/state";
-import { defineComponent, ref, reactive, computed } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import provinceJSON from "src/service/province_th.json";
 import { useQuasar } from "quasar";
 import { useStore } from "src/store";

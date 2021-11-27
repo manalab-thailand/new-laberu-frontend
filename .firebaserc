@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "laberu"
+  },
+  "targets": {
+    "laberu": {
+      "hosting": {
+        "laberu": [
+          "laberu"
+        ]
+      }
+    }
+  }
+}

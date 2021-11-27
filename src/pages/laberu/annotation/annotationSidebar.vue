@@ -1,9 +1,9 @@
 <template>
-  <div class="label-tools" v-if="imageData">
+  <div class="label-tools" v-if="imageData && project">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
-        <div class="sidebar-header">Annotation tools</div>
-        <q-icon name="construction" size="20px" />
+        <div class="sidebar-header">{{ project.project_name }}</div>
+
         <!-- document btn -->
         <a
           href="https://www.w3schools.com"
@@ -18,29 +18,42 @@
         class="flex-row text-blck text-bold q-mt-md q-mb-sm"
         style="font-size: 16px"
       >
+        Project Description
+      </div>
+      <div class="flex-row sidebar-desc">
+        {{ project.project_desc }}
+      </div>
+      <div
+        class="flex-row text-blck text-bold q-mt-md q-mb-sm"
+        style="font-size: 16px"
+      >
         Quick Guidelines
       </div>
       <div class="flex-row sidebar-desc">
-        {{ imageData.annotation?.decsription }}
+        {{ imageData.annotation.description }}
       </div>
 
       <!-- wrapped -->
       <div class="orientation-portrait">
         <div class="flex-row">
-          <div class="act-perform-bar-p">Action Performance</div>
+          <div class="act-perform-bar-p">
+            Annotation Tools <q-icon name="construction" size="20px" />
+          </div>
         </div>
       </div>
       <!-- unwrap -->
       <div class="orientation-landscape">
         <div class="flex-row">
-          <div class="act-perform-bar-l">Action Performance</div>
+          <div class="act-perform-bar-l">
+            Annotation Tools <q-icon name="construction" size="20px" />
+          </div>
         </div>
       </div>
 
       <div class="flex-row label-sec">
         <q-select
           class="annotation-overflow"
-          label="Mode: 'add-unique'"
+          label="Enter Description"
           filled
           v-model="text"
           use-input
@@ -81,8 +94,8 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   props: {
-    project: Object as () => IProject,
-    imageData: Object as () => IImageData,
+    project: {} as () => IProject,
+    imageData: {} as () => IImageData,
     descriptions: String,
   },
   setup(props, { emit }) {

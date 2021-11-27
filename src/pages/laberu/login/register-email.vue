@@ -1,5 +1,7 @@
 <template>
-  <div class="top-section q-mb-xs">Sign Up</div>
+  <div class="top-section q-mb-xs row">
+    <div>Sign Up</div>
+  </div>
   <q-form @submit="registerFirebase">
     <div class="q-my-md">
       <div class="text-bold q-mb-sm" style="color: #888888">Email address</div>
@@ -7,7 +9,8 @@
         v-model="email"
         type="email"
         label="Email"
-        filled
+        outlined
+        dense
         :rules="[(val) => !!val || 'Field is require']"
       />
     </div>
@@ -17,7 +20,8 @@
         <q-input
           v-model="password"
           label="Password"
-          filled
+          outlined
+          dense
           :type="isPwd ? 'password' : 'text'"
           :rules="[(val) => !!val || 'Field is require']"
         >
@@ -39,7 +43,8 @@
         <q-input
           v-model="confirmPwd"
           :type="isPwd ? 'password' : 'text'"
-          filled
+          outlined
+          dense
           label="Confirm Password"
           :rules="[(val) => !!val || 'Field is require']"
         />
@@ -84,7 +89,7 @@ export default defineComponent({
         if (user) {
           q.dialog({
             title: "Register Success",
-            message: "Your account has registered successful",
+            message: "Your account has been registered",
             persistent: true,
           }).onOk(() => {
             window.location.reload();

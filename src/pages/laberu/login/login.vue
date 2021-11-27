@@ -54,7 +54,12 @@
         <div class="-or- col"></div>
       </div>
       <div>
-        <q-btn unelevated outline class="google-btn" no-caps
+        <q-btn
+          unelevated
+          outline
+          class="google-btn"
+          no-caps
+          @click="onClickLoginGoogle"
           ><img src="/images/Google-Logo 1.png" alt="" /> Sign In with
           Google</q-btn
         >
@@ -64,13 +69,11 @@
 </template>
 <style lang="scss"></style>
 <script lang="ts">
-import { StateInterface, useStore } from "src/store";
-import { IAuthState } from "src/store/module-auth/state";
-import { defineComponent, ref } from "vue";
-import { useRouter, useRoute, Router } from "vue-router";
-import { loginWithGoogle, loginWithFirebase } from "src/boot/firebase";
-import { Store } from "vuex";
-import { QVueGlobals, useQuasar } from "quasar";
+import { useStore } from "src/store";
+import { defineComponent, ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { loginWithGoogle } from "src/boot/firebase";
+import { useQuasar } from "quasar";
 import LoginComponent from "src/pages/laberu/login/Login-component.vue";
 import RegisterEmail from "src/pages/laberu/login/register-email.vue";
 export default defineComponent({
@@ -87,76 +90,79 @@ export default defineComponent({
     const isComponent = ref("LoginComponent");
     const isRegister = ref("RegisterEmail");
 
+    const authentication = () => {
+      const email = ref<string>("");
+      const password = ref<string>("");
+      const uid = ref<string | undefined>("");
+
+      const onClickLoginGoogle = async () => {
+        try {
+          q.loading.show();
+          const result = await loginWithGoogle();
+          if (result) {
+            uid.value = result.user.uid!;
+            email.value = result.user.email!;
+            setAuhentication();
+          }
+        } catch (error) {
+          q.notify({
+            message: `${error}`,
+            icon: "warning",
+            color: "negative",
+          });
+        } finally {
+          q.loading.hide();
+        }
+      };
+
+      const setAuhentication = async () => {
+        try {
+          q.loading.show();
+
+          const response = await store.dispatch("moduleAuth/onLogin", {
+            uid: uid.value,
+            email: email.value,
+          });
+
+          if (response.status === 404) {
+            router.push({ name: "register" });
+            return;
+          }
+
+          const user = computed(() => store.state.moduleAuth.user);
+
+          if (user.value.status !== "active") {
+            q.dialog({
+              title: "Unauthorized access",
+              message: "Your account has been disabled",
+              ok: true,
+              persistent: true,
+            }).onOk(async () => {
+              router.push({ name: "login" });
+            });
+          }
+
+          router.push({ name: "home" });
+        } catch (error) {
+          console.log(error);
+        } finally {
+          q.loading.hide();
+        }
+      };
+
+      return {
+        onClickLoginGoogle,
+        setAuhentication,
+        email,
+        password,
+      };
+    };
+
     return {
-      ...authentication(store, router, q),
+      ...authentication(),
       isComponent,
       isRegister,
     };
   },
 });
-const authentication = (
-  store: Store<StateInterface>,
-  router: Router,
-  q: QVueGlobals
-) => {
-  const email = ref<string>("");
-  const password = ref<string>("");
-  const uid = ref<string | undefined>("");
-  const currentUser = ref<IAuthState>();
-
-  const onClickLoginGoogle = async () => {
-    try {
-      q.loading.show();
-      const result = await loginWithGoogle();
-      if (result) {
-        uid.value = result.user.uid!;
-        email.value = result.user.email!;
-        setAuhentication();
-      }
-    } catch (error) {
-      q.notify({
-        message: `${error}`,
-        icon: "warning",
-        color: "negative",
-      });
-    } finally {
-      q.loading.hide();
-    }
-  };
-
-  const setAuhentication = async () => {
-    const response = await store.dispatch("moduleAuth/onLogin", {
-      uid: uid.value,
-      email: email.value,
-    });
-
-    if (response.status === 404) {
-      router.push({ name: "register" });
-      return;
-    }
-
-    const user = store.state.moduleAuth.user;
-    const { status } = user;
-
-    if (status !== "active") {
-      q.dialog({
-        title: "Unauthorized access",
-        message: "Your account has been disabled",
-        ok: true,
-        persistent: true,
-      }).onOk(async () => {
-        router.push({ name: "login" });
-      });
-    }
-
-    router.push({ name: "home" });
-  };
-
-  return {
-    onClickLoginGoogle,
-    setAuhentication,
-    email,
-    password,
-  };
-};
 </script>

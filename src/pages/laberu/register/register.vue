@@ -2,7 +2,6 @@
   <div class="content-sidebar-60">
     <div class="col-6">
       <div class="login-img">
-        <!--source: https://codepen.io/alvaromontoro/pen/RmRjvg -->
         <div class="animated-title">
           <div class="text-top">
             <div>

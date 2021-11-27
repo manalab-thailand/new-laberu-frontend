@@ -1,18 +1,23 @@
 <template>
-  <q-card bordered class="my-card shadow-9 q-ma-md" v-if="editUser">
+  <q-card
+    bordered
+    class="shadow-9 q-mx-md"
+    style="max-width: 500px; width: 100%"
+    v-if="editUser"
+  >
     <q-card-section>
-      <div class="text-h4 text-weight-bold text-center">Manage User</div>
+      <div class="text-h5 text-weight-bold text-center">Edit Profile</div>
     </q-card-section>
-    <q-card-section>
+    <q-card-section class="q-pa-none">
       <q-form @submit="onSubmitUpdate(editUser)" class="q-gutter-x-lg q-px-md">
         <EditUserInformation :user="editUser" />
         <!-- <EditUserAuthorization :user="user" /> -->
         <EditUserPayment :user="editUser" />
 
-        <div class="row justify-center">
+        <div class="row justify-center q-mb-md">
           <q-btn
             dense
-            label="Submit Update"
+            label="Update Profile"
             color="primary"
             class="text-weight-bold"
             type="submit"

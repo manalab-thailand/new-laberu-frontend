@@ -28,7 +28,7 @@ module.exports = configure(function (ctx) {
     extras: [
       // 'ionicons-v4',
       // 'mdi-v5',
-      'fontawesome-v5',
+      "fontawesome-v5",
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
@@ -130,8 +130,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `new-laberu`,
-        short_name: `new-laberu`,
+        name: `Laberu`,
+        short_name: `Laberu`,
         description: `A Quasar Framework app`,
         display: "standalone",
         orientation: "portrait",

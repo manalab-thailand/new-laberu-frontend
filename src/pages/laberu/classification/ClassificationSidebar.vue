@@ -1,9 +1,8 @@
 <template>
-  <div class="label-tools" v-if="imageData">
+  <div class="label-tools" v-if="imageData && project">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
-        <div class="sidebar-header">Classification Tools</div>
-        <q-icon name="construction" size="20px" />
+        <div class="sidebar-header">{{ project.project_name }}</div>
         <!-- document btn -->
         <a
           href="https://www.w3schools.com"
@@ -15,16 +14,30 @@
         </a>
       </div>
 
+      <div
+        class="flex-row text-blck text-bold q-mt-md q-mb-sm"
+        style="font-size: 16px"
+      >
+        Project Description
+      </div>
+      <div class="flex-row sidebar-desc">
+        {{ project.project_desc }}
+      </div>
+
       <!-- wrapped -->
       <div class="orientation-portrait">
         <div class="flex-row">
-          <div class="act-perform-bar-p">Action Performance</div>
+          <div class="act-perform-bar-p">
+            Classification Tools <q-icon name="construction" size="20px" />
+          </div>
         </div>
       </div>
       <!-- unwrap -->
       <div class="orientation-landscape">
         <div class="flex-row">
-          <div class="act-perform-bar-l">Action Performance</div>
+          <div class="act-perform-bar-l">
+            Classification Tools <q-icon name="construction" size="20px" />
+          </div>
         </div>
       </div>
       <div
@@ -130,7 +143,7 @@ export default defineComponent({
           color: "red-5",
           textColor: "white",
           icon: "warning",
-          message: "กรุณาใส่ติ๊กถูกสักช่องไอสัดดด",
+          message: "กรุณาเลือกหมวดหมู่ของรูปภาพอย่างน้อย 1 หมวดหมู่",
         });
         return;
       }

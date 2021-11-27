@@ -1,62 +1,76 @@
 <template>
   <div v-if="user">
-    <div class="text-weight-bold text-h6">User Infomation</div>
-    <div class="flex-row justify-between">
-      <q-input
-        class="col"
-        label="Firstname"
-        v-model="user.firstname"
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
-      <q-input
-        class="col"
-        label="Lastname"
-        v-model="user.lastname"
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
-    </div>
-    <div class="flex-row justify-between">
-      <q-input
-        class="col"
-        label="Email"
-        v-model="user.email"
-        readonly
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
-      <q-input
-        ref="nameRef"
-        class="col"
-        mask="###-###-####"
-        label="Phone Number"
-        v-model="user.phone_number"
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
-    </div>
-    <div class="flex-row justify-between">
-      <q-select
-        class="col"
-        label="Career"
-        v-model="user.career"
-        :options="careerTH"
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
-      <q-select
-        class="col"
-        label="Province"
-        v-model="user.province"
-        :options="provinceTH"
-        @filter="filterFn"
-        use-input
-        emit-value
-        map-options
-        lazy-rules
-        :rules="[(val) => !!val || 'Field is required']"
-      />
+    <div class="text-weight-bold text-h6 q-pb-sm">User Infomation</div>
+    <div class="q-gutter-y-sm">
+      <div class="row justify-between">
+        <q-input
+          class="col-md-6 col-12 q-px-sm"
+          label="Firstname"
+          v-model="user.firstname"
+          outlined
+          dense
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+        <q-input
+          class="col-md-6 col-12 q-px-sm"
+          label="Lastname"
+          v-model="user.lastname"
+          outlined
+          dense
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+      </div>
+      <div class="row justify-between">
+        <q-input
+          class="col-md-6 col-12 q-px-sm"
+          label="Email"
+          v-model="user.email"
+          outlined
+          dense
+          readonly
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+        <q-input
+          ref="nameRef"
+          class="col-md-6 col-12 q-px-sm"
+          mask="###-###-####"
+          label="Phone Number"
+          v-model="user.phone_number"
+          outlined
+          dense
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+      </div>
+      <div class="row justify-between">
+        <q-select
+          class="col-md-6 col-12 q-px-sm"
+          label="Career"
+          v-model="user.career"
+          :options="careerTH"
+          outlined
+          dense
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+        <q-select
+          class="col-md-6 col-12 q-px-sm"
+          label="Province"
+          v-model="user.province"
+          :options="provinceTH"
+          @filter="filterFn"
+          outlined
+          dense
+          use-input
+          emit-value
+          map-options
+          lazy-rules
+          :rules="[(val) => !!val || 'Field is required']"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -119,7 +133,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.my-card .col {
+.my-card .col-md-6 col-12 {
   margin: 0;
 }
 </style>

@@ -1,86 +1,97 @@
 <template>
   <div class="main-profile-box">
-    <div class="flex-row main-box-title items-center">
-      Profile <q-icon name="account_circle" class="q-ml-sm" color="blue" />
+    <div class="flex-row main-box-title justify-between items-center q-mb-sm">
+      <div class="row items-center">
+        Profile <q-icon name="account_circle" class="q-ml-sm" color="blue" />
+      </div>
+      <div class="flex-row justify-center q-mt-sm">
+        <q-btn
+          class="text-weight-bold"
+          outline
+          icon="edit"
+          label="Edit"
+          color="primary"
+          @click="editUserDialog = !editUserDialog"
+        />
+
+        <q-dialog v-model="editUserDialog" v-if="user">
+          <EditUser
+            :user="user"
+            @onUpdateUser="editUserDialog = !editUserDialog"
+          />
+        </q-dialog>
+      </div>
     </div>
-    <div class="flex-row profile-wrap">
-      <div class="col">
+    <div class="flex-row profile-wrap q-gutter-y-md">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Name:</div>
-          <q-input dense outlined :placeholder="user.firstname" />
+          <q-input dense outlined readonly v-model="user.firstname" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Surname:</div>
-          <q-input dense outlined :placeholder="user.lastname" />
+          <q-input dense outlined readonly v-model="user.lastname" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Email:</div>
-          <q-input dense outlined :placeholder="emailHide(user.email)" />
+          <q-input dense outlined readonly v-model="reactiveUser.email" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Tel:</div>
-          <q-input dense outlined :placeholder="cardHide(user.phone_number)" />
+          <q-input
+            dense
+            outlined
+            readonly
+            v-model="reactiveUser.phone_number"
+          />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Career:</div>
-          <q-input dense outlined :placeholder="user.career" />
+          <q-input dense outlined readonly v-model="user.career" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Province:</div>
-          <q-input dense outlined :placeholder="user.province" />
+          <q-input dense outlined readonly v-model="user.province" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Bank:</div>
-          <q-input dense outlined :placeholder="user.payment.bank_name" />
+          <q-input dense outlined readonly v-model="reactiveUser.bank_name" />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Acc. No:</div>
           <q-input
             dense
             outlined
-            :placeholder="cardHide(user.payment.bank_account_no)"
+            readonly
+            v-model="reactiveUser.bank_account_no"
           />
         </div>
       </div>
-      <div class="col">
+      <div class="">
         <div class="flex-row items-center">
           <div class="rows-header">Acc. Name:</div>
           <q-input
             dense
             outlined
-            :placeholder="user.payment.bank_account_name"
+            readonly
+            v-model="user.payment.bank_account_name"
           />
         </div>
       </div>
-    </div>
-    <div class="flex-row justify-center q-mt-sm">
-      <q-btn
-        class="text-weight-bold"
-        label="Edit User"
-        color="primary"
-        @click="editUserDialog = !editUserDialog"
-      />
-
-      <q-dialog v-model="editUserDialog" v-if="user">
-        <EditUser
-          :user="user"
-          @onUpdateUser="editUserDialog = !editUserDialog"
-        />
-      </q-dialog>
     </div>
   </div>
 </template>
@@ -95,13 +106,16 @@
 .q-input {
   padding: 0 1em;
 }
+// div {
+//   border: dashed;
+// }
 </style>
-<script>
-import { defineComponent, ref, onMounted, computed } from "vue";
+<script lang='ts'>
+import { defineComponent, ref, onMounted, computed, reactive } from "vue";
 import { useStore } from "src/store";
 import EditUser from "./edit-user/edit-user.vue";
 
-function cardHide(card) {
+function cardHide(card: any) {
   let hideNum = [];
   for (let i = 0; i < card.length; i++) {
     if (i < card.length - 4) {
@@ -112,7 +126,7 @@ function cardHide(card) {
   }
   return hideNum.join("");
 }
-function emailHide(card) {
+function emailHide(card: any) {
   let hideNum = [];
   let at = 0;
   for (let i = 0; i < card.length; i++) {
@@ -137,13 +151,33 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+
     const user = computed(() => store.state.moduleAuth.user);
+
+    const bankAccountTH = ref([
+      { label: "(SCB) ธนาคารไทยพาณิชย์", value: "SCB" },
+      { label: "(KTB) ธนาคารกรุงไทย", value: "KTB" },
+      { label: "(KBANK) ธนาคารกสิกรไทย", value: "KBANK" },
+      { label: "(BAY) ธนาคารกรุงศรีอยุธยา", value: "BAY" },
+      { label: "(GSB) ธนาคารออมสิน", value: "GSB" },
+      { label: "(KBANK) ธนาคารกรุงเทพ", value: "BBL" },
+    ]);
+
+    const reactiveUser = reactive({
+      phone_number: cardHide(user.value.phone_number),
+      email: emailHide(user.value.email),
+      bank_account_no: cardHide(user.value.payment.bank_account_no),
+      bank_name: bankAccountTH.value.find(
+        (bank) => bank.value === user.value.payment.bank_name
+      )?.label,
+    });
 
     const editUserDialog = ref(false);
 
     return {
       text: ref(""),
       user,
+      reactiveUser,
       editUserDialog,
       cardHide,
       emailHide,

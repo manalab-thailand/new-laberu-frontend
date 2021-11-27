@@ -11,7 +11,7 @@ export interface IImageData {
 }
 
 export interface IAnnotation {
-  decsription: string;
+  description: string;
 }
 
 export interface IClassification {}

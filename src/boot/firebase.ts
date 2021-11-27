@@ -35,7 +35,19 @@ const loginWithFirebase = async (email: string, password: string) => {
     );
     return user;
   } catch (error) {
-    throw new Error((error as ExecException).message);
+    const message = errorHandlerFirebase(
+      (error as ExecException).code!.toString()
+    );
+
+    throw new Error(message);
+  }
+};
+
+const errorHandlerFirebase = (error_code: string) => {
+  if (error_code === "auth/user-not-found") {
+    return "The username or password is incorrect";
+  } else if (error_code === "auth/wrong-password") {
+    return "The username or password is incorrect";
   }
 };
 

@@ -1,9 +1,8 @@
 <template>
-  <div class="label-tools">
+  <div class="label-tools" v-if="project">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
-        <div class="sidebar-header">Labelling tools</div>
-        <q-icon name="construction" size="20px" />
+        <div class="sidebar-header">{{ project.project_name }}</div>
         <!-- document btn -->
         <a
           href="https://www.w3schools.com"
@@ -15,16 +14,26 @@
         </a>
       </div>
 
+      <div
+        class="flex-row text-blck text-bold q-mt-md q-mb-sm"
+        style="font-size: 16px"
+      >
+        Project Description
+      </div>
+      <div class="flex-row sidebar-desc">
+        {{ project.project_desc }}
+      </div>
+
       <!-- wrapped -->
       <div class="orientation-portrait">
         <div class="flex-row">
-          <div class="act-perform-bar-p">Action Performance</div>
+          <div class="act-perform-bar-p">Object Labelling Tools</div>
         </div>
       </div>
       <!-- unwrap -->
       <div class="orientation-landscape">
         <div class="flex-row">
-          <div class="act-perform-bar-l">Action Performance</div>
+          <div class="act-perform-bar-l">Object Labelling Tools</div>
         </div>
       </div>
 
@@ -32,7 +41,7 @@
         <div class="flex-col" v-if="boxes && boxes.length > 0">
           <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
             <q-select
-              style="width: 100%; min-width: 200px; z-index: 1"
+              style="width: 100%; min-width: 300px; z-index: 1"
               bg-color="white"
               label="Select Related Object"
               outlined
@@ -41,28 +50,20 @@
               v-model="box.label"
               :options="options"
             />
-            <div class="flex-col q-mt-xl" style="z-index: 2">
-              <div>left:{{ convertSizeX(box.left) }}</div>
-              <div>top:{{ convertSizeY(box.top) }}</div>
-              width:{{ convertSizeX(box.left + box.width) }} height:{{
-                convertSizeY(box.top + box.height)
-              }}
-            </div>
           </div>
-          {{ boxes }}
-          {{ imageSize }}
         </div>
-        <div v-else class="drag-to-label q-mt-sm">drag to start labelling</div>
+        <div v-else class="drag-to-label q-mt-sm">
+          Draw a box in image to start labelling.
+        </div>
       </div>
 
-      <div class="flex-row justify-center q-mt-md">
+      <div class="flex-row justify-end q-mt-md">
         <q-btn
-          no-wrap
+          @click="onSaveNotFound()"
           dense
           no-caps
           label="Not Found"
-          style="background: #dddddd; padding: 5px 10px; color: black"
-          @click="onSaveNotFound"
+          style="background: #050505; padding: 5px 1em; color: white"
         />
         <q-btn
           no-wrap

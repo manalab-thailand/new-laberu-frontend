@@ -2,11 +2,12 @@
   "name": "new-laberu-frontend",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "new-laberu",
+  "productName": "Laberu",
   "author": "Doublepor <doublepor.pp@gmail.com>",
   "private": true,
   "scripts": {
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "deploy": "quasar build -m spa && firebase deploy --only hosting:laberu"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",

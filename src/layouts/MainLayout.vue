@@ -2,36 +2,36 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated>
       <q-toolbar class="bg-white">
-        <q-toolbar-title
-          @click="$router.push({ name: 'home' })"
-          class="text-bold row"
-          style="flex-wrap: nowrap"
-        >
-          <q-avatar size="28px" class="cursor-pointer">
-            <img src="../images/bg-icon.png" />
-          </q-avatar>
-          <div
-            class="cursor-pointer"
-            style="
-              font-weight: bold;
-              letter-spacing: 5px;
-              margin-left: 7px;
-              color: #d15eff;
-            "
-          >
-            ABERU.TECH
-            <q-tooltip> Home </q-tooltip>
+        <q-toolbar-title class="text-bold">
+          <div class="row" style="flex-wrap: nowrap" @click="pushPage('home')">
+            <q-avatar size="28px" class="cursor-pointer">
+              <img src="../images/bg-icon.png" />
+            </q-avatar>
+            <div
+              class="cursor-pointer"
+              style="
+                font-weight: bold;
+                letter-spacing: 5px;
+                margin-left: 7px;
+                color: #d15eff;
+              "
+            >
+              ABERU.TECH
+              <q-tooltip> Home </q-tooltip>
+            </div>
           </div>
           <q-space />
-
         </q-toolbar-title>
         <q-btn
-          :to="{ name: 'profile' }"
+          v-if="routerName !== 'register'"
           color="black"
-          flat
-          round
           dense
+          flat
+          class="text-weight-bold"
+          no-caps
+          :label="!$q.platform.is.mobile ? user.email : ''"
           icon="account_circle"
+          @click="pushPage('profile')"
         />
         <q-btn
           dense
@@ -49,10 +49,11 @@
   </q-layout>
 </template>
 
-<script>
+<script lang='ts'>
 import EssentialLink from "components/EssentialLink.vue";
 import { logout } from "src/boot/firebase";
-import { defineComponent } from "vue";
+import { useStore } from "src/store";
+import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
 export default defineComponent({
   name: "MainLayout",
@@ -61,15 +62,24 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
+    const store = useStore();
+
+    const routerName = computed(() => router.currentRoute.value.name);
+
+    const user = computed(() => store.state.moduleAuth.user);
 
     const logoutFirebase = async () => {
       await logout();
       router.push({ name: "login" });
     };
 
-    return {
-      logoutFirebase,
+    const pushPage = (name: string) => {
+      if (routerName.value !== "register") {
+        router.push({ name: name });
+      }
     };
+
+    return { routerName, logoutFirebase, pushPage, user };
   },
 });
 </script>
