@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "laberu",
-    "public": "dist/spa",
+    "public": "dist/pwa",
     "ignore": [
       "firebase.json",
       "**/.*",

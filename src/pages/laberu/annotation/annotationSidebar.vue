@@ -29,7 +29,7 @@
       >
         Quick Guidelines
       </div>
-      <div class="flex-row sidebar-desc">
+      <div class="flex-row sidebar-desc" v-if="imageData">
         {{ imageData.annotation.description }}
       </div>
 

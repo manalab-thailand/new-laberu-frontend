@@ -169,14 +169,14 @@ export default defineComponent({
     const userState = computed(() => store.state.moduleAuth.user);
 
     const user = {
-      firstname: ref("user"),
-      lastname: ref("test"),
-      phone_number: ref("0123456789"),
+      firstname: ref(""),
+      lastname: ref(""),
+      phone_number: ref(""),
       career: ref(""),
       province: ref(""),
       bank_name: ref(null),
-      bank_account_no: ref("123456789"),
-      bank_account_name: ref("user test"),
+      bank_account_no: ref(""),
+      bank_account_name: ref(""),
     };
 
     const provinceTH = ref<string[]>();

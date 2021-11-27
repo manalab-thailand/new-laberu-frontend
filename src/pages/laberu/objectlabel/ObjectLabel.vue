@@ -92,6 +92,7 @@ import { ExecException } from "child_process";
 import { IProject } from "src/store/module-project/state";
 import { IUser } from "src/store/module-users/state";
 import { IImageData, ITaskImage } from "src/store/module-task-image/state";
+import moment from "moment";
 
 interface Boxes {
   top: number;
@@ -136,6 +137,7 @@ export default defineComponent({
     startedAt: new Date(),
     dialog: ref(false),
     maximizedToggle: ref(true),
+    intervalSession: ref(),
   }),
   mounted() {
     this.project = computed(() =>
@@ -195,6 +197,8 @@ export default defineComponent({
         this.image_url = `${(this.project as IProject)?.base_image_url}/${
           (this.taskImage as ITaskImage).shortcode
         }.${(this.project as IProject)?.image_type}`;
+
+        this.intervalSessionExpire();
       } catch (error) {
         throw new Error((error as ExecException).message);
       } finally {
@@ -229,6 +233,8 @@ export default defineComponent({
         startedAt: this.startedAt,
       });
 
+      this.clearSessionExpire();
+
       try {
         this.$q.loading.show();
         await this.$store.dispatch(
@@ -242,14 +248,29 @@ export default defineComponent({
         this.$q.loading.hide();
       }
     },
-
     screenValidation() {
       if (window.screen.width < 1000) {
         return false;
       }
       return true;
     },
+    intervalSessionExpire() {
+      const sessionExpire = moment().add("minute", 15);
 
+      this.intervalSession.value = setInterval(() => {
+        const diffSessionExpire = moment(sessionExpire).diff(
+          moment(),
+          "second"
+        );
+        if (diffSessionExpire <= 0) {
+          clearInterval(this.intervalSession.value);
+          this.$router.go(-1);
+        }
+      }, 1000 * 60 * 0.5);
+    },
+    clearSessionExpire() {
+      clearInterval(this.intervalSession.value);
+    },
     startDrawingBox(e: any) {
       this.drawingBox = {
         width: 0,
@@ -293,6 +314,9 @@ export default defineComponent({
       });
       this.activeBoxIndex = null;
     },
+  },
+  beforeUnmount() {
+    this.clearSessionExpire();
   },
 });
 </script>

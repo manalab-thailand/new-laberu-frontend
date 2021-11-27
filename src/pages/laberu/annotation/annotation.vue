@@ -31,12 +31,21 @@
 <style lang="scss" scoped></style>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watch,
+  onUnmounted,
+  onBeforeUnmount,
+} from "vue";
 import annotationSidebar from "src/pages/laberu/annotation/annotationSidebar.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "src/store";
 import { useQuasar } from "quasar";
 import { ExecException } from "child_process";
+import moment from "moment";
 
 export default defineComponent({
   components: {
@@ -84,6 +93,7 @@ export default defineComponent({
 
         startedAt.value = new Date();
         image_url.value = `${project.value?.base_image_url}/${taskImage.value.shortcode}.${project.value?.image_type}`;
+        intervalSessionExpire();
       } catch (error) {
         throw new Error((error as ExecException).message);
       } finally {
@@ -119,6 +129,8 @@ export default defineComponent({
         startedAt: startedAt.value,
       });
 
+      clearSessionExpire();
+
       try {
         q.loading.show();
         await store.dispatch(
@@ -133,11 +145,37 @@ export default defineComponent({
       }
     };
 
+    const intervalSession = ref();
+
+    const intervalSessionExpire = () => {
+      const sessionExpire = moment().add("minute", 15);
+
+      intervalSession.value = setInterval(() => {
+        const diffSessionExpire = moment(sessionExpire).diff(
+          moment(),
+          "second"
+        );
+        if (diffSessionExpire <= 0) {
+          clearInterval(intervalSession.value);
+          router.go(-1);
+        }
+      }, 1000 * 60 * 0.5);
+    };
+
+    const clearSessionExpire = () => {
+      clearInterval(intervalSession.value);
+    };
+
+    onBeforeUnmount(() => {
+      clearSessionExpire();
+    });
+
     return {
       taskImage,
       imageData,
       project,
       image_url,
+      startedAt,
       onSave,
       initState,
     };
