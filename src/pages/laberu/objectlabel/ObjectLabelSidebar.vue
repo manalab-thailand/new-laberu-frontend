@@ -101,6 +101,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "src/store";
 import { useQuasar } from "quasar";
 import { IImageData, ITaskImage } from "src/store/module-task-image/state";
+import { IEventResult } from "../classification/classification.vue";
 
 interface Boxes {
   top: number;
@@ -145,7 +146,10 @@ export default defineComponent({
         },
       ];
 
-      emit("onSave", detection);
+      emit("onSave", {
+        result: detection,
+        result_type: "Not Found",
+      } as IEventResult);
     };
 
     const onSave = () => {
@@ -169,7 +173,10 @@ export default defineComponent({
         };
       });
 
-      emit("onSave", detection);
+      emit("onSave", {
+        result: detection,
+        result_type: "Found",
+      } as IEventResult);
     };
 
     const convertSizeX = (detection: number) => {

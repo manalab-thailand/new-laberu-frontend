@@ -93,6 +93,7 @@ import { IProject } from "src/store/module-project/state";
 import { IUser } from "src/store/module-users/state";
 import { IImageData, ITaskImage } from "src/store/module-task-image/state";
 import moment from "moment";
+import { IEventResult } from "../classification/classification.vue";
 
 interface Boxes {
   top: number;
@@ -215,13 +216,13 @@ export default defineComponent({
         this.$q.loading.hide();
       }
     },
-    async onSave(data: any) {
+    async onSave(data: { result: []; result_type: string }) {
       const size = {
         width: (this.imageData as IImageData).labelling.width,
         height: (this.imageData as IImageData).labelling.height,
       };
 
-      const result = data.map((x: any) => ({
+      const result = data.result.map((x) => ({
         size,
         detection: x,
       }));
@@ -241,6 +242,7 @@ export default defineComponent({
             : null,
         },
         startedAt: this.startedAt,
+        result_type: data.result_type,
       });
 
       this.clearSessionExpire();

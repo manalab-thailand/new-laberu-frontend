@@ -43,9 +43,9 @@ import { useQuasar } from "quasar";
 import { ExecException } from "child_process";
 import moment from "moment";
 
-interface IEventResult {
-  value: boolean;
-  label: string;
+export interface IEventResult {
+  result: {};
+  result_type: string;
 }
 
 export default defineComponent({
@@ -111,12 +111,12 @@ export default defineComponent({
       }
     });
 
-    const onSave = async (result: IEventResult) => {
+    const onSave = async (event: IEventResult) => {
       const taskSuccess = ref({
         shortcode: taskImage.value.shortcode,
         result: {
           classification: {
-            class: result,
+            class: event.result,
           },
         },
         task_id: taskImage.value._id,
@@ -127,6 +127,7 @@ export default defineComponent({
           group_id: group_id ? group_id : null,
         },
         startedAt: startedAt.value,
+        result_type: event.result_type,
       });
 
       clearSessionExpire();

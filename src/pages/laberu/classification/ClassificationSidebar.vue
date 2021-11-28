@@ -108,6 +108,7 @@ import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
 import { IImageData } from "src/store/module-task-image/state";
 import { defineComponent, ref, watch, toRef } from "vue";
+import { IEventResult } from "./classification.vue";
 
 export default defineComponent({
   props: {
@@ -141,7 +142,15 @@ export default defineComponent({
         };
       }, {} as any);
 
-      emit("onSave", classResult);
+      emit("onSave", {
+        result: classResult,
+        result_type: "Not Found",
+      } as IEventResult);
+
+      result.value = options!.map((option) => ({
+        label: option.value,
+        value: false,
+      }));
     };
 
     const onSave = () => {
@@ -163,7 +172,10 @@ export default defineComponent({
         };
       }, {} as any);
 
-      emit("onSave", classResult);
+      emit("onSave", {
+        result: classResult,
+        result_type: "Found",
+      } as IEventResult);
 
       result.value = options!.map((option) => ({
         label: option.value,
