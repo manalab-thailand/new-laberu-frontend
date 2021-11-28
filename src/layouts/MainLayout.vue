@@ -4,9 +4,9 @@
       <q-toolbar class="bg-white">
         <q-toolbar-title class="text-bold">
           <div class="row" style="flex-wrap: nowrap" @click="pushPage('home')">
-            <q-avatar size="28px" class="cursor-pointer">
+            <!-- <q-avatar size="28px" class="cursor-pointer">
               <img src="../images/bg-icon.png" />
-            </q-avatar>
+            </q-avatar> -->
             <div
               class="cursor-pointer"
               style="
@@ -16,7 +16,7 @@
                 color: #d15eff;
               "
             >
-              ABERU.TECH
+              LABERU.TECH
               <q-tooltip> Home </q-tooltip>
             </div>
           </div>

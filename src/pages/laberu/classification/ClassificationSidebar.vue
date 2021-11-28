@@ -40,8 +40,13 @@
           </div>
         </div>
       </div>
+
+      <div class="label-sec q-my-sm" style="opacity: 0.7">
+        เป็นการจัดหมวดหมู่ของรูปภาพ
+      </div>
+
       <div
-        class="flex-row label-sec checkbox-wrapper classification-toggle-btn"
+        class="flex-row checkbox-wrapper classification-toggle-btn"
         v-if="options"
       >
         <div v-for="(option, index) in options" :key="index">
@@ -51,6 +56,9 @@
             :color="color[index]"
           />
         </div>
+      </div>
+      <div style="opacity: 0.7" class="q-mt-sm">
+        เลือกตัวเลือกให้สอดคล้องกับหมวดหมู่ของรูปภาพ
       </div>
       <div class="flex-row justify-end q-mt-md q-gutter-x-md">
         <q-btn

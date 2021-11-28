@@ -50,19 +50,37 @@
         </div>
       </div>
 
-      <div class="flex-row label-sec">
+      <div class="flex-col q-gutter-sm label-sec">
         <q-select
           class="annotation-overflow"
-          label="Enter Description"
-          filled
-          v-model="text"
+          label="ตัวอย่างการอธิบายข้อความ"
+          v-model="example"
           use-input
           use-chips
           multiple
           hide-dropdown-icon
+          readonly
           input-debounce="0"
           new-value-mode="add-unique"
         />
+        <q-select
+          class="annotation-overflow"
+          label="Enter Description"
+          v-model="text"
+          use-input
+          use-chips
+          multiple
+          outlined
+          hide-dropdown-icon
+          input-debounce="0"
+          new-value-mode="add-unique"
+        />
+        <div style="opacity: 0.7" v-if="$q.platform.is.mobile">
+          กดปุ่ม Return เพื่อแบ่งคำอธิบายเป็นส่วน ๆ
+        </div>
+        <div style="opacity: 0.7" v-else>
+          กดปุ่ม Spacebar เพื่อแบ่งคำอธิบายเป็นส่วน ๆ
+        </div>
       </div>
 
       <div class="flex-row justify-end q-mt-md q-gutter-x-md">
@@ -101,7 +119,15 @@ export default defineComponent({
   setup(props, { emit }) {
     const q = useQuasar();
 
-    const text = ref<any>(null);
+    const text = ref([]);
+
+    const example = ref([
+      "สวัสดีตอนเช้า",
+      "ชาว Laberu",
+      "อากาศแจ่มใส",
+      "หัวใจเบิกบาน",
+      "สงกรานต์ยังไม่ถึง",
+    ]);
 
     const onSave = () => {
       if (text.value.length < 5) {
@@ -113,8 +139,8 @@ export default defineComponent({
         });
         return;
       }
-      emit("onSave", text.value);
-      text.value = null;
+      // emit("onSave", text.value);
+      text.value = [];
     };
 
     const onSkip = () => {
@@ -125,6 +151,7 @@ export default defineComponent({
       text,
       onSave,
       onSkip,
+      example,
     };
   },
 });

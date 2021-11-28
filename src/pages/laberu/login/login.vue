@@ -11,15 +11,7 @@
             </div>
           </div>
           <div class="text-bottom">
-            <div class="row">
-              Image Labelling Platform. Let’s Get
-              <div
-                class="q-ml-md fancy-link cursor-pointer"
-                style="padding-bottom: 0; text-shadow: 2px 2px 5px #d15eff"
-              >
-                Start
-              </div>
-            </div>
+            <div class="row">Image Labelling Platform</div>
           </div>
         </div>
       </div>

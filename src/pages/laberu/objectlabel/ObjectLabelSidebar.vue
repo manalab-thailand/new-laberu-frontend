@@ -5,7 +5,7 @@
         <div class="sidebar-header">{{ project.project_name }}</div>
         <!-- document btn -->
         <a
-          href="https://www.w3schools.com"
+          href="https://storage.googleapis.com/smooth-street-100k/instruction/Label_document.pdf"
           target="_blank"
           class="doc-btn cursor-pointer"
         >
@@ -37,52 +37,59 @@
         </div>
       </div>
 
-      <div class="flex-row justify-center label-sec">
-        <div class="flex-col" v-if="boxes && boxes.length > 0">
-          <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
-            <q-select
-              style="width: 100%; min-width: 300px; z-index: 1"
-              bg-color="white"
-              label="Select Related Object"
-              outlined
-              emit-value
-              map-options
-              v-model="box.label"
-              :options="options"
-            />
-          </div>
-        </div>
-        <div v-else class="drag-to-label q-mt-sm">
-          Draw a box in image to start labelling.
-        </div>
+      <div style="opacity: 0.7" class="q-mt-md label-sec">
+        เป็นการตีกรอบเฉพาะจุดที่สนใจภายในรูปภาพ
       </div>
 
-      <div class="flex-row justify-end q-mt-md">
-        <q-btn
-          @click="onSaveNotFound()"
-          dense
-          no-caps
-          label="Not Found"
-          style="background: #050505; padding: 5px 1em; color: white"
-        />
-        <q-btn
-          no-wrap
-          dense
-          no-caps
-          label="Skip"
-          class="q-mx-md"
-          style="background: #7a7a7a; padding: 5px 10px; color: white"
-          @click="onSkip()"
-        />
-        <q-btn
-          no-wrap
-          dense
-          no-caps
-          label="Submit"
-          style="background: #149bfc; padding: 5px 10px; color: white"
-          @click="onSave()"
-        />
-      </div>
+      <q-form @submit="onSave()">
+        <div class="flex-row justify-center">
+          <div class="flex-col" v-if="boxes && boxes.length > 0">
+            <div v-for="(box, i) in boxes" :key="i" class="q-my-md">
+              <q-select
+                style="width: 100%; min-width: 300px; z-index: 1"
+                bg-color="white"
+                label="Select Related Object"
+                outlined
+                emit-value
+                map-options
+                v-model="box.label"
+                :options="options"
+                :rules="[(val) => !!val || 'กรุณาเลือกตัวเลือกในช่องตัวเลือก']"
+              />
+            </div>
+          </div>
+          <div v-else class="drag-to-label q-mt-sm">
+            วาดกรอบในรูปภาพโดยการคลิกเพื่อเริ่มการตีกรอบจุดที่สนใจ
+          </div>
+        </div>
+
+        <div class="flex-row justify-end q-mt-md">
+          <q-btn
+            @click="onSaveNotFound()"
+            dense
+            no-caps
+            label="Not Found"
+            style="background: #050505; padding: 5px 1em; color: white"
+          />
+          <q-btn
+            no-wrap
+            dense
+            no-caps
+            label="Skip"
+            class="q-mx-md"
+            style="background: #7a7a7a; padding: 5px 10px; color: white"
+            @click="onSkip()"
+          />
+          <q-btn
+            no-wrap
+            dense
+            no-caps
+            type="submit"
+            label="Submit"
+            style="background: #149bfc; padding: 5px 10px; color: white"
+          />
+        </div>
+      </q-form>
     </div>
   </div>
 </template>
@@ -152,18 +159,13 @@ export default defineComponent({
         return;
       }
 
-      //? xmin = left
-      //? ymin = top
-      //? xmax = left + width
-      //? ymax = top + height
-
       const detection = props.boxes?.map((box) => {
         return {
           name: box.label,
-          xmin: convertSizeX(box.left),
-          ymin: convertSizeY(box.top),
-          xmax: convertSizeX(box.left + box.width),
-          ymax: convertSizeY(box.top + box.height),
+          xmin: Number(convertSizeX(box.left).toFixed(0)),
+          ymin: Number(convertSizeY(box.top).toFixed(0)),
+          xmax: Number(convertSizeX(box.left + box.width).toFixed(0)),
+          ymax: Number(convertSizeY(box.top + box.height).toFixed(0)),
         };
       });
 
@@ -209,7 +211,7 @@ export default defineComponent({
   border: dashed 2px rgb(71, 156, 71);
   border-radius: 5px;
   padding: 1em;
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 

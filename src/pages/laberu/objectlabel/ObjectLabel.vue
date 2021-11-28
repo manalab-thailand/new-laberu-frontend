@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref, computed, watch } from "vue";
 import ObjectLabelSidebar from "pages/laberu/objectlabel/ObjectLabelSidebar.vue";
 import Box from "components/Box.vue";
 import { pick } from "lodash";
@@ -153,6 +153,16 @@ export default defineComponent({
     this.imageSize.height = computed(() =>
       (this.$q.screen.height * 0.64).toFixed(2)
     );
+
+    const screenSize = computed(() => this.$q.screen.width);
+
+    watch(screenSize, (val) => {
+      if (val < 1000) {
+        this.dialog = true;
+      } else {
+        this.dialog = false;
+      }
+    });
 
     if (!this.screenValidation()) {
       this.dialog = true;
@@ -257,19 +267,19 @@ export default defineComponent({
     intervalSessionExpire() {
       const sessionExpire = moment().add("minute", 15);
 
-      this.intervalSession.value = setInterval(() => {
+      this.intervalSession = setInterval(() => {
         const diffSessionExpire = moment(sessionExpire).diff(
           moment(),
           "second"
         );
         if (diffSessionExpire <= 0) {
-          clearInterval(this.intervalSession.value);
+          clearInterval(this.intervalSession);
           this.$router.go(-1);
         }
       }, 1000 * 60 * 0.5);
     },
     clearSessionExpire() {
-      clearInterval(this.intervalSession.value);
+      clearInterval(this.intervalSession);
     },
     startDrawingBox(e: any) {
       this.drawingBox = {
