@@ -5,7 +5,9 @@
         <div class="text-white">
           <div class="flex-col content text-center">
             <div class="flex-row header-title">LABERU.TECH</div>
-            <div class="flex-row sub-title">PICK PROJECT TO LABEL NOW.</div>
+            <div class="flex-row sub-title">
+              SELECT THE PROJECT TO LABEL NOW.
+            </div>
           </div>
         </div>
       </q-intersection>
