@@ -63,7 +63,6 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   name: "registerEmail",
   setup() {
-    const router = useRouter();
     const q = useQuasar();
 
     const email = ref<string>();

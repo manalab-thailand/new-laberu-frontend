@@ -18,7 +18,7 @@ import routes from "./routes";
  * with the Router instance.
  */
 
-export default route<StateInterface>(function (/* { store, ssrContext } */) {
+export default route<StateInterface>(({ store }) => {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
@@ -39,11 +39,16 @@ export default route<StateInterface>(function (/* { store, ssrContext } */) {
 
   Router.beforeEach(async (to, from, next) => {
     const requireAuth = to.matched.some((record) => record.meta.requiresAuth);
-    const currentUser = await onAuthStateChanged();
 
-    if (requireAuth && currentUser) {
-      next();
-    } else if (requireAuth && !currentUser) {
+    const currentUserLogin = await onAuthStateChanged();
+
+    const isRegister = store.state.moduleAuth.authentication.isRegister;
+
+    if (to.name === "login" && currentUserLogin && !isRegister) {
+      next({ name: "home" });
+    } else if (requireAuth && currentUserLogin && isRegister) {
+      next({ name: "login" });
+    } else if (requireAuth && !currentUserLogin) {
       next({ name: "login" });
     } else {
       next();

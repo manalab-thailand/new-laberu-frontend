@@ -1,5 +1,6 @@
 import { boot } from "quasar/wrappers";
 import axios, { AxiosInstance } from "axios";
+import { logout } from "./firebase";
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
@@ -18,12 +19,23 @@ const api = axios.create({
   // baseURL: "http://localhost:3000",
 });
 
-export default boot(({ app }) => {
+export default boot(({ app, router }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;
   // ^ ^ ^ this will allow you to use this.$axios (for Vue Options API form)
   //       so you won't necessarily have to import axios in each vue file
+
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response.status === 401) {
+        logout();
+        router.push({ name: "login" });
+      }
+      return;
+    }
+  );
 
   app.config.globalProperties.$api = api;
   // ^ ^ ^ this will allow you to use this.$api (for Vue Options API form)

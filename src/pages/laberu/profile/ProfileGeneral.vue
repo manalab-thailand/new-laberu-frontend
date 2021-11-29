@@ -164,9 +164,11 @@ export default defineComponent({
     ]);
 
     const reactiveUser = reactive({
-      phone_number: cardHide(user.value.phone_number),
+      phone_number: computed(() => cardHide(user.value.phone_number)),
       email: emailHide(user.value.email),
-      bank_account_no: cardHide(user.value.payment.bank_account_no),
+      bank_account_no: computed(() =>
+        cardHide(user.value.payment.bank_account_no)
+      ),
       bank_name: bankAccountTH.value.find(
         (bank) => bank.value === user.value.payment.bank_name
       )?.label,

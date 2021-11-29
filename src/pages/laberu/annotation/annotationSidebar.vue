@@ -29,7 +29,7 @@
       >
         Quick Guidelines
       </div>
-      <div class="flex-row sidebar-desc" v-if="imageData">
+      <div class="flex-row sidebar-desc" v-if="imageData.annotation">
         {{ imageData.annotation.description }}
       </div>
 
@@ -139,7 +139,7 @@ export default defineComponent({
         });
         return;
       }
-      // emit("onSave", text.value);
+      emit("onSave", text.value);
       text.value = [];
     };
 

@@ -7,11 +7,13 @@ const mutation: MutationTree<IAuthState> = {
     const { user, authentication } = payload;
     state.user = user;
     state.authentication = authentication;
+    state.authentication.isRegister = false;
   },
 
   onUserNotRegistered(state, payload: { uid: string; email: string }) {
     state.user.uid = payload.uid;
     state.user.email = payload.email;
+    state.authentication.isRegister = true;
   },
 
   onUpdateUser(state, payload: IUser) {

@@ -41,10 +41,14 @@
             v-model="group_id"
             label="Group"
             class="col"
+            outlined
+            dense
           />
           <q-input
+            outlined
+            dense
             class="col"
-            label="password"
+            label="Password"
             v-model="accessPwd"
             @keyup.enter="validateAccessPwd()"
           />
