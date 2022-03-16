@@ -7,6 +7,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("src/pages/laberu/login/login.vue"),
   },
   {
+    path: "/register",
+    name: "register",
+    component: () => import("pages/laberu/register/register.vue"),
+  },
+  {
     path: "/laberu",
     meta: { requiresAuth: true },
     component: () => import("layouts/MainLayout.vue"),
@@ -15,11 +20,6 @@ const routes: RouteRecordRaw[] = [
         path: "",
         name: "home",
         component: () => import("pages/laberu/home/home.vue"),
-      },
-      {
-        path: "register",
-        name: "register",
-        component: () => import("pages/laberu/register/register.vue"),
       },
       {
         path: "annotation",

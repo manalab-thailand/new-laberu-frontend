@@ -115,6 +115,7 @@ export default defineComponent({
             uid: uid.value,
             email: email.value,
           });
+          console.log("🚀 ~ response", response);
 
           if (response.status === 404) {
             router.push({ name: "register" });

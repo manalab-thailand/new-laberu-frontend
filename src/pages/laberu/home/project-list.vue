@@ -3,6 +3,9 @@
     <div class="flex-row items-center">
       <img style="width: 100%" :src="randomImage(project.label_type)" alt="" />
     </div>
+    <div class="flex-row justify-center text-title q-my-md">
+      {{ project.project_name }}
+    </div>
     <div class="flex-row justify-start text-section q-my-md">
       {{
         project.label_type == "labelling"
@@ -12,9 +15,7 @@
       {{ labelThai(project.label_type) }}
     </div>
     <div class="flex-row justify-start sub-text-section q-my-md">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis nam
-      minima voluptate sunt praesentium aperiam quam optio magni explicabo
-      voluptatem.
+      {{ project.project_desc }}
     </div>
     <div class="flex-row justify-end">
       <q-btn
@@ -207,6 +208,14 @@ export default defineComponent({
   width: 100%;
   text-align: start;
   font-size: 16px;
+  font-weight: 700;
+  color: #242424;
+}
+
+.text-title {
+  width: 100%;
+  text-align: start;
+  font-size: 18px;
   font-weight: 700;
   color: #242424;
 }
