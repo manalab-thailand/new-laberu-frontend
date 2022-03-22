@@ -7,6 +7,7 @@
           v-for="(project, index) in projects"
           :key="index"
           :project="project"
+          :index="index"
           :style="`width: ${widthPerItem}%`"
           class="project-card"
         />

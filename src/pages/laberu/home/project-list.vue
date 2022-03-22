@@ -1,7 +1,11 @@
 <template>
   <div v-if="project" class="project-card">
     <div class="flex-row items-center">
-      <img style="width: 100%" :src="randomImage(project.label_type)" alt="" />
+      <img
+        style="width: 100%"
+        :src="randomImage(project.label_type, index)"
+        alt=""
+      />
     </div>
     <div class="flex-row justify-center text-title q-my-md">
       {{ project.project_name }}
@@ -71,6 +75,7 @@ import { useQuasar } from "quasar";
 export default defineComponent({
   props: {
     project: Object as () => IProject | undefined,
+    index: Number,
   },
   setup(props) {
     const q = useQuasar();
@@ -109,9 +114,9 @@ export default defineComponent({
       },
     ];
 
-    const randomImage = (label_type: string) => {
+    const randomImage = (label_type: string, index: number) => {
       return arrType.find((type) => type.label_type == label_type)!.image[
-        Math.floor(Math.random() * 2)
+        index
       ];
     };
 

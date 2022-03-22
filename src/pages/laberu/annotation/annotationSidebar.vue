@@ -51,10 +51,10 @@
       </div>
 
       <div class="flex-col q-gutter-sm label-sec">
-        <q-select
+        <!-- <q-select
           class="annotation-overflow"
           label="ตัวอย่างการอธิบายข้อความ"
-          v-model="example"
+          v-model="example.sub_string"
           use-input
           use-chips
           multiple
@@ -63,7 +63,7 @@
           input-debounce="0"
           new-value-mode="add-unique"
         />
-        <q-select
+                <q-select
           class="annotation-overflow"
           label="Enter Description"
           v-model="text"
@@ -74,6 +74,28 @@
           hide-dropdown-icon
           input-debounce="0"
           new-value-mode="add-unique"
+        /> -->
+        <q-input
+          class="annotation-overflow"
+          label="ตัวอย่างการอธิบายข้อความ"
+          v-model="example.sub_string"
+          use-input
+          use-chips
+          multiple
+          hide-dropdown-icon
+          readonly
+          input-debounce="0"
+          new-value-mode="add-unique"
+        />
+        <q-input
+          class="annotation-overflow"
+          label="Enter Description"
+          v-model="text"
+          dense
+          use-input
+          use-chips
+          multiple
+          outlined
         />
         <div style="opacity: 0.7" v-if="$q.platform.is.mobile">
           กดปุ่ม Return เพื่อแบ่งคำอธิบายเป็นส่วน ๆ
@@ -119,28 +141,32 @@ export default defineComponent({
   setup(props, { emit }) {
     const q = useQuasar();
 
-    const text = ref([]);
+    const text = ref();
 
-    const example = ref([
-      "สวัสดีตอนเช้า",
-      "ชาว Laberu",
-      "อากาศแจ่มใส",
-      "หัวใจเบิกบาน",
-      "สงกรานต์ยังไม่ถึง",
-    ]);
+    const example = ref({
+      sub_string: [
+        "สวัสดีตอนเช้า",
+        "ชาว Laberu",
+        "อากาศแจ่มใส",
+        "หัวใจเบิกบาน",
+        "สงกรานต์ยังไม่ถึง",
+      ],
+      string:
+        "สวัสดีตอนเช้า ชาว Laberu อากาศแจ่มใส หัวใจเบิกบาน สงกรานต์ยังไม่ถึง",
+    });
 
     const onSave = () => {
-      if (text.value.length < 5) {
+      if (text.value.length < 50) {
         q.notify({
           color: "red-5",
           textColor: "white",
           icon: "warning",
-          message: "กรุณากรอกอย่างน้อย 5 คำ",
+          message: "กรุณากรอกอย่างน้อย 50 ตัวอักษร",
         });
         return;
       }
       emit("onSave", text.value);
-      text.value = [];
+      text.value = "";
     };
 
     const onSkip = () => {

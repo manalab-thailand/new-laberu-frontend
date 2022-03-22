@@ -110,7 +110,8 @@ export default defineComponent({
     });
 
     const onSave = async (data: any) => {
-      const result = data.join(" ");
+      // const result = data.join(" ");
+      const result = data;
 
       const taskSuccess = ref({
         shortcode: taskImage.value.shortcode,
