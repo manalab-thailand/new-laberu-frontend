@@ -79,7 +79,6 @@ export default defineComponent({
           user_id: user.value._id,
           project_id: project.value?._id,
         });
-        console.log("🚀 ~ resp", resp);
 
         if (!resp) {
           q.notify({
@@ -150,18 +149,19 @@ export default defineComponent({
     const intervalSession = ref();
 
     const intervalSessionExpire = () => {
-      const sessionExpire = moment().add("minute", 15);
+      const sessionExpire = moment().add(15, "minute");
 
       intervalSession.value = setInterval(() => {
         const diffSessionExpire = moment(sessionExpire).diff(
           moment(),
           "second"
         );
+
         if (diffSessionExpire <= 0) {
           clearInterval(intervalSession.value);
           router.go(-1);
         }
-      }, 1000 * 60 * 0.5);
+      }, 1000 * 60 * 1);
     };
 
     const clearSessionExpire = () => {
