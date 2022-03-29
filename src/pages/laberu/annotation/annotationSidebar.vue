@@ -18,7 +18,7 @@
         class="flex-row text-blck text-bold q-mt-md q-mb-sm"
         style="font-size: 16px"
       >
-        Project Description
+        คำอธิบายโปรเจค
       </div>
       <div class="flex-row sidebar-desc">
         {{ project.project_desc }}
@@ -27,7 +27,7 @@
         class="flex-row text-blck text-bold q-mt-md q-mb-sm"
         style="font-size: 16px"
       >
-        Quick Guidelines
+        ไกด์ไลน์
       </div>
       <div class="flex-row sidebar-desc" v-if="imageData.annotation">
         {{ imageData.annotation.description }}
@@ -78,7 +78,8 @@
         <q-input
           class="annotation-overflow"
           label="ตัวอย่างการอธิบายข้อความ"
-          v-model="example.sub_string"
+          v-model="example.string"
+          autogrow
           use-input
           use-chips
           multiple
@@ -89,7 +90,7 @@
         />
         <q-input
           class="annotation-overflow"
-          label="Enter Description"
+          label="ใส่ข้อความอธิบายรูปภาพ"
           v-model="text"
           dense
           use-input
@@ -97,26 +98,31 @@
           multiple
           outlined
         />
-        <div style="opacity: 0.7" v-if="$q.platform.is.mobile">
+        <div>จำนวนตัวอักษรปัจจุบัน : {{ text.length }}</div>
+        <!-- <div style="opacity: 0.7" v-if="$q.platform.is.mobile">
           กดปุ่ม Return เพื่อแบ่งคำอธิบายเป็นส่วน ๆ
         </div>
         <div style="opacity: 0.7" v-else>
           กดปุ่ม Enter เพื่อแบ่งคำอธิบายเป็นส่วน ๆ
+        </div> -->
+        <div style="opacity: 0.7">
+          ** อย่างน้อย 50 ตัวอักษรและความยาวไม่จำกัด
         </div>
+        <div></div>
       </div>
 
       <div class="flex-row justify-end q-mt-md q-gutter-x-md">
         <q-btn
           dense
           no-caps
-          label="Skip"
+          label="ข้าม"
           style="background: #7a7a7a; padding: 5px 1em; color: white"
           @click="onSkip()"
         />
         <q-btn
           dense
           no-caps
-          label="Submit"
+          label="บันทึก"
           style="background: #149bfc; padding: 5px 1em; color: white"
           @click="onSave()"
         />
@@ -141,7 +147,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const q = useQuasar();
 
-    const text = ref();
+    const text = ref<string>("");
 
     const example = ref({
       sub_string: [

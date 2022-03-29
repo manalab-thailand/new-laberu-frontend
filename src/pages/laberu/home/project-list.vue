@@ -116,7 +116,7 @@ export default defineComponent({
 
     const randomImage = (label_type: string, index: number) => {
       return arrType.find((type) => type.label_type == label_type)!.image[
-        index
+        index < 2 ? index : index % 3
       ];
     };
 

@@ -79,6 +79,7 @@ export default defineComponent({
           user_id: user.value._id,
           project_id: project.value?._id,
         });
+        console.log("🚀 ~ resp", resp);
 
         if (!resp) {
           q.notify({
