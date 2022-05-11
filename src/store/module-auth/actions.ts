@@ -49,18 +49,10 @@ const actions: ActionTree<IAuthState, StateInterface> = {
 
   updateUser: async ({ commit, rootState }, payload: IUser) => {
     try {
-      await api.put(
-        "/user/update",
-        {
-          ...payload,
-          update_by: "user",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${rootState.moduleAuth.authentication.access_token}`,
-          },
-        }
-      );
+      await api.put("/user/update", {
+        ...payload,
+        update_by: "user",
+      });
 
       commit("onUpdateUser", payload);
     } catch (error) {

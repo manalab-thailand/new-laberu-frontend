@@ -5,11 +5,7 @@ import { IProject, IProjectState } from "./state";
 
 const actions: ActionTree<IProjectState, StateInterface> = {
   getProjects: async ({ rootState, commit }) => {
-    const { data } = await api.get("project/find-by-user", {
-      headers: {
-        Authorization: `Bearer ${rootState.moduleAuth.authentication.access_token}`,
-      },
-    });
+    const { data } = await api.get("project/find-by-user");
 
     commit("onGetProject", data);
   },

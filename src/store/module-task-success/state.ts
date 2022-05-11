@@ -70,11 +70,13 @@ export interface IUserTaskSuccess {
 export interface ITaskSuccessState {
   task_success: ITaskSuccess[];
   user_task_success: IUserTaskSuccess[];
+  history_lists: ITaskSuccess[];
 }
 
 const taskSuccessState = (): ITaskSuccessState => ({
   task_success: [] as ITaskSuccess[],
   user_task_success: [] as IUserTaskSuccess[],
+  history_lists: [] as ITaskSuccess[],
 });
 
 export default taskSuccessState;

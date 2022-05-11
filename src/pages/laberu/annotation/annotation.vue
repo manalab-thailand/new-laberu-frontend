@@ -76,6 +76,13 @@ export default defineComponent({
         q.loading.show();
 
         const resp = await store.dispatch("moduleTaskImage/getTaskImage", {
+          // user_id: "6247d6ee67ebe82488115be3",
+          user_id: user.value._id,
+          project_id: project.value?._id,
+        });
+
+        await store.dispatch("moduleTaskSuccess/getHistory", {
+          // user_id: "6247d6ee67ebe82488115be3",
           user_id: user.value._id,
           project_id: project.value?._id,
         });
@@ -93,7 +100,9 @@ export default defineComponent({
 
         startedAt.value = new Date();
         image_url.value = `${project.value?.base_image_url}/${taskImage.value.shortcode}.${project.value?.image_type}`;
-        intervalSessionExpire();
+
+        // clearSessionExpire();
+        // intervalSessionExpire();
       } catch (error) {
         throw new Error((error as ExecException).message);
       } finally {
@@ -110,7 +119,6 @@ export default defineComponent({
     });
 
     const onSave = async (data: any) => {
-      // const result = data.join(" ");
       const result = data;
 
       const taskSuccess = ref({
@@ -130,7 +138,7 @@ export default defineComponent({
         startedAt: startedAt.value,
       });
 
-      clearSessionExpire();
+      // clearSessionExpire();
 
       try {
         q.loading.show();
@@ -146,31 +154,31 @@ export default defineComponent({
       }
     };
 
-    const intervalSession = ref();
+    // const intervalSession = ref();
 
-    const intervalSessionExpire = () => {
-      const sessionExpire = moment().add(15, "minute");
+    // const intervalSessionExpire = () => {
+    //   const sessionExpire = moment().add(15, "minute");
+    //   intervalSession.value = setInterval(() => {
+    //     const diffSessionExpire = moment(sessionExpire).diff(
+    //       moment(),
+    //       "second"
+    //     );
 
-      intervalSession.value = setInterval(() => {
-        const diffSessionExpire = moment(sessionExpire).diff(
-          moment(),
-          "second"
-        );
+    //     if (diffSessionExpire <= 0) {
+    //       clearInterval(intervalSession.value);
+    //       router.go(-1);
+    //     }
+    //   }, 1000 * 60 * 0.5);
+    // };
 
-        if (diffSessionExpire <= 0) {
-          clearInterval(intervalSession.value);
-          router.go(-1);
-        }
-      }, 1000 * 60 * 1);
-    };
+    // const clearSessionExpire = () => {
+    //   clearInterval(intervalSession.value);
+    //   intervalSession.value = null;
+    // };
 
-    const clearSessionExpire = () => {
-      clearInterval(intervalSession.value);
-    };
-
-    onBeforeUnmount(() => {
-      clearSessionExpire();
-    });
+    // onBeforeUnmount(() => {
+    //   clearSessionExpire();
+    // });
 
     return {
       taskImage,

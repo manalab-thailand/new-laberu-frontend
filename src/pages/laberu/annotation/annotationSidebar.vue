@@ -75,6 +75,10 @@
           input-debounce="0"
           new-value-mode="add-unique"
         /> -->
+        <div class="text-weight-medium">รูปภาพปัจจุบัน</div>
+        <div class="flex justify-center text-weight-bold">
+          {{ imageData.shortcode }}
+        </div>
         <q-input
           class="annotation-overflow"
           label="ตัวอย่างการอธิบายข้อความ"
@@ -89,6 +93,7 @@
           new-value-mode="add-unique"
         />
         <q-input
+          autogrow
           class="annotation-overflow"
           label="ใส่ข้อความอธิบายรูปภาพ"
           v-model="text"
@@ -127,6 +132,8 @@
           @click="onSave()"
         />
       </div>
+
+      <History />
     </div>
   </div>
 </template>
@@ -135,14 +142,17 @@
 import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
 import { IImageData } from "src/store/module-task-image/state";
-import { log } from "util";
 import { defineComponent, ref } from "vue";
+import History from "./annotationHistory.vue";
 
 export default defineComponent({
   props: {
     project: {} as () => IProject,
     imageData: {} as () => IImageData,
     descriptions: String,
+  },
+  components: {
+    History,
   },
   setup(props, { emit }) {
     const q = useQuasar();

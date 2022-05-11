@@ -10,18 +10,10 @@ interface getTaskImage {
 const actions: ActionTree<ITaskImageState, StateInterface> = {
   getTaskImage: async ({ rootState, commit }, payload: getTaskImage) => {
     try {
-      const { data } = await api.post(
-        "task-image/get-task-image",
-        {
-          user_id: payload.user_id,
-          project_id: payload.project_id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${rootState.moduleAuth.authentication.access_token}`,
-          },
-        }
-      );
+      const { data } = await api.post("task-image/get-task-image", {
+        user_id: payload.user_id,
+        project_id: payload.project_id,
+      });
 
       if (data.message == "task image not avaliable for you") {
         return false;
