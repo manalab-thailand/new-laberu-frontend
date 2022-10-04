@@ -97,6 +97,7 @@
           class="annotation-overflow"
           label="ใส่ข้อความอธิบายรูปภาพ"
           v-model="text"
+          @update:model-value="onInputValue"
           dense
           use-input
           use-chips
@@ -171,6 +172,14 @@ export default defineComponent({
         "สวัสดีตอนเช้า ชาว Laberu อากาศแจ่มใส หัวใจเบิกบาน สงกรานต์ยังไม่ถึง",
     });
 
+    const onInputValue = (val: string) => {
+      const lenSpace = val.split(" ");
+      if (lenSpace.length > 2) {
+        const [first, ...other] = lenSpace.filter((x) => x);
+        text.value = `${first} ${other.join("")}`;
+      }
+    };
+
     const onSave = () => {
       if (text.value.length < 50) {
         q.notify({
@@ -181,19 +190,19 @@ export default defineComponent({
         });
         return;
       }
+
       emit("onSave", text.value);
       text.value = "";
     };
 
-    const onSkip = () => {
-      emit("onSkip");
-    };
+    const onSkip = () => emit("onSkip");
 
     return {
       text,
+      example,
+      onInputValue,
       onSave,
       onSkip,
-      example,
     };
   },
 });

@@ -98,8 +98,16 @@ export default defineComponent({
           return;
         }
 
+        let url;
+
+        if (taskImage.value.shortcode.includes("png")) {
+          url = `${project.value?.base_image_url}/${taskImage.value.shortcode}`;
+        } else {
+          url = `${project.value?.base_image_url}/${taskImage.value.shortcode}.${project.value?.image_type}`;
+        }
+
         startedAt.value = new Date();
-        image_url.value = `${project.value?.base_image_url}/${taskImage.value.shortcode}.${project.value?.image_type}`;
+        image_url.value = url;
 
         // clearSessionExpire();
         // intervalSessionExpire();
