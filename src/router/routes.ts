@@ -42,6 +42,11 @@ const routes: RouteRecordRaw[] = [
         name: "profile",
         component: () => import("pages/laberu/profile/profile.vue"),
       },
+      {
+        path: "reject-task",
+        name: "reject-task",
+        component: () => import("pages/laberu/reject/index.vue"),
+      },
     ],
   },
   // Always leave this as last one,

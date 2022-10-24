@@ -110,13 +110,13 @@
 //   border: dashed;
 // }
 </style>
-<script lang='ts'>
+<script lang="ts">
 import { defineComponent, ref, onMounted, computed, reactive } from "vue";
 import { useStore } from "src/store";
 import EditUser from "./edit-user/edit-user.vue";
 
 function cardHide(card: any) {
-  let hideNum = [];
+  let hideNum: string[] = [];
   for (let i = 0; i < card.length; i++) {
     if (i < card.length - 4) {
       hideNum.push("*");
@@ -127,7 +127,7 @@ function cardHide(card: any) {
   return hideNum.join("");
 }
 function emailHide(card: any) {
-  let hideNum = [];
+  let hideNum: string[] = [];
   let at = 0;
   for (let i = 0; i < card.length; i++) {
     if (card[i] == "@") {

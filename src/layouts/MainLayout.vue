@@ -28,8 +28,20 @@
           no-caps
           :label="!$q.platform.is.mobile ? user.email : ''"
           icon="account_circle"
-          @click="pushPage('profile')"
-        />
+        >
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup @click="pushPage('profile')">
+                <q-item-section>
+                  <div class="text-weight-bold text-subtitle1">Profile</div>
+                </q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup @click="pushPage('reject-task')">
+                <div class="text-weight-bold text-subtitle1">Reject Task</div>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
         <q-btn
           dense
           icon="logout"
@@ -46,13 +58,12 @@
   </q-layout>
 </template>
 
-<script lang='ts'>
+<script lang="ts">
 import EssentialLink from "components/EssentialLink.vue";
 import { logout } from "src/boot/firebase";
 import { useStore } from "src/store";
-import { defineComponent, computed, ref, watch, onUnmounted } from "vue";
+import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
-import moment from "moment";
 
 export default defineComponent({
   name: "MainLayout",

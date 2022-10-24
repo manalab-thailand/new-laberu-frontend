@@ -4,14 +4,14 @@
       <div class="orientation-portrait">
         <div
           class="img-bg-s"
-          :style="{ backgroundImage: `url(${this.image_url})` }"
+          :style="{ backgroundImage: `url(${image_url})` }"
         ></div>
       </div>
       <div class="orientation-landscape">
         <div class="flex-row justify-center items-center" style="height: 90vh">
           <div
             class="img-bg"
-            :style="{ backgroundImage: `url(${this.image_url})` }"
+            :style="{ backgroundImage: `url(${image_url})` }"
           ></div>
         </div>
       </div>
@@ -31,21 +31,12 @@
 <style lang="scss" scoped></style>
 
 <script lang="ts">
-import {
-  defineComponent,
-  ref,
-  computed,
-  onMounted,
-  watch,
-  onUnmounted,
-  onBeforeUnmount,
-} from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
 import annotationSidebar from "src/pages/laberu/annotation/annotationSidebar.vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "src/store";
 import { useQuasar } from "quasar";
 import { ExecException } from "child_process";
-import moment from "moment";
 
 export default defineComponent({
   components: {
