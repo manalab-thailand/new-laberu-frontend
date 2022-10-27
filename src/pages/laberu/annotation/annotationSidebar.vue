@@ -173,11 +173,18 @@ export default defineComponent({
     });
 
     const onInputValue = (val: string) => {
-      const lenSpace = val.split(" ");
-      if (lenSpace.length > 2) {
-        const [first, ...other] = lenSpace.filter((x) => x);
-        text.value = `${first} ${other.join("")}`;
+      let state = val;
+      const firstWord = val.charAt(0);
+      const lastWord = val.charAt(val.length - 1);
+
+      if (firstWord === " " || lastWord === " ") {
+        state = val.trim();
       }
+
+      text.value = state
+        .split(" ")
+        .filter((x) => x)
+        .join(" ");
     };
 
     const onSave = () => {

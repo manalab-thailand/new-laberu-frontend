@@ -26,7 +26,6 @@
     <q-dialog v-model="isConfirmDialog">
       <q-card style="min-width: 700px">
         <q-card-section class="row justify-center items-center">
-          {{ imageUrl }}
           <img :src="imageUrl" />
         </q-card-section>
 
@@ -124,10 +123,17 @@ const onClickConfirm = async () => {
 };
 
 const onInputValue = (val: string) => {
-  const lenSpace = val.split(" ");
-  if (lenSpace.length > 2) {
-    const [first, ...other] = lenSpace.filter((x) => x);
-    newDesc.value = `${first} ${other.join("")}`;
+  let state = val;
+  const firstWord = val.charAt(0);
+  const lastWord = val.charAt(val.length - 1);
+
+  if (firstWord === " " || lastWord === " ") {
+    state = val.trim();
   }
+
+  newDesc.value = state
+    .split(" ")
+    .filter((x) => x)
+    .join(" ");
 };
 </script>
