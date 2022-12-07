@@ -1,5 +1,5 @@
 <template>
-  <div class="label-tools" v-if="imageData && project">
+  <div class="label-tools" v-if="project">
     <div class="flex-col">
       <div class="flex-row items-center" style="position: relative">
         <div class="sidebar-header">{{ project.project_name }}</div>
@@ -29,9 +29,12 @@
       >
         ไกด์ไลน์
       </div>
-      <div class="flex-row sidebar-desc" v-if="imageData.annotation">
+      <!-- <div
+        class="flex-row sidebar-desc"
+        v-if="imageData && imageData.annotation"
+      >
         {{ imageData.annotation.description }}
-      </div>
+      </div> -->
 
       <!-- wrapped -->
       <div class="orientation-portrait">
@@ -76,8 +79,8 @@
           new-value-mode="add-unique"
         /> -->
         <div class="text-weight-medium">รูปภาพปัจจุบัน</div>
-        <div class="flex justify-center text-weight-bold">
-          {{ imageData.shortcode }}
+        <div class="flex justify-center text-weight-bold" v-if="taskImage">
+          {{ taskImage.shortcode }}
         </div>
         <q-input
           class="annotation-overflow"
@@ -142,14 +145,14 @@
 <script lang="ts">
 import { useQuasar } from "quasar";
 import { IProject } from "src/store/module-project/state";
-import { IImageData } from "src/store/module-task-image/state";
+import { ITaskImage } from "src/store/module-task-image/state";
 import { defineComponent, ref } from "vue";
 import History from "./annotationHistory.vue";
 
 export default defineComponent({
   props: {
     project: {} as () => IProject,
-    imageData: {} as () => IImageData,
+    taskImage: {} as () => ITaskImage,
     descriptions: String,
   },
   components: {

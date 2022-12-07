@@ -27,6 +27,7 @@
       <q-card style="min-width: 700px">
         <q-card-section class="row justify-center items-center">
           <img :src="imageUrl" />
+          <div class="q-mt-md text-weight-bolder">{{ description }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -63,7 +64,7 @@ const q = useQuasar();
 const store = useStore();
 const route = useRoute();
 
-defineProps({
+const props = defineProps({
   taskImageRejects: Object as () => ITaskImageReject[],
   pagination: Object as () => IPagination,
 });
@@ -77,6 +78,7 @@ const list_projects = computed(() => store.state.moduleProjects.projects);
 const isConfirmDialog = ref(false);
 const dataSelected = ref<ITaskImageReject>();
 const imageUrl = ref<string>();
+const description = ref<string>();
 
 const newDesc = ref<string>();
 
@@ -91,6 +93,8 @@ const onClickEvent = (data: ITaskImageReject) => {
   } else {
     imageUrl.value = `${project?.base_image_url}/${data.shortcode}.${project?.image_type}`;
   }
+
+  description.value = data.task_success.result.annotation?.description;
 
   isConfirmDialog.value = true;
 };

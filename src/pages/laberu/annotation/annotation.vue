@@ -20,7 +20,7 @@
     <div class="col">
       <annotationSidebar
         :project="project"
-        :imageData="imageData"
+        :taskImage="taskImage"
         @onSave="onSave($event)"
         @onSkip="initState()"
       />
@@ -67,13 +67,13 @@ export default defineComponent({
         q.loading.show();
 
         const resp = await store.dispatch("moduleTaskImage/getTaskImage", {
-          // user_id: "6247d6ee67ebe82488115be3",
+          // user_id: "6336783777d3853f7e42e3a3",
           user_id: user.value._id,
           project_id: project.value?._id,
         });
 
         await store.dispatch("moduleTaskSuccess/getHistory", {
-          // user_id: "6247d6ee67ebe82488115be3",
+          // user_id: "6336783777d3853f7e42e3a3",
           user_id: user.value._id,
           project_id: project.value?._id,
         });
